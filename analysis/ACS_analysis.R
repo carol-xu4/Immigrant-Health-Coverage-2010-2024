@@ -87,3 +87,97 @@ coverage_counts = acsdata %>%
   ungroup()
 
 write_csv(coverage_counts, "results/coverage_counts_year.csv")
+
+# 2024 coverage
+coverage2024 = coverage_counts %>%
+  filter(year == 2024) %>%
+  group_by(immig_status) %>%
+  mutate(rate = population / sum(population)) %>%
+  ungroup()
+
+ACS_coverage_2024 = ggplot(coverage2024, aes(x = immig_status, y = rate, fill = coverage_type)) +
+  geom_bar(stat = "identity") +
+  scale_y_continuous(
+    labels = scales::percent,
+    breaks = seq(0, 1, by = 0.1)) +
+  scale_fill_manual(values = c(
+    "Employer-sponsored" = "#3043B4",
+    "Direct purchase"    = "#7C756D",
+    "Medicaid"           = "#C97703",
+    "Medicare"           = "#0D0E51",
+    "Other public"       = "#6B8E23",
+    "Uninsured"          = "#C0392B")) +
+  labs(
+    title = "Health Insurance Coverage Type by Immigration Status (2024)",
+    subtitle = "ACS; Working-age adults 18–64",
+    x = NULL,
+    y = NULL,
+    fill = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "bottom",
+    legend.text = element_text(size = 10),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 11, color = "black"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/ACS_coverage_2024.png", width = 10, height = 6)
+
+# 2010 coverage
+coverage2010 = coverage_counts %>%
+  filter(year == 2010) %>%
+  group_by(immig_status) %>%
+  mutate(rate = population / sum(population)) %>%
+  ungroup()
+
+ACS_coverage_2010 = ggplot(coverage2010, aes(x = immig_status, y = rate, fill = coverage_type)) +
+  geom_bar(stat = "identity") +
+  scale_y_continuous(
+    labels = scales::percent,
+    breaks = seq(0, 1, by = 0.1)) +
+  scale_fill_manual(values = c(
+    "Employer-sponsored" = "#3043B4",
+    "Direct purchase"    = "#7C756D",
+    "Medicaid"           = "#C97703",
+    "Medicare"           = "#0D0E51",
+    "Other public"       = "#6B8E23",
+    "Uninsured"          = "#C0392B")) +
+  labs(
+    title = "Health Insurance Coverage Type by Immigration Status (2010)",
+    subtitle = "ACS; Working-age adults 18–64",
+    x = NULL,
+    y = NULL,
+    fill = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "bottom",
+    legend.text = element_text(size = 10),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 11, color = "black"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/ACS_coverage_2010.png", width = 10, height = 6)

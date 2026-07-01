@@ -9,6 +9,8 @@
 # Health Coverage (ACS)
 [Table](results/coverage_counts_year.csv)
 
+![Coverage 2024](results/ACS_coverage_2024.png)
+![Coverage 2010](results/ACS_coverage_2010.png)
 
 
 # CPS data (2010-2024)
