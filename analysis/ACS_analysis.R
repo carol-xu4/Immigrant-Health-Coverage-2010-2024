@@ -8,6 +8,26 @@ setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Cover
 # ACS data ------------------------------------------------------------------
 acsdata = fread("data/output/acsdata.csv")
 
+STATE_BY <- acsdata %>%
+  mutate(
+    coverage_type = case_when(
+      hcovany == 1 ~ "Uninsured",
+      hinsemp == 2 ~ "Employer-sponsored",
+      hinspur == 2 ~ "Direct purchase",
+      hinscaid == 2 ~ "Medicaid",
+      hinscare == 2 ~ "Medicare",
+      hinstri == 2 | hinsva == 2 ~ "Other public",
+      TRUE ~ "Unknown")) %>% 
+  group_by(year, statefip, immig_status, coverage_type) %>%
+  summarise(
+    population = sum(perwt, na.rm = TRUE)) %>%
+  ungroup()
+STATE_BY %>%
+  filter(immig_status == 'Undocumented', coverage_type == 'Medicaid') %>%
+  filter(year == 2024) %>%
+  arrange(-population)
+
+
 # immigrant status counts
 immig_counts = acsdata %>%
   group_by(year, immig_status) %>%
@@ -109,7 +129,7 @@ ACS_coverage_2024 = ggplot(coverage2024, aes(x = immig_status, y = rate, fill = 
     "Uninsured"          = "#C0392B")) +
   labs(
     title = "Health Insurance Coverage Type by Immigration Status (2024)",
-    subtitle = "ACS; Working-age adults 18–64",
+    subtitle = "ACS; Working-age adults (18–64)",
     x = NULL,
     y = NULL,
     fill = NULL,
@@ -156,7 +176,7 @@ ACS_coverage_2010 = ggplot(coverage2010, aes(x = immig_status, y = rate, fill = 
     "Uninsured"          = "#C0392B")) +
   labs(
     title = "Health Insurance Coverage Type by Immigration Status (2010)",
-    subtitle = "ACS; Working-age adults 18–64",
+    subtitle = "ACS; Working-age adults (18–64)",
     x = NULL,
     y = NULL,
     fill = NULL,
@@ -181,3 +201,13 @@ ACS_coverage_2010 = ggplot(coverage2010, aes(x = immig_status, y = rate, fill = 
     panel.background = element_rect(fill = "white", color = NA))
 
 ggsave("results/ACS_coverage_2010.png", width = 10, height = 6)
+
+# combining all immigrants vs. native-born
+coverage_2024_grouped = coverage_counts %>%
+  filter(year == 2024) %>%
+  mutate(group = ifelse(immig_status == "Native-born", "Native-born", "All immigrants")) %>%
+  group_by(group, coverage_type) %>%
+  summarise(population = sum(population), .groups = "drop") %>%
+  group_by(group) %>%
+  mutate(rate = population / sum(population)) %>%
+  ungroup()
