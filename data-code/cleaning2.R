@@ -12,14 +12,6 @@ acs = read_ipums_micro(ddi_acs)
 acs = acs %>%
     rename_with(tolower)
 
-# remove group quarters &limit to working-age adults (18-64)
-acs = acs %>%
-    filter(gq %in% c(1, 2),
-           age >= 18, age <= 64)
-
-    # 47,595,496 total rows before
-    # 26,762,659 total rows after
-
 acs = acs %>%
   select(
     year, serial, pernum, cluster, strata, perwt, statefip,
@@ -96,4 +88,4 @@ acs %>%
   count(citizen, bpl)
 
 # rewrite final ACS dataset
-fwrite(acs, "data/output/acsdata.csv")
+fwrite(acs, "data/output/acs_unfiltered.csv")

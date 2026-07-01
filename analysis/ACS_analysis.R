@@ -5,7 +5,7 @@ pacman::p_load(tidyverse, ggthemes, readxl, data.table, gdata, ipumsr)
 # Set working directory -----------------------------------------------------
 setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Coverage 2010-2024")
 
-# ACS -----------------------------------------------------------------------
+# ACS, gq and age filter applied --------------------------------------------
 acsdata = fread("data/output/acsdata.csv")
 
 # immigrant status counts
@@ -22,7 +22,7 @@ write_csv(immig_counts, "results/immig_counts_year.csv")
 immig_counts %>%
   filter(year == 2024, immig_status != "Native-born") %>%
   mutate(undoc_share = population / sum(population))
-  
+
 colors = c(
   "Native-born"         = "#3043B4",
   "Naturalized citizen" = "#0D0E51",
@@ -30,7 +30,7 @@ colors = c(
   "Undocumented"        = "#C97703")
 
 ACS_population = ggplot(immig_counts, aes(x = as.numeric(year), y = population / 1e6, color = immig_status)) +
-  geom_line(linewidth = 1.1) +
+  geom_line(linewidth = 1.8) +
   geom_point() +
   scale_color_manual(values = colors) +
   scale_x_continuous(breaks = seq(2010, 2024, by = 2)) +
@@ -56,3 +56,6 @@ ACS_population = ggplot(immig_counts, aes(x = as.numeric(year), y = population /
     plot.background = element_rect(fill = "white"))
 
 ggsave("results/ACS_population.png", width = 15, height = 10)
+
+# ACS, unfiltered
+acs_unfiltered = fread("data/output/acs_unfiltered.csv")
