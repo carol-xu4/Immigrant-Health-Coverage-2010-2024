@@ -47,8 +47,8 @@ ACS_population = ggplot(immig_counts, aes(x = as.numeric(year), y = population /
     caption = "Source: ACS PUMS via IPUMS") +
   theme_minimal() +
   theme(
-    plot.title = element_text(size = 40, face = "bold", hjust = 0, color = "black"),
-    plot.subtitle = element_text(size = 30, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
     legend.position = "top",
     legend.justification = "left",
     legend.text = element_text(size = 20),
@@ -69,3 +69,21 @@ ACS_population = ggplot(immig_counts, aes(x = as.numeric(year), y = population /
 
 ggsave("results/ACS_population.png", width = 15, height = 10)
 
+# health coverage
+coverage_counts = acsdata %>%
+  mutate(
+    coverage_type = case_when(
+      hcovany == 1 ~ "Uninsured",
+      hinsemp == 2 ~ "Employer-sponsored",
+      hinspur == 2 ~ "Direct purchase",
+      hinscaid == 2 ~ "Medicaid",
+      hinscare == 2 ~ "Medicare",
+      hinstri == 2 | hinsva == 2 ~ "Other public",
+      TRUE ~ "Unknown")) %>%
+  group_by(year, immig_status, coverage_type) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE)) %>%
+  ungroup()
+
+write_csv(coverage_counts, "results/coverage_counts_year.csv")

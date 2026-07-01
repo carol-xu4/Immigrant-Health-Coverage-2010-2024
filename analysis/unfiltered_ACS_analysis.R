@@ -35,8 +35,8 @@ unfiltered_ACS_population = ggplot(unfiltered_immig_counts, aes(x = as.numeric(y
     caption = "Source: ACS PUMS via IPUMS") +
   theme_minimal() +
   theme(
-    plot.title = element_text(size = 40, face = "bold", hjust = 0, color = "black"),
-    plot.subtitle = element_text(size = 30, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
     legend.position = "top",
     legend.justification = "left",
     legend.text = element_text(size = 20),
@@ -46,7 +46,6 @@ unfiltered_ACS_population = ggplot(unfiltered_immig_counts, aes(x = as.numeric(y
     panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
     panel.grid.minor.y = element_blank(),
     axis.line = element_blank(),
-    axis.ticks = element_blank(),
     axis.text.x = element_text(size = 25, color = "gray40"),
     axis.text.y = element_text(size = 25, color = "gray40"),
     plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
