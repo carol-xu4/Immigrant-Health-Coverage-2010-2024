@@ -6,7 +6,8 @@
 
 ![ACS Population Estimates](results/ACS_population.png)
 
-
+# Health Coverage (ACS)
+[Table](results/coverage_counts_year.csv)
 
 
 
