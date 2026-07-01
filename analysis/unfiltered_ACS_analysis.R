@@ -5,42 +5,30 @@ pacman::p_load(tidyverse, ggthemes, readxl, data.table, gdata, ipumsr)
 # Set working directory -----------------------------------------------------
 setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Coverage 2010-2024")
 
-# ACS data ------------------------------------------------------------------
-acsdata = fread("data/output/acsdata.csv")
+# ACS, unfiltered --------------------------------------------------------
+acs_unfiltered = fread("data/output/acs_unfiltered.csv")
 
-# immigrant status counts
-immig_counts = acsdata %>%
+unfiltered_immig_counts = acs_unfiltered %>%
   group_by(year, immig_status) %>%
   summarise(
     n = n(),
     population = sum(perwt, na.rm = TRUE)) %>%
   ungroup()
 
-write_csv(immig_counts, "results/immig_counts_year.csv")
+write_csv(unfiltered_immig_counts, "results/unfiltered_immig_counts_year.csv")
 
-# share of working-age immigrants who are undocumented?
-immig_counts %>%
-  filter(year == 2024, immig_status != "Native-born") %>%
-  mutate(undoc_share = population / sum(population))
-
-colors = c(
-  "Native-born"         = "#3043B4",
-  "Naturalized citizen" = "#0D0E51",
-  "Legal immigrant"     = "#7C756D",
-  "Undocumented"        = "#C97703")
-
-ACS_population = ggplot(immig_counts, aes(x = as.numeric(year), y = population / 1e6, color = immig_status)) +
+unfiltered_ACS_population = ggplot(unfiltered_immig_counts, aes(x = as.numeric(year), y = population / 1e6, color = immig_status)) +
   geom_line(linewidth = 1.8) +
   scale_color_manual(values = colors) +
   scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
   scale_y_continuous(
     breaks = seq(0, 300, by = 50),
     labels = function(x) paste0(x, "M"),
-    limits = c(0, 200),
+    limits = c(0, 300),
     expand = c(0.02, 0)) +
   labs(
     title = "Population by Immigration Status (2010-2024)",
-    subtitle = "ACS; Working-age adults (18-64), non-GQ",
+    subtitle = "ACS; Unfiltered Sample",
     x = NULL,
     y = NULL,
     color = NULL,
@@ -67,5 +55,4 @@ ACS_population = ggplot(immig_counts, aes(x = as.numeric(year), y = population /
     plot.background = element_rect(fill = "white", color = NA),
     panel.background = element_rect(fill = "white", color = NA))
 
-ggsave("results/ACS_population.png", width = 15, height = 10)
-
+ggsave("results/unfiltered_ACS_population.png", unfiltered_ACS_population, width = 15, height = 10, dpi = 300)
