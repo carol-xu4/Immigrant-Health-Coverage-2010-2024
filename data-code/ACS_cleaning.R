@@ -12,13 +12,12 @@ acs = read_ipums_micro(ddi_acs)
 acs = acs %>%
     rename_with(tolower)
 
-# remove group quarters &limit to working-age adults (18-64)
+# limit to working-age adults (18-64)
 acs = acs %>%
-    filter(gq %in% c(1, 2),
-           age >= 18, age <= 64)
+    filter(age >= 18, age <= 64)
 
     # 47,595,496 total rows before
-    # 26,762,659 total rows after
+    # 28,497,258 total rows after
 
 acs = acs %>%
   select(
@@ -90,10 +89,6 @@ acs = acs %>%
                                           "Naturalized citizen",
                                           "Legal immigrant",
                                           "Undocumented")))
-
-acs %>%
-  filter(immig_status == "Native-born" & immigrant == 1) %>%
-  count(citizen, bpl)
 
 # rewrite final ACS dataset
 fwrite(acs, "data/output/acsdata.csv")

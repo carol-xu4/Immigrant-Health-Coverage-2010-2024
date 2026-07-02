@@ -8,26 +8,6 @@ setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Cover
 # ACS data ------------------------------------------------------------------
 acsdata = fread("data/output/acsdata.csv")
 
-STATE_BY <- acsdata %>%
-  mutate(
-    coverage_type = case_when(
-      hcovany == 1 ~ "Uninsured",
-      hinsemp == 2 ~ "Employer-sponsored",
-      hinspur == 2 ~ "Direct purchase",
-      hinscaid == 2 ~ "Medicaid",
-      hinscare == 2 ~ "Medicare",
-      hinstri == 2 | hinsva == 2 ~ "Other public",
-      TRUE ~ "Unknown")) %>% 
-  group_by(year, statefip, immig_status, coverage_type) %>%
-  summarise(
-    population = sum(perwt, na.rm = TRUE)) %>%
-  ungroup()
-STATE_BY %>%
-  filter(immig_status == 'Undocumented', coverage_type == 'Medicaid') %>%
-  filter(year == 2024) %>%
-  arrange(-population)
-
-
 # immigrant status counts
 immig_counts = acsdata %>%
   group_by(year, immig_status) %>%
@@ -60,7 +40,7 @@ ACS_population = ggplot(immig_counts, aes(x = as.numeric(year), y = population /
     expand = c(0.02, 0)) +
   labs(
     title = "Population by Immigration Status (2010-2024)",
-    subtitle = "ACS; Working-age adults (18-64), non-GQ",
+    subtitle = "ACS; Working-age adults (18-64)",
     x = NULL,
     y = NULL,
     color = NULL,
@@ -202,12 +182,115 @@ ACS_coverage_2010 = ggplot(coverage2010, aes(x = immig_status, y = rate, fill = 
 
 ggsave("results/ACS_coverage_2010.png", width = 10, height = 6)
 
-# combining all immigrants vs. native-born
+# native-born vs. legal vs. undocumented
 coverage_2024_grouped = coverage_counts %>%
   filter(year == 2024) %>%
-  mutate(group = ifelse(immig_status == "Native-born", "Native-born", "All immigrants")) %>%
+  mutate(
+    immig_status = as.character(immig_status),
+    group = case_when(
+      immig_status == "Native-born"                                    ~ "Native-born",
+      immig_status %in% c("Naturalized citizen", "Legal immigrant")    ~ "Legal immigrant",
+      immig_status == "Undocumented"                                   ~ "Undocumented")) %>%
   group_by(group, coverage_type) %>%
   summarise(population = sum(population), .groups = "drop") %>%
   group_by(group) %>%
   mutate(rate = population / sum(population)) %>%
-  ungroup()
+  ungroup() %>%
+  mutate(group = factor(group, levels = c("Native-born", "Legal immigrant", "Undocumented")))
+
+ACS_coverage_2024_grouped = ggplot(coverage_2024_grouped, aes(x = group, y = rate, fill = coverage_type)) +
+  geom_bar(stat = "identity") +
+  scale_y_continuous(
+    labels = scales::percent,
+    breaks = seq(0, 1, by = 0.1)) +
+  scale_fill_manual(values = c(
+    "Employer-sponsored" = "#3043B4",
+    "Direct purchase"    = "#7C756D",
+    "Medicaid"           = "#C97703",
+    "Medicare"           = "#0D0E51",
+    "Other public"       = "#6B8E23",
+    "Uninsured"          = "#C0392B")) +
+  labs(
+    title = "Health Insurance Coverage by Immigration Status (2024)",
+    subtitle = "ACS; Working-age adults 18–64",
+    x = NULL,
+    y = NULL,
+    fill = NULL,
+    caption = "Source: ACS PUMS via IPUMS, authors' calculations") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "bottom",
+    legend.text = element_text(size = 10),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 11, color = "black"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/ACS_coverage_2024_grouped.png", ACS_coverage_2024_grouped, width = 8, height = 6)
+
+# combining all immigrants vs. native-born
+coverage_2024_COMBINED = coverage_counts %>%
+  filter(year == 2024) %>%
+  mutate(
+    immig_status = as.character(immig_status),
+    group = case_when(
+      immig_status == "Native-born" ~ "Native-born",
+      TRUE                          ~ "All immigrants")) %>%
+  group_by(group, coverage_type) %>%
+  summarise(population = sum(population), .groups = "drop") %>%
+  group_by(group) %>%
+  mutate(rate = population / sum(population)) %>%
+  ungroup() %>%
+  mutate(group = factor(group, levels = c("Native-born", "All immigrants")))
+
+write_csv(coverage_2024_COMBINED, "results/coverage_2024_COMBINED.csv")
+
+ACS_coverage_2024_COMBINED = ggplot(coverage_2024_COMBINED, aes(x = group, y = rate, fill = coverage_type)) +
+  geom_bar(stat = "identity") +
+  scale_y_continuous(
+    labels = scales::percent,
+    breaks = seq(0, 1, by = 0.1)) +
+  scale_fill_manual(values = c(
+    "Employer-sponsored" = "#3043B4",
+    "Direct purchase"    = "#7C756D",
+    "Medicaid"           = "#C97703",
+    "Medicare"           = "#0D0E51",
+    "Other public"       = "#6B8E23",
+    "Uninsured"          = "#C0392B")) +
+  labs(
+    title = "Health Insurance Coverage by Immigration Status (2024)",
+    subtitle = "ACS; Working-age adults 18–64",
+    x = NULL,
+    y = NULL,
+    fill = NULL,
+    caption = "Source: ACS PUMS via IPUMS, authors' calculations") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "bottom",
+    legend.text = element_text(size = 10),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 11, color = "black"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/ACS_coverage_2024_COMBINED.png", ACS_coverage_2024_COMBINED, width = 8, height = 6)
