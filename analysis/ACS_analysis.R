@@ -216,7 +216,7 @@ ACS_coverage_2024_grouped = ggplot(coverage_2024_grouped, aes(x = group, y = rat
     x = NULL,
     y = NULL,
     fill = NULL,
-    caption = "Source: ACS PUMS via IPUMS, authors' calculations") +
+    caption = "Source: ACS PUMS via IPUMS") +
   theme_minimal() +
   theme(
     plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
@@ -273,7 +273,7 @@ ACS_coverage_2024_COMBINED = ggplot(coverage_2024_COMBINED, aes(x = group, y = r
     x = NULL,
     y = NULL,
     fill = NULL,
-    caption = "Source: ACS PUMS via IPUMS, authors' calculations") +
+    caption = "Source: ACS PUMS via IPUMS") +
   theme_minimal() +
   theme(
     plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
