@@ -18,9 +18,11 @@
 
 ### Uninsured 
 ![Unisured rates by immigration status over time](results/ACS_uninsured_trend.png)
+![Uninsured, all immigrants vs native born](results/ACS_uninsured2.png)
 
 ### Medicaid Coverage
 ![Medicad rates by immigration status over time](results/ACS_medicaid_trend.png)
+![Medicaid, all immigrants vs. native born ](results/ACS_medicaid2.png)
 
 ### Employer-Sponsored Insurance
 ![ESI rates by immigration status over time](results/ACS_esi_trend.png)
