@@ -576,3 +576,5 @@ ACS_medicaid2 = ggplot(medicaid2, aes(x = as.numeric(year), y = medicaid_rate, c
     panel.background = element_rect(fill = "white", color = NA))
 
 ggsave("results/ACS_medicaid2.png", ACS_medicaid2, width = 10, height = 6)
+
+### STATES
