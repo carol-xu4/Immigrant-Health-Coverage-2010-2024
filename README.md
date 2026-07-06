@@ -22,5 +22,8 @@
 ### Medicaid Coverage
 ![Medicad rates by immigration status over time](results/ACS_medicaid_trend.png)
 
+### Employer-Sponsored Insurance
+![ESI rates by immigration status over time](results/ACS_esi_trend.png)
+
 
 # CPS data (2010-2024)
