@@ -12,13 +12,6 @@ acs = read_ipums_micro(ddi_acs)
 acs = acs %>%
     rename_with(tolower)
 
-# limit to working-age adults (18-64)
-acs = acs %>%
-    filter(age >= 18, age <= 64)
-
-    # 47,595,496 total rows before
-    # 28,497,258 total rows after
-
 acs = acs %>%
   select(
     year, serial, pernum, cluster, strata, perwt, statefip,

@@ -431,6 +431,7 @@ ACS_esi_trend = ggplot(esi_trend, aes(x = as.numeric(year), y = esi_rate, color 
   scale_y_continuous(
     labels = scales::percent,
     breaks = seq(0, 1, by = 0.05),
+    limit = c(0.25, 0.6),
     expand = c(0.02, 0)) +
   geom_vline(xintercept = 2014, linetype = "dashed", color = "gray50", linewidth = 0.5) +
   annotate("text", x = 2014, y = 0.45, label = "ACA (2014)",
