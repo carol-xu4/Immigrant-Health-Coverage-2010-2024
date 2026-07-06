@@ -36,11 +36,11 @@ ACS_population = ggplot(immig_counts, aes(x = as.numeric(year), y = population /
   scale_y_continuous(
     breaks = seq(0, 300, by = 50),
     labels = function(x) paste0(x, "M"),
-    limits = c(0, 200),
+    limits = c(0, 300),
     expand = c(0.02, 0)) +
   labs(
     title = "Population by Immigration Status (2010-2024)",
-    subtitle = "ACS; Working-age adults (18-64)",
+    subtitle = "ACS; Ages 0-97",
     x = NULL,
     y = NULL,
     color = NULL,
@@ -109,7 +109,7 @@ ACS_coverage_2024 = ggplot(coverage2024, aes(x = immig_status, y = rate, fill = 
     "Uninsured"          = "#C0392B")) +
   labs(
     title = "Health Insurance Coverage Type by Immigration Status (2024)",
-    subtitle = "ACS; Working-age adults (18–64)",
+    subtitle = "ACS",
     x = NULL,
     y = NULL,
     fill = NULL,
@@ -156,7 +156,7 @@ ACS_coverage_2010 = ggplot(coverage2010, aes(x = immig_status, y = rate, fill = 
     "Uninsured"          = "#C0392B")) +
   labs(
     title = "Health Insurance Coverage Type by Immigration Status (2010)",
-    subtitle = "ACS; Working-age adults (18–64)",
+    subtitle = "ACS",
     x = NULL,
     y = NULL,
     fill = NULL,
@@ -212,7 +212,7 @@ ACS_coverage_2024_grouped = ggplot(coverage_2024_grouped, aes(x = group, y = rat
     "Uninsured"          = "#C0392B")) +
   labs(
     title = "Health Insurance Coverage by Immigration Status (2024)",
-    subtitle = "ACS; Working-age adults 18–64",
+    subtitle = "ACS",
     x = NULL,
     y = NULL,
     fill = NULL,
@@ -269,7 +269,7 @@ ACS_coverage_2024_COMBINED = ggplot(coverage_2024_COMBINED, aes(x = group, y = r
     "Uninsured"          = "#C0392B")) +
   labs(
     title = "Health Insurance Coverage by Immigration Status (2024)",
-    subtitle = "ACS; Working-age adults 18–64",
+    subtitle = "ACS",
     x = NULL,
     y = NULL,
     fill = NULL,
@@ -317,13 +317,14 @@ ACS_uninsured_trend = ggplot(uninsured_trend, aes(x = as.numeric(year), y = unin
   scale_y_continuous(
     labels = scales::percent,
     breaks = seq(0, 1, by = 0.05),
+    limits = c(0, 0.65),
     expand = c(0.02, 0)) +
   geom_vline(xintercept = 2014, linetype = "dashed", color = "gray50", linewidth = 0.5) +
   annotate("text", x = 2014.1, y = 0.55, label = "ACA (2014)",
            hjust = 0, size = 3, color = "gray50") +
   labs(
     title = "Uninsured Rate by Immigration Status (2010–2024)",
-    subtitle = "ACS; Working-age adults 18–64",
+    subtitle = "ACS",
     x = NULL,
     y = NULL,
     color = NULL,
@@ -380,7 +381,7 @@ ACS_medicaid_trend = ggplot(medicaid_trend, aes(x = as.numeric(year), y = medica
            hjust = 0, size = 3, color = "gray50") +
   labs(
     title = "Medicaid Coverage Rate by Immigration Status (2010–2024)",
-    subtitle = "ACS; Working-age adults 18–64",
+    subtitle = "ACS",
     x = NULL,
     y = NULL,
     color = NULL,
@@ -404,8 +405,7 @@ ACS_medicaid_trend = ggplot(medicaid_trend, aes(x = as.numeric(year), y = medica
     plot.caption.position = "plot",
     plot.title.position = "plot",
     plot.background = element_rect(fill = "white", color = NA),
-    panel.background = element_rect(fill = "white", color = NA)
-  )
+    panel.background = element_rect(fill = "white", color = NA))
 
 ggsave("results/ACS_medicaid_trend.png", ACS_medicaid_trend, width = 10, height = 6)
 
@@ -433,11 +433,11 @@ ACS_esi_trend = ggplot(esi_trend, aes(x = as.numeric(year), y = esi_rate, color 
     breaks = seq(0, 1, by = 0.05),
     expand = c(0.02, 0)) +
   geom_vline(xintercept = 2014, linetype = "dashed", color = "gray50", linewidth = 0.5) +
-  annotate("text", x = 2014, y = 0.55, label = "ACA (2014)",
+  annotate("text", x = 2014, y = 0.45, label = "ACA (2014)",
            hjust = 0, size = 3, color = "gray50") +
   labs(
     title = "Employer-Sponsored Coverage Rate by Immigration Status (2010–2024)",
-    subtitle = "ACS; Working-age adults 18–64",
+    subtitle = "ACS",
     x = NULL,
     y = NULL,
     color = NULL,
@@ -481,7 +481,7 @@ ACS_uninsured2 = ggplot(uninsured2, aes(x = as.numeric(year), y = uninsured_rate
   geom_point(size = 2) +
   scale_color_manual(values = c(
     "Native-born"    = "#3043B4",
-    "All immigrants" = "#C97703")) +
+    "Immigrants" = "#C97703")) +
   scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
   scale_y_continuous(
     labels = scales::percent,
@@ -492,7 +492,7 @@ ACS_uninsured2 = ggplot(uninsured2, aes(x = as.numeric(year), y = uninsured_rate
            hjust = 0, size = 3, color = "gray50") +
   labs(
     title = "Uninsured Rate: Native-Born vs All Immigrants (2010–2024)",
-    subtitle = "ACS; Working-age adults 18–64",
+    subtitle = "ACS",
     x = NULL,
     y = NULL,
     color = NULL,
@@ -520,9 +520,10 @@ ACS_uninsured2 = ggplot(uninsured2, aes(x = as.numeric(year), y = uninsured_rate
 
 ggsave("results/ACS_uninsured2.png", ACS_uninsured2, width = 10, height = 6)
 
+# medicaid, all immigrants vs. native- born
 medicaid2 = acsdata %>%
   mutate(
-    group    = ifelse(as.character(immig_status) == "Native-born", "Native-born", "All immigrants"),
+    group    = ifelse(as.character(immig_status) == "Native-born", "Native-born", "Immigrants"),
     medicaid = ifelse(hinscaid == 2, perwt, 0)) %>%
   group_by(year, group) %>%
   summarise(
@@ -536,18 +537,18 @@ ACS_medicaid2 = ggplot(medicaid2, aes(x = as.numeric(year), y = medicaid_rate, c
   geom_point(size = 2) +
   scale_color_manual(values = c(
     "Native-born"    = "#3043B4",
-    "All immigrants" = "#C97703")) +
+    "Immigrants" = "#C97703")) +
   scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
   scale_y_continuous(
     labels = scales::percent,
     breaks = seq(0, 1, by = 0.05),
     expand = c(0.02, 0)) +
   geom_vline(xintercept = 2014, linetype = "dashed", color = "gray50", linewidth = 0.5) +
-  annotate("text", x = 2014.1, y = 0.20, label = "ACA (2014)",
+  annotate("text", x = 2014.1, y = 0.19, label = "ACA (2014)",
            hjust = 0, size = 3, color = "gray50") +
   labs(
     title = "Medicaid Rate: Native-Born vs All Immigrants (2010–2024)",
-    subtitle = "ACS; Working-age adults 18–64",
+    subtitle = "ACS",
     x = NULL,
     y = NULL,
     color = NULL,
