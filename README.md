@@ -66,7 +66,7 @@ As of 2024, seven states and DC have expanded coverage to income-eligible adults
 | Vermont | 2015 |
 
 ## California
-![california population](results/ACA_CA_population.png)
-![california uninsured](results/ACA_CA_uninsured.png)
-![california medicaid](results/ACA_CA_medicaid.png)
+![california population](results/ACS_CA_population.png)
+![california uninsured](results/ACS_CA_uninsured.png)
+![california medicaid](results/ACS_CA_medicaid.png)
 ![california medicaid age](results/CA_medicaid_age_trend.png)

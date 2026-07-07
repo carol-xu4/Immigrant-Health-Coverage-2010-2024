@@ -945,4 +945,6 @@ CA_medicaid_age_trend = ggplot(ca_medicaid_age_trend, aes(x = as.numeric(year), 
 
 ggsave("results/CA_medicaid_age_trend.png", CA_medicaid_age_trend, width = 10, height = 6)
 
-
+# removing california
+acs_noca = acsdata %>%
+  filter(statefip != 6)
