@@ -911,9 +911,9 @@ CA_medicaid_age_trend = ggplot(ca_medicaid_age_trend, aes(x = as.numeric(year), 
   geom_vline(xintercept = 2016, linetype = "dashed", color = "gray50", linewidth = 0.5) +
   geom_vline(xintercept = 2020, linetype = "dashed", color = "gray50", linewidth = 0.5) +
   geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
-  annotate("text", x = 2014.1, y = 58, label = "ACA",          hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2014.1, y = 55, label = "ACA",          hjust = 0, size = 3, color = "gray50") +
   annotate("text", x = 2016.1, y = 55, label = "Medi-Cal <19", hjust = 0, size = 3, color = "gray50") +
-  annotate("text", x = 2020.1, y = 58, label = "Medi-Cal <26", hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2020.1, y = 55, label = "Medi-Cal <26", hjust = 0, size = 3, color = "gray50") +
   annotate("text", x = 2022.1, y = 55, label = "Medi-Cal 50+", hjust = 0, size = 3, color = "gray50") +
   labs(
     title = "Median Age of Medicaid Enrollees by Immigration Status — California (2010–2024)",
@@ -962,9 +962,6 @@ NOCA_medicaid_age_trend = ggplot(acs_noca, aes(x = as.numeric(year), y = median_
     "Undocumented"        = "#C97703")) +
   scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
   scale_y_continuous(breaks = seq(0, 80, by = 5), expand = c(0.02, 0), limits = c(10, 60)) +
-  geom_vline(xintercept = 2014, linetype = "dashed", color = "gray50", linewidth = 0.5) +
-  annotate("text", x = 2014.1, y = 58, label = "ACA (2014)",
-           hjust = 0, size = 3, color = "gray50") +
   labs(
     title = "Median Age of Medicaid Enrollees by Immigration Status (2010–2024)",
     subtitle = "ACS; excluding California",
