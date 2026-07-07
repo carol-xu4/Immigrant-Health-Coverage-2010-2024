@@ -7,7 +7,6 @@
 # Health Coverage (ACS)
 [Table, All Years](results/coverage_counts_year.csv)
 
-### 2024 vs. 2010
 ![Coverage by immigration status, 2024](results/ACS_coverage_2024.png) 
 ![Coverage by immigration status, all years](results/ACS_coverage_animated.gif) 
 

@@ -1049,16 +1049,16 @@ ACS_undoc_uninsured_expansion = ggplot(uninsured_expansion,
     geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2023, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2024, linetype = "dashed", color = "gray50", linewidth = 0.5) +
-    annotate("text", x = 2016.1, y = 0.60, label = "CA <19",                hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2020.1, y = 0.60, label = "CA <26",                hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2022.1, y = 0.60, label = "CA 50+",                hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2022.1, y = 0.55, label = "OR",                    hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2022.1, y = 0.50, label = "IL 42+",                hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2023.1, y = 0.60, label = "CO",                    hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2024.1, y = 0.60, label = "CA",                    hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2024.1, y = 0.55, label = "MN",                    hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2024.1, y = 0.50, label = "WA",                    hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2024.1, y = 0.45, label = "NY 65+",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2016.1, y = 0.61, label = "CA <19",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2020.1, y = 0.61, label = "CA <26",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2022.1, y = 0.61, label = "CA 50+",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2022.1, y = 0.56, label = "OR",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2022.1, y = 0.51, label = "IL 42+",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2023.1, y = 0.61, label = "CO",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.61, label = "CA",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.56, label = "MN",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.51, label = "WA",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.46, label = "NY 65+",                hjust = 0, size = 2.8, color = "gray50") +
   labs(
     title = "Uninsured Rate for Undocumented Immigrants (2010–2024)",
     subtitle = "Expansion states: California, Oregon, Illinois, New York, Colorado, Washington, Minnesota, DC",
@@ -1116,16 +1116,16 @@ ACS_undoc_medicaid_expansion = ggplot(medicaid_expansion,
     geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2023, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2024, linetype = "dashed", color = "gray50", linewidth = 0.5) +
-    annotate("text", x = 2016.1, y = 0.32, label = "CA <19",                hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2020.1, y = 0.30, label = "CA <26",                hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2022.1, y = 0.30, label = "CA 50+",                hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2022.1, y = 0.23, label = "OR",                    hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2022.1, y = 0.20, label = "IL 42+",                hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2023.1, y = 0.30, label = "CO",                    hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2024.1, y = 0.30, label = "CA",                    hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2024.1, y = 0.25, label = "MN",                    hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2024.1, y = 0.20, label = "WA",                    hjust = 0, size = 2.8, color = "gray50") +
-    annotate("text", x = 2024.1, y = 0.15, label = "NY 65+",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2016.1, y = 0.33, label = "CA <19",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2020.1, y = 0.31, label = "CA <26",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2022.1, y = 0.31, label = "CA 50+",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2022.1, y = 0.24, label = "OR",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2022.1, y = 0.21, label = "IL 42+",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2023.1, y = 0.31, label = "CO",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.31, label = "CA",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.26, label = "MN",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.21, label = "WA",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.16, label = "NY 65+",                hjust = 0, size = 2.8, color = "gray50") +
   labs(
     title = "Medicaid Rate for Undocumented Immigrants (2010–2024)",
     subtitle = "Expansion states: California, Oregon, Illinois, New York, Colorado, Washington, Minnesota, DC",
