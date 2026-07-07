@@ -857,9 +857,9 @@ ACS_CA_medicaid = ggplot(ca_medicaid,
   geom_vline(xintercept = 2016, linetype = "dashed", color = "gray50", linewidth = 0.5) +
   geom_vline(xintercept = 2020, linetype = "dashed", color = "gray50", linewidth = 0.5) +
   geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
-  annotate("text", x = 2014.1, y = 0.55, label = "ACA (2014)",       hjust = 0, size = 3, color = "gray50") +
-  annotate("text", x = 2016.1, y = 0.55, label = "Medi-Cal <19",     hjust = 0, size = 3, color = "gray50") +
-  annotate("text", x = 2020.1, y = 0.50, label = "Medi-Cal <26",     hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2014.1, y = 0.45, label = "ACA (2014)",       hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2016.1, y = 0.45, label = "Medi-Cal <19",     hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2020.1, y = 0.45, label = "Medi-Cal <26",     hjust = 0, size = 3, color = "gray50") +
   annotate("text", x = 2022.1, y = 0.45, label = "Medi-Cal 50+",     hjust = 0, size = 3, color = "gray50") +
   labs(
     title = "Medicaid Rate by Immigration Status — California (2010–2024)",
@@ -991,3 +991,167 @@ NOCA_medicaid_age_trend = ggplot(acs_noca, aes(x = as.numeric(year), y = median_
     panel.background = element_rect(fill = "white", color = NA))
 
 ggsave("results/NOCA_medicaid_age_trend.png", NOCA_medicaid_age_trend, width = 10, height = 6)
+
+### Expansion states
+acsdata = acsdata %>%
+  mutate(expansion_state = case_when(
+    # California — phased expansion
+    statefip == 6  & year >= 2016 & age <= 18                        ~ 1,  # children under 19
+    statefip == 6  & year >= 2020 & age <= 25                        ~ 1,  # young adults under 26
+    statefip == 6  & year >= 2022 & age >= 50                        ~ 1,  # adults 50+
+    statefip == 6  & year >= 2024 & age >= 26 & age <= 49            ~ 1,  # all adults 26-49
+    # Oregon — full expansion all ages
+    statefip == 41 & year >= 2022                                     ~ 1,
+    # Illinois — adults 42+
+    statefip == 17 & year >= 2022 & age >= 42                        ~ 1,
+    # New York — adults 65+
+    statefip == 36 & year >= 2024 & age >= 65                        ~ 1,
+    # Colorado — adults 
+    statefip == 8  & year >= 2023                                     ~ 1,
+    # Washington — adults 
+    statefip == 53 & year >= 2024                                     ~ 1,
+    # Minnesota — adults
+    statefip == 27 & year >= 2024                                     ~ 1,
+    # DC — all residents all ages
+    statefip == 11                                                    ~ 1,
+    TRUE ~ 0 )) %>%
+  mutate(expansion_label = ifelse(expansion_state == 1,
+                                  "Expansion state",
+                                  "Non-expansion state"))
+
+undoc_expansion = acsdata %>%
+  filter(immig_status == "Undocumented")
+
+uninsured_expansion = undoc_expansion %>%
+  mutate(uninsured = ifelse(hcovany ==1, perwt, 0)) %>%
+  group_by(year, expansion_label) %>%
+  summarise(total_pop = sum(perwt, na.rm = TRUE),
+            uninsured = sum(uninsured, na.rm = TRUE),
+            .groups = "drop") %>%
+  mutate(uninsured_rate = uninsured / total_pop)
+
+ACS_undoc_uninsured_expansion = ggplot(uninsured_expansion,
+  aes(x = as.numeric(year), y = uninsured_rate,
+        color = expansion_label)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_color_manual(values = c(
+    "Expansion state"     = "#C97703",
+    "Non-expansion state" = "#3043B4")) +
+  scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = scales::percent,
+    breaks = seq(0, 1, by = 0.05),
+    limits = c(0.05, 0.65),
+    expand = c(0.02, 0)) +
+    geom_vline(xintercept = 2016, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+    geom_vline(xintercept = 2020, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+    geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+    geom_vline(xintercept = 2023, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+    geom_vline(xintercept = 2024, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+    annotate("text", x = 2016.1, y = 0.60, label = "CA <19",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2020.1, y = 0.60, label = "CA <26",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2022.1, y = 0.60, label = "CA 50+",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2022.1, y = 0.55, label = "OR",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2022.1, y = 0.50, label = "IL 42+",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2023.1, y = 0.60, label = "CO",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.60, label = "CA",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.55, label = "MN",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.50, label = "WA",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.45, label = "NY 65+",                hjust = 0, size = 2.8, color = "gray50") +
+  labs(
+    title = "Uninsured Rate for Undocumented Immigrants (2010–2024)",
+    subtitle = "Expansion states: California, Oregon, Illinois, New York, Colorado, Washington, Minnesota, DC",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS PUMS via IPUMS, authors' calculations") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 10),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 10, color = "gray40"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/ACS_undoc_uninsured_expansion.png", width = 10, height = 6)
+
+# Medicaid rates, expansion states
+medicaid_expansion = undoc_expansion %>%
+  mutate(medicaid = ifelse(hinscaid ==2, perwt, 0)) %>%
+  group_by(year, expansion_label) %>%
+  summarise(total_pop = sum(perwt, na.rm = TRUE),
+            medicaid = sum(medicaid, na.rm = TRUE),
+            .groups = "drop") %>% 
+  mutate(medicaid_rate = medicaid / total_pop)
+
+ACS_undoc_medicaid_expansion = ggplot(medicaid_expansion, 
+  aes(x = as.numeric(year), y = medicaid_rate, color = expansion_label)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_color_manual(values = c(
+    "Expansion state"     = "#C97703",
+    "Non-expansion state" = "#3043B4")) +
+  scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = scales::percent,
+    breaks = seq(0, 1, by = 0.05),
+    limits = c(0, 0.35),
+    expand = c(0.02, 0)) +
+    geom_vline(xintercept = 2016, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+    geom_vline(xintercept = 2020, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+    geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+    geom_vline(xintercept = 2023, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+    geom_vline(xintercept = 2024, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+    annotate("text", x = 2016.1, y = 0.32, label = "CA <19",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2020.1, y = 0.30, label = "CA <26",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2022.1, y = 0.30, label = "CA 50+",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2022.1, y = 0.23, label = "OR",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2022.1, y = 0.20, label = "IL 42+",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2023.1, y = 0.30, label = "CO",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.30, label = "CA",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.25, label = "MN",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.20, label = "WA",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2024.1, y = 0.15, label = "NY 65+",                hjust = 0, size = 2.8, color = "gray50") +
+  labs(
+    title = "Medicaid Rate for Undocumented Immigrants (2010–2024)",
+    subtitle = "Expansion states: California, Oregon, Illinois, New York, Colorado, Washington, Minnesota, DC",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS PUMS via IPUMS, authors' calculations") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 10),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 10, color = "gray40"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/ACS_undoc_medicaid_expansion.png", width = 10, height = 6)

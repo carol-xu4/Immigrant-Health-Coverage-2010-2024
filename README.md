@@ -65,6 +65,10 @@ As of 2024, seven states and DC have expanded coverage to income-eligible adults
 | Utah | 2017 |
 | Vermont | 2015 |
 
+# Expanded States
+![Uninsured rate for undocumented immigrants, by expansion](results/ACS_undoc_uninsured_expansion.png)
+![medicaid rate for undocumented immigrants, by expansion](results/ACS_undoc_medicaid_expansion.png)
+
 ## California
 ![california population](results/ACS_CA_population.png)
 ![california uninsured](results/ACS_CA_uninsured.png)
