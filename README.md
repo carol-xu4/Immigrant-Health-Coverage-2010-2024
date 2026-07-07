@@ -70,6 +70,7 @@ As of 2024, seven states and DC have expanded coverage to income-eligible adults
 ![california uninsured](results/ACS_CA_uninsured.png)
 ![california medicaid](results/ACS_CA_medicaid.png)
 ![california medicaid age](results/CA_medicaid_age_trend.png)
+![california age density](results/CA_age_density.gif)
 
 ### Median Age of Medicaid Enrollees, EXCLUDING CALIFORNIA
 ![noca median age medicaid](results/NOCA_medicaid_age_trend.png)
