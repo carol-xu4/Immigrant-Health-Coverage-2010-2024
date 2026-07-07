@@ -234,3 +234,70 @@ animate(CA_age_density_gif,
         width     = 1000,
         height    = 600,
         renderer  = gifski_renderer("results/CA_age_density.gif"))
+
+# Coverage rates for all immigration status
+coverage_all <- coverage_counts %>%
+  group_by(year, immig_status) %>%
+  mutate(rate = population / sum(population)) %>%
+  ungroup() %>%
+  mutate(coverage_type = factor(coverage_type, levels = c(
+    "Employer-sponsored",
+    "Direct purchase",
+    "Medicaid",
+    "Medicare",
+    "Other public",
+    "Uninsured",
+    "Unknown"
+  )))
+
+ACS_coverage_gif <- ggplot(coverage_all, aes(x = immig_status, y = rate, fill = coverage_type)) +
+  geom_bar(stat = "identity") +
+  scale_y_continuous(
+    labels = scales::percent,
+    breaks = seq(0, 1, by = 0.1)
+  ) +
+  scale_fill_manual(values = c(
+    "Employer-sponsored" = "#3043B4",
+    "Direct purchase"    = "#7C756D",
+    "Medicaid"           = "#C97703",
+    "Medicare"           = "#0D0E51",
+    "Other public"       = "#6B8E23",
+    "Uninsured"          = "#C0392B",
+    "Unknown"            = "gray80"
+  )) +
+  labs(
+    title = "Health Insurance Coverage by Immigration Status — {closest_state}",
+    subtitle = "ACS",
+    x = NULL,
+    y = NULL,
+    fill = NULL,
+    caption = "Source: ACS PUMS via IPUMS"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "bottom",
+    legend.text = element_text(size = 10),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 11, color = "black"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  ) +
+  transition_states(year, transition_length = 2, state_length = 1) +
+  ease_aes("cubic-in-out")
+
+animate(ACS_coverage_gif,
+        nframes   = 75,
+        fps       = 10,
+        width     = 1000,
+        height    = 600,
+        renderer  = gifski_renderer("results/ACS_coverage_animated.gif"))

@@ -9,7 +9,7 @@
 
 ### 2024 vs. 2010
 ![Coverage by immigration status, 2024](results/ACS_coverage_2024.png) 
-![Coverage by immigration status, 2010](results/ACS_coverage_2010.png) 
+![Coverage by immigration status, all years](results/ACS_coverage_animated.gif) 
 
 ![Coverage by immigration status (grouped)](results/ACS_coverage_2024_grouped.png)
 ![Native-born vs all immigrants](results/ACS_coverage_2024_COMBINED.png)
@@ -65,7 +65,7 @@ As of 2024, seven states and DC have expanded coverage to income-eligible adults
 | Utah | 2017 |
 | Vermont | 2015 |
 
-# Expanded States
+## States with Coverage Expansions, Regardless of Immigration Status
 ![Uninsured rate for undocumented immigrants, by expansion](results/ACS_undoc_uninsured_expansion.png)
 ![medicaid rate for undocumented immigrants, by expansion](results/ACS_undoc_medicaid_expansion.png)
 
