@@ -802,7 +802,7 @@ ACS_CA_uninsured = ggplot(ca_uninsured,
   annotate("text", x = 2022.1, y = 0.45, label = "Medi-Cal 50+",     hjust = 0, size = 3, color = "gray50") +
   labs(
     title = "Uninsured Rate by Immigration Status — California (2010–2024)",
-    subtitle = "ACS; all ages",
+    subtitle = "ACS",
     x = NULL,
     y = NULL,
     color = NULL,
@@ -838,3 +838,109 @@ ca_medicaid = acs_ca %>%
     medicaid      = sum(medicaid, na.rm = TRUE),
     .groups = "drop") %>%
   mutate(medicaid_rate = medicaid / total_pop)
+
+ACS_CA_medicaid = ggplot(ca_medicaid,
+                           aes(x = as.numeric(year), y = medicaid_rate, color = immig_status)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_color_manual(values = c(
+    "Native-born"         = "#3043B4",
+    "Naturalized citizen" = "#0D0E51",
+    "Legal immigrant"     = "#7C756D",
+    "Undocumented"        = "#C97703")) +
+  scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = scales::percent,
+    breaks = seq(0, 1, by = 0.05),
+    expand = c(0.02, 0)) +
+  geom_vline(xintercept = 2014, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  geom_vline(xintercept = 2016, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  geom_vline(xintercept = 2020, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  annotate("text", x = 2014.1, y = 0.55, label = "ACA (2014)",       hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2016.1, y = 0.55, label = "Medi-Cal <19",     hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2020.1, y = 0.50, label = "Medi-Cal <26",     hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2022.1, y = 0.45, label = "Medi-Cal 50+",     hjust = 0, size = 3, color = "gray50") +
+  labs(
+    title = "Medicaid Rate by Immigration Status — California (2010–2024)",
+    subtitle = "ACS",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 10),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 10, color = "gray40"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/ACS_CA_medicaid.png", width = 10, height = 6)
+
+ca_medicaid_age_trend = acsdata %>%
+  filter(hinscaid == 2, statefip == 6) %>%
+  group_by(year, immig_status) %>%
+  summarise(median_age = weightedMedian(age, w = perwt, na.rm = TRUE), 
+    .groups = "drop")
+
+CA_medicaid_age_trend = ggplot(ca_medicaid_age_trend, aes(x = as.numeric(year), y = median_age, color = immig_status)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_color_manual(values = c(
+    "Native-born"         = "#3043B4",
+    "Naturalized citizen" = "#0D0E51",
+    "Legal immigrant"     = "#7C756D",
+    "Undocumented"        = "#C97703")) +
+  scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
+  scale_y_continuous(breaks = seq(0, 80, by = 5), expand = c(0.02, 0), limits = c(10, 65)) +
+  geom_vline(xintercept = 2014, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  geom_vline(xintercept = 2016, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  geom_vline(xintercept = 2020, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  annotate("text", x = 2014.1, y = 58, label = "ACA",          hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2016.1, y = 55, label = "Medi-Cal <19", hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2020.1, y = 58, label = "Medi-Cal <26", hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2022.1, y = 55, label = "Medi-Cal 50+", hjust = 0, size = 3, color = "gray50") +
+  labs(
+    title = "Median Age of Medicaid Enrollees by Immigration Status — California (2010–2024)",
+    subtitle = "ACS",
+    x = NULL,
+    y = "Median age",
+    color = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 10),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 10, color = "gray40"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/CA_medicaid_age_trend.png", CA_medicaid_age_trend, width = 10, height = 6)
