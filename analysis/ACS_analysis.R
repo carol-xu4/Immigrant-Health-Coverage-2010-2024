@@ -724,3 +724,117 @@ ggsave("results/ACS_medicaid_age_trend.png", ACS_medicaid_age_trend, width = 10,
 acs_ca = acsdata %>%
   filter(statefip == 6)
 
+ca_immig_counts = acs_ca %>%
+  group_by(year, immig_status) %>%
+  summarise( 
+    n = n(), population = sum(perwt, na.rm = TRUE), .groups = "drop")
+
+ACS_population = ggplot(ca_immig_counts, aes(x = as.numeric(year), y = population / 1e6, color = immig_status)) +
+  geom_line(linewidth = 1.8) +
+  scale_color_manual(values = colors) +
+  scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    breaks = seq(0, 30, by = 5),
+    labels = function(x) paste0(x, "M"),
+    limits = c(0, 30),
+    expand = c(0.02, 0)) +
+  labs(
+    title = "California Population by Immigration Status (2010-2024)",
+    subtitle = "ACS",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/ACS_CA_population.png", width = 15, height = 10)
+
+ca_uninsured = acs_ca %>%
+  mutate(uninsured = ifelse(hcovany == 1, perwt, 0)) %>%
+  group_by(year, immig_status) %>%
+  summarise(
+    total_pop      = sum(perwt, na.rm = TRUE),
+    uninsured      = sum(uninsured, na.rm = TRUE),
+    .groups = "drop") %>%
+  mutate(uninsured_rate = uninsured / total_pop)
+
+ACS_CA_uninsured = ggplot(ca_uninsured, 
+                            aes(x = as.numeric(year), y = uninsured_rate, color = immig_status)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_color_manual(values = c(
+    "Native-born"         = "#3043B4",
+    "Naturalized citizen" = "#0D0E51",
+    "Legal immigrant"     = "#7C756D",
+    "Undocumented"        = "#C97703")) +
+  scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = scales::percent,
+    breaks = seq(0, 1, by = 0.05),
+    expand = c(0.02, 0)) +
+  geom_vline(xintercept = 2014, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  geom_vline(xintercept = 2016, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  geom_vline(xintercept = 2020, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  annotate("text", x = 2014.1, y = 0.55, label = "ACA (2014)",       hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2016.1, y = 0.55, label = "Medi-Cal <19",     hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2020.1, y = 0.50, label = "Medi-Cal <26",     hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 2022.1, y = 0.45, label = "Medi-Cal 50+",     hjust = 0, size = 3, color = "gray50") +
+  labs(
+    title = "Uninsured Rate by Immigration Status — California (2010–2024)",
+    subtitle = "ACS; all ages",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 10),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 10, color = "gray40"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/ACS_CA_uninsured.png", width = 10, height = 6)
+
+ca_medicaid = acs_ca %>%
+  mutate(medicaid = ifelse(hinscaid == 2, perwt, 0)) %>%
+  group_by(year, immig_status) %>%
+  summarise(
+    total_pop     = sum(perwt, na.rm = TRUE),
+    medicaid      = sum(medicaid, na.rm = TRUE),
+    .groups = "drop") %>%
+  mutate(medicaid_rate = medicaid / total_pop)

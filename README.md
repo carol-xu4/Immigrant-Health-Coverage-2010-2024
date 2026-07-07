@@ -27,7 +27,7 @@
 ![ESI rates by immigration status over time](results/ACS_esi_trend.png)
 
 ## State Health Coverage Expansions for Undocumented Immigrants
-As of March 2024, six states and DC have expanded coverage to income-eligible adults regardless of immigration status: California, Colorado, Illinois, New York, Oregon, Washington, and DC. 
+As of 2024, seven states and DC have expanded coverage to income-eligible adults regardless of immigration status: California, Colorado, Illinois, New York, Oregon, Washington, and DC. 
 
 ## Age
 ![Age density 2024, all immigrants vs native born](results/ACS_age_density2024.png)
@@ -64,3 +64,7 @@ As of March 2024, six states and DC have expanded coverage to income-eligible ad
 | Rhode Island | 2007 |
 | Utah | 2017 |
 | Vermont | 2015 |
+
+## California
+![](results/ACA_CA_population.png)
+![](results/ACA_CA_uninsured.png)
