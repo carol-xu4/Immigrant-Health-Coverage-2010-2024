@@ -313,6 +313,8 @@ medicaid_age = acsdata %>%
         .groups = "drop") %>%
     mutate(medicaid_rate = medicaid / total_pop)
 
+write_csv(medicaid_age, "results/ACS_medicaid_age.csv")
+
 ACS_medicaid_age_gif <- ggplot(medicaid_age,
                                 aes(x = age, y = medicaid_rate, color = immig_status)) +
   geom_line(linewidth = 1.2) +
