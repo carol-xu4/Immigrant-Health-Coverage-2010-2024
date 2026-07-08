@@ -371,3 +371,80 @@ animate(ACS_medicaid_age_gif,
         height    = 600,
         res       = 100,
         renderer  = gifski_renderer("results/ACS_medicaid_age_animated.gif"))
+
+# California medicaid rate by age over time
+# california only
+ca_medicaid_age <- acsdata %>%
+  filter(statefip == 6) %>%
+  mutate(medicaid = ifelse(hinscaid == 2, perwt, 0)) %>%
+  group_by(year, immig_status, age) %>%
+  summarise(
+    total_pop     = sum(perwt, na.rm = TRUE),
+    medicaid      = sum(medicaid, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  mutate(medicaid_rate = medicaid / total_pop)
+
+CA_medicaid_age_gif <- ggplot(ca_medicaid_age,
+                               aes(x = age, y = medicaid_rate, color = immig_status)) +
+  geom_line(linewidth = 1.2) +
+  scale_color_manual(values = c(
+    "Native-born"         = "#3043B4",
+    "Naturalized citizen" = "#0D0E51",
+    "Legal immigrant"     = "#7C756D",
+    "Undocumented"        = "#C97703"
+  )) +
+  scale_x_continuous(breaks = seq(0, 85, by = 10), limits = c(0, 85), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = scales::percent,
+    breaks = seq(0, 1, by = 0.10),
+    expand = c(0.02, 0)
+  ) +
+  geom_vline(xintercept = 18, linetype = "dashed", color = "gray70", linewidth = 0.5) +
+  geom_vline(xintercept = 50, linetype = "dashed", color = "gray70", linewidth = 0.5) +
+  geom_vline(xintercept = 65, linetype = "dashed", color = "gray70", linewidth = 0.5) +
+  annotate("text", x = 18.5, y = 0.95, label = "Age 18",
+           hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 50.5, y = 0.95, label = "Age 50 (Medi-Cal)",
+           hjust = 0, size = 3, color = "gray50") +
+  annotate("text", x = 65.5, y = 0.95, label = "Age 65",
+           hjust = 0, size = 3, color = "gray50") +
+  labs(
+    title = "Medicaid Rate by Age and Immigration Status — California ({closest_state})",
+    subtitle = "ACS",
+    x = "Age",
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS PUMS via IPUMS, authors' calculations"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 10),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 10, color = "gray40"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)
+  ) +
+  transition_states(year, transition_length = 2, state_length = 1) +
+  ease_aes("cubic-in-out")
+
+animate(CA_medicaid_age_gif,
+        nframes   = 75,
+        fps       = 10,
+        width     = 1000,
+        height    = 600,
+        res       = 100,
+        renderer  = gifski_renderer("results/CA_medicaid_age_animated.gif"))

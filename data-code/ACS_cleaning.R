@@ -36,10 +36,32 @@ acs = acs %>%
     immigrant == 1 & incwelfr > 0 & incwelfr < 99999 ~ 2,
     immigrant == 1 & hinscare == 2 ~ 2,
     immigrant == 1 & hinscaid == 2 &
-      !(statefip == 6 & ((year >= 2016 & age <= 19) | (year >= 2020 & age <= 26) | (year >= 2022 & age >= 50))) &
+      # california — phased expansion
+      !(statefip == 6 & ((year >= 2016 & age <= 18) | (year >= 2020 & age <= 25) | (year >= 2022 & age >= 50) | (year >= 2024 & age >= 26 & age <= 49))) &
+      # dc — all residents all ages all years
       !(statefip == 11) &
-      !(statefip == 17 & ((year >= 2020 & age >= 65) | (year >= 2022 & age >= 42))) &
-      !(statefip == 41 & ((year >= 2012 & age <= 19) | (year >= 2022 & (age <= 25 | age >= 55)))) ~ 2,
+      # illinois — children 2006, adults 42+ 2022
+      !(statefip == 17 & ((year >= 2006 & age <= 18) | (year >= 2022 & age >= 42))) &
+      # washington — children 2007, adults 2024
+      !(statefip == 53 & ((year >= 2007 & age <= 18) | (year >= 2024))) &
+      # new york — children 2014, adults 65+ 2024
+      !(statefip == 36 & ((year >= 2014 & age <= 18) | (year >= 2024 & age >= 65))) &
+      # oregon — children 2018, full expansion 2022
+      !(statefip == 41 & ((year >= 2018 & age <= 18) | (year >= 2022))) &
+      # new jersey — children 2018
+      !(statefip == 34 & year >= 2018 & age <= 18) &
+      # connecticut — children under 15, 2010
+      !(statefip == 9  & year >= 2010 & age <= 14) &
+      # rhode island — children 2022
+      !(statefip == 44 & year >= 2022 & age <= 18) &
+      # maine — children 2022
+      !(statefip == 23 & year >= 2022 & age <= 18) &
+      # vermont — children 2022
+      !(statefip == 50 & year >= 2022 & age <= 18) &
+      # colorado — adults 2023
+      !(statefip == 8  & year >= 2023) &
+     # minnesota — adults 2024
+      !(statefip == 27 & year >= 2024) ~ 2,
     immigrant == 1 & vetstat == 2 ~ 2,
     immigrant == 1 & classwkrd == 26 ~ 2,
     immigrant == 1 & bpld == 25000 & yrimmig < 2017 ~ 2,

@@ -2,7 +2,7 @@
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, ggthemes, readxl, data.table, gdata, ipumsr, matrixStats)
 
-# Set working directory -----------------------------------------------------
+# Set working directory
 setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Coverage 2010-2024")
 
 # ACS data ------------------------------------------------------------------
@@ -74,7 +74,7 @@ ACS_population = ggplot(immig_counts, aes(x = as.numeric(year), y = population /
 
 ggsave("results/ACS_population.png", width = 15, height = 10)
 
-# health coverage
+# HEALTH COVERAGE ------------------------------------------------------------------------
 coverage_counts = acsdata %>%
   mutate(
     coverage_type = case_when(
@@ -300,7 +300,7 @@ ACS_coverage_2024_COMBINED = ggplot(coverage_2024_COMBINED, aes(x = group, y = r
 
 ggsave("results/ACS_coverage_2024_COMBINED.png", ACS_coverage_2024_COMBINED, width = 8, height = 6)
 
-# Uninsured rate by immigration status, over time
+# UNINSURED & MEDICAID RATES ---------------------------------------------------------
 uninsured_trend = acsdata %>%
   mutate(uninsured = ifelse(hcovany == 1, perwt, 0)) %>%
   group_by(year, immig_status) %>%
@@ -414,7 +414,7 @@ ACS_medicaid_trend = ggplot(medicaid_trend, aes(x = as.numeric(year), y = medica
 
 ggsave("results/ACS_medicaid_trend.png", ACS_medicaid_trend, width = 10, height = 6)
 
-# ESI coverage rates
+# EMPLOYER-SPONSORED INSURANCE -----------------------------------------------------------------------------
 esi_trend = acsdata %>%
   mutate(esi = ifelse(hinsemp == 2, perwt, 0)) %>%
   group_by(year, immig_status) %>%
@@ -582,7 +582,7 @@ ACS_medicaid2 = ggplot(medicaid2, aes(x = as.numeric(year), y = medicaid_rate, c
 
 ggsave("results/ACS_medicaid2.png", ACS_medicaid2, width = 10, height = 6)
 
-## AGE
+## AGE -------------------------------------------------------------------------------
 age_medicaid2024 = acsdata %>%
     filter(year == 2024, hinscaid ==2) %>%
     mutate(group = ifelse(as.character(immig_status) == "Native-born", "Native-born", "Immigrants"))   
@@ -725,7 +725,7 @@ ACS_medicaid_age_trend = ggplot(medicaid_age_trend, aes(x = as.numeric(year), y 
 
 ggsave("results/ACS_medicaid_age_trend.png", ACS_medicaid_age_trend, width = 10, height = 6)
 
-### CALIFORNIA
+# CALIFORNIA --------------------------------------------------------------------
 acs_ca = acsdata %>%
   filter(statefip == 6)
 
@@ -997,7 +997,7 @@ NOCA_medicaid_age_trend = ggplot(acs_noca, aes(x = as.numeric(year), y = median_
 
 ggsave("results/NOCA_medicaid_age_trend.png", NOCA_medicaid_age_trend, width = 10, height = 6)
 
-### Expansion states
+# STATE EXPANSIONS ----------------------------------------------------------------------------
 acsdata = acsdata %>%
   mutate(expansion_state = case_when(
     # California — phased expansion
@@ -1164,3 +1164,5 @@ ACS_undoc_medicaid_expansion = ggplot(medicaid_expansion,
     panel.background = element_rect(fill = "white", color = NA))
 
 ggsave("results/ACS_undoc_medicaid_expansion.png", width = 10, height = 6)
+
+# NEW IMMIGRANTS -----------------------------------------------------------

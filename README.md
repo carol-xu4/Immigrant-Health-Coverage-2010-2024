@@ -49,20 +49,19 @@ As of 2024, seven states and DC have expanded coverage to income-eligible adults
 | DC | Medicaid | All residents | 2010 |
 
 ### Children-Only Coverage Expansions
-| State | Year |
-|-------|------|
-| California | 2016 |
-| Illinois | 2012 |
-| Massachusetts | 2006 |
-| New York | 2001 |
-| Oregon | 2012 |
-| Washington | 2009 |
-| New Jersey | 2018 |
-| Connecticut | 2010 |
-| Maine | 2019 |
-| Rhode Island | 2007 |
-| Utah | 2017 |
-| Vermont | 2015 |
+| State | Year | Age Coverage | Notes |
+|-------|------|-------------|-------|
+| Illinois | 2006 | Under 19 | First state — "All Kids" program |
+| Washington | 2007 | Under 19 | "Apple Health for Kids" |
+| Connecticut | ~2010 | Under 15 | Coverage may continue to 19 if already enrolled |
+| New York | 2014 | Under 19 | Child Health Plus B |
+| California | 2016 | Under 19 | Health4All Kids — subsequently expanded to all ages |
+| New Jersey | 2018 | Under 19 | CHIP infrastructure |
+| Oregon | 2018 | Under 19 | Cover All Kids |
+| Rhode Island | 2022 | Under 19 | Children and pregnant people |
+| Maine | 2022 | Under 19 | |
+| Vermont | 2022 | Under 19 | 
+
 
 ### States with Coverage Expansions, Regardless of Immigration Status
 ![Uninsured rate for undocumented immigrants, by expansion](results/ACS_undoc_uninsured_expansion.png)
