@@ -1,10 +1,8 @@
-# Immigrant Health Coverage
-
 # ACS data (2010-2024)
 
 ![ACS Population Estimates](results/ACS_population.png)
 
-# Health Coverage (ACS)
+## Health Coverage (ACS)
 [Table, All Years](results/coverage_counts_year.csv)
 
 ![Coverage by immigration status, 2024](results/ACS_coverage_2024.png) 
@@ -25,14 +23,15 @@
 ### Employer-Sponsored Insurance
 ![ESI rates by immigration status over time](results/ACS_esi_trend.png)
 
-## State Health Coverage Expansions for Undocumented Immigrants
-As of 2024, seven states and DC have expanded coverage to income-eligible adults regardless of immigration status: California, Colorado, Illinois, New York, Oregon, Washington, and DC. 
-
 ## Age
 ![Age density over time, all immigrants vs native born](results/ACS_age_density.gif)
 ![Age density, immigrant status](results/ACS_age_density_4groups.gif)
 ![Median ages of medicaid enrollees](results/ACS_medicaid_age_trend.png)
 ![Medicaid rates by age and immigration status over time](results/ACS_medicaid_age_animated.gif)
+[Table](results/ACS_medicaid_age.csv)
+
+### State Health Coverage Expansions for Undocumented Immigrants
+As of 2024, seven states and DC have expanded coverage to income-eligible adults regardless of immigration status: California, Colorado, Illinois, New York, Oregon, Washington, and DC. 
 
 ### Adult Coverage Expansions
 | State | Program | Population Covered | Year |
@@ -65,16 +64,15 @@ As of 2024, seven states and DC have expanded coverage to income-eligible adults
 | Utah | 2017 |
 | Vermont | 2015 |
 
-## States with Coverage Expansions, Regardless of Immigration Status
+### States with Coverage Expansions, Regardless of Immigration Status
 ![Uninsured rate for undocumented immigrants, by expansion](results/ACS_undoc_uninsured_expansion.png)
 ![medicaid rate for undocumented immigrants, by expansion](results/ACS_undoc_medicaid_expansion.png)
 
-## California
+### California
 ![california population](results/ACS_CA_population.png)
 ![california uninsured](results/ACS_CA_uninsured.png)
 ![california medicaid](results/ACS_CA_medicaid.png)
 ![california medicaid age](results/CA_medicaid_age_trend.png)
 ![california age density](results/CA_age_density.gif)
-
 ### Median Age of Medicaid Enrollees, EXCLUDING CALIFORNIA
 ![noca median age medicaid](results/NOCA_medicaid_age_trend.png)
