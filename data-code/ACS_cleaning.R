@@ -22,7 +22,33 @@ acs = acs %>%
     hcovany, hcovpriv, hinsemp, hinspur,
     hcovpub, hinscaid, hinscare, hinsva, hinstri)
 
-# residual method 
+# before residual method -----------------------------------------------------
+# medicaid enrollment among non-citizens by state and year
+before_medicaid = acs %>%
+  filter(
+    citizen == 3, 
+    bpl >= 150,    
+    hinscaid == 2) %>%
+  group_by(year, statefip) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop")
+
+write_csv(before_medicaid, "results/before_medicaid.csv")
+
+# total non-citizen foreign born population 
+before_noncitizen_states = acs %>%
+  filter(citizen == 3, bpl >= 150) %>%
+  group_by(year, statefip) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop")
+
+write_csv(before_noncitizen_states, "results/before_noncitizen_states.csv")
+
+# residual method -------------------------------------------------------------
 acs = acs %>%
   mutate(immigrant = ifelse(citizen == 2 |
                             citizen == 3, 1, 0)) %>%
@@ -36,18 +62,16 @@ acs = acs %>%
     immigrant == 1 & incwelfr > 0 & incwelfr < 99999 ~ 2,
     immigrant == 1 & hinscare == 2 ~ 2,
     immigrant == 1 & hinscaid == 2 &
-      # california — phased expansion
+      # california — phased Medi-Cal expansion
       !(statefip == 6 & ((year >= 2016 & age <= 18) | (year >= 2020 & age <= 25) | (year >= 2022 & age >= 50) | (year >= 2024 & age >= 26 & age <= 49))) &
-      # dc — all residents all ages all years
-      !(statefip == 11) &
-      # illinois — children 2006, adults 42+ 2022
-      !(statefip == 17 & ((year >= 2006 & age <= 18) | (year >= 2022 & age >= 42))) &
-      # washington — children 2007, adults 2024
-      !(statefip == 53 & ((year >= 2007 & age <= 18) | (year >= 2024))) &
-      # new york — children 2014, adults 65+ 2024
+      # illinois — All Kids children 2006, HBIS seniors 2020, HBIA adults 42-64 2022
+      !(statefip == 17 & ((year >= 2006 & age <= 18) | (year >= 2020 & age >= 65) | (year >= 2022 & age >= 42 & age <= 64))) &
+      # washington — Apple Health for Kids children 2007 only (adult expansion is marketplace)
+      !(statefip == 53 & year >= 2007 & age <= 18) &
+      # new york — Child Health Plus children 2014, adults 65+ 2024
       !(statefip == 36 & ((year >= 2014 & age <= 18) | (year >= 2024 & age >= 65))) &
-      # oregon — children 2018, full expansion 2022
-      !(statefip == 41 & ((year >= 2018 & age <= 18) | (year >= 2022))) &
+      # oregon — Cover All Kids children 2018, phase 1 ages 19-25/55+ 2022, full expansion 2023
+      !(statefip == 41 & ((year >= 2018 & age <= 18) | (year == 2022 & (age <= 25 | age >= 55)) | (year >= 2023))) &
       # new jersey — children 2018
       !(statefip == 34 & year >= 2018 & age <= 18) &
       # connecticut — children under 15, 2010
@@ -57,11 +81,7 @@ acs = acs %>%
       # maine — children 2022
       !(statefip == 23 & year >= 2022 & age <= 18) &
       # vermont — children 2022
-      !(statefip == 50 & year >= 2022 & age <= 18) &
-      # colorado — adults 2023
-      !(statefip == 8  & year >= 2023) &
-     # minnesota — adults 2024
-      !(statefip == 27 & year >= 2024) ~ 2,
+      !(statefip == 50 & year >= 2022 & age <= 18) ~ 2,
     immigrant == 1 & vetstat == 2 ~ 2,
     immigrant == 1 & classwkrd == 26 ~ 2,
     immigrant == 1 & bpld == 25000 & yrimmig < 2017 ~ 2,
@@ -107,3 +127,51 @@ acs = acs %>%
 
 # rewrite final ACS dataset
 fwrite(acs, "data/output/acsdata.csv")
+
+# after residual method --------------------------------------------------------
+# medicaid enrollment among non-citizens by state and year
+after_medicaid = acs %>%
+  filter(
+    citizen == 3,
+    bpl >= 150,
+    hinscaid == 2) %>%
+  group_by(year, statefip) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop")
+
+write_csv(after_medicaid, "results/after_medicaid.csv")
+
+# total non-citizen foreign born population
+after_noncitizen_states = acs %>%
+  filter(citizen == 3, bpl >= 150) %>%
+  group_by(year, statefip) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop")
+
+write_csv(after_noncitizen_states, "results/after_noncitizen_states.csv")
+
+# combine before and after tables
+medicaid_comparison = before_medicaid %>%
+  rename(n_before = n, pop_before = population) %>%
+  left_join(
+    after_medicaid %>% rename(n_after = n, pop_after = population),
+    by = c("year", "statefip")) %>%
+  mutate(
+    pop_change = pop_after - pop_before,
+    pct_change = pop_change / pop_before * 100)
+
+noncitizen_comparison = before_noncitizen_states %>%
+  rename(n_before = n, pop_before = population) %>%
+  left_join(
+    after_noncitizen_states %>% rename(n_after = n, pop_after = population),
+    by = c("year", "statefip")) %>%
+  mutate(
+    pop_change = pop_after - pop_before,
+    pct_change = pop_change / pop_before * 100)
+
+write_csv(medicaid_comparison,    "results/medicaid_comparison.csv")
+write_csv(noncitizen_comparison,  "results/noncitizen_comparison.csv")
