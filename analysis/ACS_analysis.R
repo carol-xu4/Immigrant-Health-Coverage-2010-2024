@@ -23,6 +23,11 @@ immig_counts %>%
   filter(year == 2024, immig_status != "Native-born") %>%
   mutate(undoc_share = population / sum(population))
 
+# how many legal immigrant children are there (non-citizen)
+acsdata %>% filter(immig_status == "Legal immigrant", age <= 18) %>%
+  group_by(year) %>%
+  summarise(n = n(), population = sum(perwt, na.rm = TRUE))
+
 colors = c(
   "Native-born"         = "#3043B4",
   "Naturalized citizen" = "#0D0E51",
@@ -1044,11 +1049,13 @@ ACS_undoc_uninsured_expansion = ggplot(uninsured_expansion,
     breaks = seq(0, 1, by = 0.05),
     limits = c(0.05, 0.65),
     expand = c(0.02, 0)) +
+    geom_vline(xintercept = 2010, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2016, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2020, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2023, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2024, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+    annotate("text", x = 2010.1, y = 0.63, label = "DC",                hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2016.1, y = 0.61, label = "CA <19",                hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2020.1, y = 0.61, label = "CA <26",                hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2022.1, y = 0.61, label = "CA 50+",                hjust = 0, size = 2.8, color = "gray50") +
@@ -1111,12 +1118,14 @@ ACS_undoc_medicaid_expansion = ggplot(medicaid_expansion,
     breaks = seq(0, 1, by = 0.05),
     limits = c(0, 0.35),
     expand = c(0.02, 0)) +
+    geom_vline(xintercept = 2010, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2016, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2020, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2023, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2024, linetype = "dashed", color = "gray50", linewidth = 0.5) +
-    annotate("text", x = 2016.1, y = 0.33, label = "CA <19",                hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2010.1, y = 0.31, label = "DC",                    hjust = 0, size = 2.8, color = "gray50") +
+    annotate("text", x = 2016.1, y = 0.31, label = "CA <19",                hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2020.1, y = 0.31, label = "CA <26",                hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2022.1, y = 0.31, label = "CA 50+",                hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2022.1, y = 0.24, label = "OR",                    hjust = 0, size = 2.8, color = "gray50") +
@@ -1127,7 +1136,7 @@ ACS_undoc_medicaid_expansion = ggplot(medicaid_expansion,
     annotate("text", x = 2024.1, y = 0.21, label = "WA",                    hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2024.1, y = 0.16, label = "NY 65+",                hjust = 0, size = 2.8, color = "gray50") +
   labs(
-    title = "Medicaid Rate for Undocumented Immigrants (2010–2024)",
+    title = "Medicaid EnrollmentRate for Undocumented Immigrants (2010–2024)",
     subtitle = "Expansion states: California, Oregon, Illinois, New York, Colorado, Washington, Minnesota, DC",
     x = NULL,
     y = NULL,

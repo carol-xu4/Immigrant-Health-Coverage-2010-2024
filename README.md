@@ -32,6 +32,7 @@ As of 2024, seven states and DC have expanded coverage to income-eligible adults
 ![Age density over time, all immigrants vs native born](results/ACS_age_density.gif)
 ![Age density, immigrant status](results/ACS_age_density_4groups.gif)
 ![Median ages of medicaid enrollees](results/ACS_medicaid_age_trend.png)
+![Medicaid rates by age and immigration status over time](results/ACS_medicaid_age_animated.gif)
 
 ### Adult Coverage Expansions
 | State | Program | Population Covered | Year |
