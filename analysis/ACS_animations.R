@@ -171,6 +171,7 @@ animate(ACS_uninsured_gif,
         fps       = 15,
         width     = 1000,
         height    = 600,
+        res       = 100,
         renderer  = gifski_renderer("results/ACS_uninsured_animated.gif"))
 
 # california age density
@@ -233,6 +234,7 @@ animate(CA_age_density_gif,
         fps       = 20,
         width     = 1000,
         height    = 600,
+        res       = 100,
         renderer  = gifski_renderer("results/CA_age_density.gif"))
 
 # Coverage rates for all immigration status
@@ -298,6 +300,7 @@ animate(ACS_coverage_gif,
         fps       = 10,
         width     = 1000,
         height    = 600,
+        res       = 100,
         renderer  = gifski_renderer("results/ACS_coverage_animated.gif"))
 
 # medicaid rate by age, over time
@@ -364,4 +367,5 @@ animate(ACS_medicaid_age_gif,
         fps       = 10,
         width     = 1000,
         height    = 600,
+        res       = 100,
         renderer  = gifski_renderer("results/ACS_medicaid_age_animated.gif"))
