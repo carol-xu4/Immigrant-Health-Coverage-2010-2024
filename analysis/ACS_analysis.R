@@ -380,6 +380,7 @@ ACS_medicaid_trend = ggplot(medicaid_trend, aes(x = as.numeric(year), y = medica
   scale_y_continuous(
     labels = scales::percent,
     breaks = seq(0, 1, by = 0.05),
+    limits = c(0, 0.5),
     expand = c(0.02, 0)) +
   geom_vline(xintercept = 2014, linetype = "dashed", color = "gray50", linewidth = 0.5) +
   annotate("text", x = 2014, y = 0.33, label = "ACA (2014)",
@@ -482,7 +483,7 @@ uninsured2 = acsdata %>%
             .groups = "drop") %>%
   mutate(uninsured_rate = uninsured / total_pop)
 
-ACS_uninsured2 = ggplot(uninsured2, aes(x = as.numeric(year), y = uninsured_rate, color = group)) +
+ggplot(uninsured2, aes(x = as.numeric(year), y = uninsured_rate, color = group)) +
   geom_line(linewidth = 1.2) +
   geom_point(size = 2) +
   scale_color_manual(values = c(
@@ -524,7 +525,7 @@ ACS_uninsured2 = ggplot(uninsured2, aes(x = as.numeric(year), y = uninsured_rate
     plot.background = element_rect(fill = "white", color = NA),
     panel.background = element_rect(fill = "white", color = NA))
 
-ggsave("results/ACS_uninsured2.png", ACS_uninsured2, width = 10, height = 6)
+ggsave("results/ACS_uninsured2.png", width = 10, height = 6)
 
 # medicaid, all immigrants vs. native- born
 medicaid2 = acsdata %>%
@@ -629,7 +630,7 @@ ggsave("results/ACS_age_density2024.png", width = 10, height = 6)
 age_medicaid2024 = acsdata %>%
   filter(year == 2024, hinscaid == 2)
 
-ACS_age_density2024_2 = ggplot(age_medicaid2024, aes(x = age, fill = immig_status, color = immig_status, weight = perwt)) +
+ggplot(age_medicaid2024, aes(x = age, fill = immig_status, color = immig_status, weight = perwt)) +
   geom_density(alpha = 0.5) +
   scale_fill_manual(values = c(
     "Native-born"         = "#3043B4",
@@ -734,7 +735,7 @@ ca_immig_counts = acs_ca %>%
   summarise( 
     n = n(), population = sum(perwt, na.rm = TRUE), .groups = "drop")
 
-ACS_population = ggplot(ca_immig_counts, aes(x = as.numeric(year), y = population / 1e6, color = immig_status)) +
+ggplot(ca_immig_counts, aes(x = as.numeric(year), y = population / 1e6, color = immig_status)) +
   geom_line(linewidth = 1.8) +
   scale_color_manual(values = colors) +
   scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
@@ -957,7 +958,7 @@ acs_noca = acsdata %>%
   summarise(median_age = weightedMedian(age, w = perwt, na.rm = TRUE), 
     .groups = "drop")
 
-NOCA_medicaid_age_trend = ggplot(acs_noca, aes(x = as.numeric(year), y = median_age, color = immig_status)) +
+ggplot(acs_noca, aes(x = as.numeric(year), y = median_age, color = immig_status)) +
   geom_line(linewidth = 1.2) +
   geom_point(size = 2) +
   scale_color_manual(values = c(
@@ -995,7 +996,7 @@ NOCA_medicaid_age_trend = ggplot(acs_noca, aes(x = as.numeric(year), y = median_
     plot.background = element_rect(fill = "white", color = NA),
     panel.background = element_rect(fill = "white", color = NA))
 
-ggsave("results/NOCA_medicaid_age_trend.png", NOCA_medicaid_age_trend, width = 10, height = 6)
+ggsave("results/NOCA_medicaid_age_trend.png", width = 10, height = 6)
 
 # STATE EXPANSIONS ----------------------------------------------------------------------------
 acsdata = acsdata %>%
@@ -1017,8 +1018,6 @@ acsdata = acsdata %>%
     statefip == 53 & year >= 2024                                     ~ 1,
     # Minnesota — adults
     statefip == 27 & year >= 2024                                     ~ 1,
-    # DC — all residents all ages
-    statefip == 11                                                    ~ 1,
     TRUE ~ 0 )) %>%
   mutate(expansion_label = ifelse(expansion_state == 1,
                                   "Expansion state",
@@ -1047,15 +1046,13 @@ ACS_undoc_uninsured_expansion = ggplot(uninsured_expansion,
   scale_y_continuous(
     labels = scales::percent,
     breaks = seq(0, 1, by = 0.05),
-    limits = c(0.05, 0.65),
+    limits = c(0, 0.65),
     expand = c(0.02, 0)) +
-    geom_vline(xintercept = 2010, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2016, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2020, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2023, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2024, linetype = "dashed", color = "gray50", linewidth = 0.5) +
-    annotate("text", x = 2010.1, y = 0.63, label = "DC",                hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2016.1, y = 0.61, label = "CA <19",                hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2020.1, y = 0.61, label = "CA <26",                hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2022.1, y = 0.61, label = "CA 50+",                hjust = 0, size = 2.8, color = "gray50") +
@@ -1118,13 +1115,11 @@ ACS_undoc_medicaid_expansion = ggplot(medicaid_expansion,
     breaks = seq(0, 1, by = 0.05),
     limits = c(0, 0.35),
     expand = c(0.02, 0)) +
-    geom_vline(xintercept = 2010, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2016, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2020, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2022, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2023, linetype = "dashed", color = "gray50", linewidth = 0.5) +
     geom_vline(xintercept = 2024, linetype = "dashed", color = "gray50", linewidth = 0.5) +
-    annotate("text", x = 2010.1, y = 0.31, label = "DC",                    hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2016.1, y = 0.31, label = "CA <19",                hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2020.1, y = 0.31, label = "CA <26",                hjust = 0, size = 2.8, color = "gray50") +
     annotate("text", x = 2022.1, y = 0.31, label = "CA 50+",                hjust = 0, size = 2.8, color = "gray50") +
@@ -1165,4 +1160,3 @@ ACS_undoc_medicaid_expansion = ggplot(medicaid_expansion,
 
 ggsave("results/ACS_undoc_medicaid_expansion.png", width = 10, height = 6)
 
-# NEW IMMIGRANTS -----------------------------------------------------------

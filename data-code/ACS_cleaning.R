@@ -175,3 +175,101 @@ noncitizen_comparison = before_noncitizen_states %>%
 
 write_csv(medicaid_comparison,    "results/medicaid_comparison.csv")
 write_csv(noncitizen_comparison,  "results/noncitizen_comparison.csv")
+
+# how many undocumented immigrants arrived before 1982?
+acs %>% filter(citizen == 3, bpl >= 150, yrimmig < 1982) %>%
+  group_by(year) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop")
+
+acs %>% filter(year == 2024,citizen == 3, bpl >= 150, yrimmig < 1982,
+  hinscaid == 2) %>%
+  group_by(year, age) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop")
+
+acs %>% filter(year == 2010, citizen == 3, bpl >= 150, yrimmig < 1982,
+  hinscaid == 2) %>%
+  group_by(year, age) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop") %>%
+  print(n = Inf)
+
+acs %>% filter(year == 2024, immig_status == "Undocumented") %>%
+  group_by(year, age) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop") %>%
+  print(n = Inf)
+
+# how many 65+ non-citizens are receiving any social security income
+acs %>% filter(age >= 65, citizen == 3, bpl >= 150) %>%
+  group_by(year) %>%
+  summarise(
+    total              = n(),
+    has_ss             = sum(incss > 0 & incss < 99999, na.rm = TRUE),
+    has_ssi            = sum(incsupp > 0 & incsupp < 99999, na.rm = TRUE),
+    has_either         = sum((incss > 0 & incss < 99999) | (incsupp > 0 & incsupp < 99999), na.rm = TRUE),
+    has_neither        = sum((incss == 0 | incss == 99999) & (incsupp == 0 | incsupp == 99999), na.rm = TRUE),
+    .groups = "drop") %>%
+  print(n = Inf)
+
+# people on both medicaid and medicare
+acs %>% filter(hinscare == 2, hinscaid == 2) %>%
+  group_by(year, citizen) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop") %>%
+  print(n = Inf)
+
+# non-citizens age 65+, medicaid only, no medicare
+acs %>% filter(age >= 65, citizen == 3, bpl >= 150, hinscaid == 2, hinscare == 1) %>%
+  group_by(year) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop") %>% 
+  print(n = Inf)
+
+acs %>% filter(age >= 65, hinscaid == 2, hinscare == 1) %>%
+  group_by(year) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop") %>% 
+  print(n = Inf)
+
+acs %>%
+  filter(citizen == 3, bpl >= 150, age >= 65) %>%
+  group_by(year, hinscare, hinscaid) %>%
+  summarise(
+    n          = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop") %>%
+  print(n = Inf)
+
+# non-citizens 65+ on other insurance types
+acs %>% filter(citizen == 3, bpl >= 150, age >= 65) %>%
+  mutate(coverage_type = case_when(
+      hcovany == 1                ~ "Uninsured",
+      hinsemp == 2                ~ "Employer-sponsored",
+      hinspur == 2                ~ "Direct purchase",
+      hinstri == 2 | hinsva == 2 ~ "Other public",
+      hinscare == 2               ~ "Medicare",
+      hinscaid == 2               ~ "Medicaid",
+      TRUE                        ~ "Unknown")) %>%
+  group_by(year, coverage_type) %>%
+  summarise(
+    n          = n(),
+    population = sum(perwt, na.rm = TRUE),
+    .groups = "drop") %>% 
+  arrange(year, coverage_type) %>%
+  print(n = Inf)

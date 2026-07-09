@@ -57,7 +57,6 @@ animate(ACS_age_density_gif,
         height    = 600,
         renderer  = gifski_renderer("results/ACS_age_density.gif"))
 
-
 # age distribution of medicaid enrollees, by immigration status
 age_medicaid_all4 = acsdata %>%
   filter(hinscaid == 2)
