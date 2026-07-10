@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACS Health Coverage Data — Immigration Status, 2010–2024</title>
+<style>
+  :root{
+    --bg: #F7F6F2;
+    --surface: #FFFFFF;
+    --ink: #1C2530;
+    --muted: #6B7280;
+    --line: #DCD8CE;
+    --teal: #2E5F63;
+    --amber: #A8672B;
+    --teal-tint: #E7EEEE;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3{
+    font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  a{ color: var(--teal); text-decoration: none; border-bottom: 1px solid var(--teal); }
+  a:hover{ color: var(--amber); border-color: var(--amber); }
+
+  /* ---------- Layout shell ---------- */
+  .shell{
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  /* ---------- Header / masthead ---------- */
+  .masthead{
+    grid-column: 1 / -1;
+    padding: 48px 40px 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .masthead .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--teal);
+    margin-bottom: 10px;
+  }
+  .masthead h1{
+    font-size: 34px;
+    margin: 0 0 12px;
+  }
+  .masthead p.dek{
+    color: var(--muted);
+    max-width: 640px;
+    margin: 0 0 20px;
+    font-size: 15.5px;
+  }
+
+  /* Signature element: year-range tick strip */
+  .timeline{
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    max-width: 640px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .timeline .track{
+    position: relative;
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+    margin: 0 10px;
+  }
+  .timeline .tick{
+    position: absolute;
+    top: -4px;
+    width: 1px;
+    height: 9px;
+    background: var(--teal);
+  }
+  .timeline .tick.expansion{ background: var(--amber); height: 13px; top: -6px; }
+
+  /* ---------- Sidebar nav ---------- */
+  nav.toc{
+    padding: 32px 24px 40px;
+    border-right: 1px solid var(--line);
+    align-self: start;
+    position: sticky;
+    top: 0;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+  nav.toc .toc-label{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  nav.toc ul{ list-style: none; margin: 0; padding: 0; }
+  nav.toc li{ margin-bottom: 4px; }
+  nav.toc a{
+    display: block;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    color: var(--ink);
+    font-size: 14px;
+  }
+  nav.toc a:hover{ background: var(--teal-tint); color: var(--teal); }
+  nav.toc .sub{ padding-left: 20px; font-size: 13px; color: var(--muted); }
+
+  /* ---------- Main content ---------- */
+  main{ padding: 40px 48px 100px; min-width: 0; }
+
+  section{ margin-bottom: 56px; }
+  section h2{
+    font-size: 24px;
+    margin: 0 0 6px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--ink);
+  }
+  section h3{
+    font-size: 18px;
+    color: var(--teal);
+    margin: 34px 0 14px;
+  }
+
+  /* Figures */
+  figure{
+    margin: 20px 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 16px;
+  }
+  figure img{
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+  }
+  figcaption{
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    gap: 8px;
+  }
+  figcaption .fig-num{
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--amber);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .fig-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 720px){ .fig-grid{ grid-template-columns: 1fr; } }
+
+  .table-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    padding: 6px 10px;
+    background: var(--teal-tint);
+    border-radius: 4px;
+    border-bottom: none;
+    margin: 6px 0 18px;
+  }
+  .table-link:before{ content: "⇩"; color: var(--teal); }
+
+  /* Data tables */
+  table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 12px 0 24px;
+    background: var(--surface);
+  }
+  caption{
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  th, td{
+    text-align: left;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  th{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--teal);
+    border-bottom: 2px solid var(--ink);
+  }
+  tr:hover td{ background: var(--teal-tint); }
+  td:last-child, th:last-child{ font-family: 'IBM Plex Mono', monospace; }
+
+  .note{
+    background: var(--teal-tint);
+    border-left: 3px solid var(--teal);
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+    font-size: 14.5px;
+    margin: 16px 0 26px;
+  }
+  .note strong{ color: var(--teal); }
+
+  .source-block{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 20px 22px;
+  }
+  .source-block p{ margin: 0 0 8px; }
+  .source-block .src-label{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--amber);
+    letter-spacing: 0.08em;
+  }
+
+  footer{
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--line);
+    padding: 24px 40px;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  @media (max-width: 860px){
+    .shell{ grid-template-columns: 1fr; }
+    nav.toc{ position: relative; border-right: none; border-bottom: 1px solid var(--line); max-height: none; }
+    main{ padding: 32px 22px 80px; }
+    .masthead{ padding: 32px 22px 24px; }
+  }
+
+  :focus-visible{ outline: 2px solid var(--amber); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <div class="masthead">
+    <div class="eyebrow">American Community Survey · CMS</div>
+    <h1>Health Coverage by Immigration Status</h1>
+    <p class="dek">Coverage, enrollment, and age trends among immigrants and native-born residents in the United States, drawn from ACS microdata and CMS dual-enrollment records.</p>
+    <div class="timeline" aria-hidden="true">
+      <span>2010</span>
+      <div class="track">
+        <span class="tick expansion" style="left: 40%;" title="2016 — CA Medi-Cal expansion"></span>
+        <span class="tick expansion" style="left: 55%;" title="2020 — CA young adults"></span>
+        <span class="tick expansion" style="left: 60%;" title="2022 — IL/OR expansions"></span>
+        <span class="tick expansion" style="left: 78%;" title="2024 — CA all adults"></span>
+      </div>
+      <span>2024</span>
+    </div>
+  </div>
+
+  <nav class="toc">
+    <div class="toc-label">Contents</div>
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#coverage">Health Coverage</a></li>
+      <li class="sub"><a href="#uninsured">Uninsured</a></li>
+      <li class="sub"><a href="#medicaid">Medicaid</a></li>
+      <li class="sub"><a href="#esi">Employer-Sponsored</a></li>
+      <li><a href="#age">Age</a></li>
+      <li class="sub"><a href="#expansions">State Expansions</a></li>
+      <li class="sub"><a href="#california">California</a></li>
+      <li><a href="#cms">CMS Data</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <section id="overview">
+      <h2>Overview</h2>
+      <figure>
+        <img src="results/ACS_population.png" alt="ACS population estimates by immigration status, 2010-2024">
+        <figcaption><span class="fig-num">Fig. 1</span> ACS population estimates, 2010–2024</figcaption>
+      </figure>
+    </section>
+
+    <section id="coverage">
+      <h2>Health Coverage (ACS)</h2>
+      <a class="table-link" href="results/coverage_counts_year.csv">Table — All Years</a>
+
+      <div class="fig-grid">
+        <figure>
+          <img src="results/ACS_coverage_2024.png" alt="Coverage by immigration status, 2024">
+          <figcaption><span class="fig-num">Fig. 2</span> Coverage by immigration status, 2024</figcaption>
+        </figure>
+        <figure>
+          <img src="results/ACS_coverage_animated.gif" alt="Coverage by immigration status, all years, animated">
+          <figcaption><span class="fig-num">Fig. 3</span> Coverage by immigration status, all years</figcaption>
+        </figure>
+        <figure>
+          <img src="results/ACS_coverage_2024_grouped.png" alt="Coverage by immigration status, grouped">
+          <figcaption><span class="fig-num">Fig. 4</span> Coverage by immigration status (grouped)</figcaption>
+        </figure>
+        <figure>
+          <img src="results/ACS_coverage_2024_COMBINED.png" alt="Native-born vs all immigrants coverage">
+          <figcaption><span class="fig-num">Fig. 5</span> Native-born vs. all immigrants</figcaption>
+        </figure>
+      </div>
+      <a class="table-link" href="results/coverage_counts_year.csv">Table — Native-born vs. All Immigrants</a>
+
+      <h3 id="uninsured">Uninsured</h3>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/ACS_uninsured_trend.png" alt="Uninsured rates by immigration status over time">
+          <figcaption><span class="fig-num">Fig. 6</span> Uninsured rates by immigration status over time</figcaption>
+        </figure>
+        <figure>
+          <img src="results/ACS_uninsured2.png" alt="Uninsured, all immigrants vs native born">
+          <figcaption><span class="fig-num">Fig. 7</span> Uninsured, all immigrants vs. native-born</figcaption>
+        </figure>
+      </div>
+
+      <h3 id="medicaid">Medicaid Coverage</h3>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/ACS_medicaid_trend.png" alt="Medicaid rates by immigration status over time">
+          <figcaption><span class="fig-num">Fig. 8</span> Medicaid rates by immigration status over time</figcaption>
+        </figure>
+        <figure>
+          <img src="results/ACS_medicaid2.png" alt="Medicaid, all immigrants vs native born">
+          <figcaption><span class="fig-num">Fig. 9</span> Medicaid, all immigrants vs. native-born</figcaption>
+        </figure>
+      </div>
+
+      <h3 id="esi">Employer-Sponsored Insurance</h3>
+      <figure>
+        <img src="results/ACS_esi_trend.png" alt="ESI rates by immigration status over time">
+        <figcaption><span class="fig-num">Fig. 10</span> ESI rates by immigration status over time</figcaption>
+      </figure>
+    </section>
+
+    <section id="age">
+      <h2>Age</h2>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/ACS_age_density.gif" alt="Age density over time, all immigrants vs native born">
+          <figcaption><span class="fig-num">Fig. 11</span> Age density over time, all immigrants vs. native-born</figcaption>
+        </figure>
+        <figure>
+          <img src="results/ACS_age_density_4groups.gif" alt="Age density, immigrant status, 4 groups">
+          <figcaption><span class="fig-num">Fig. 12</span> Age density by immigration status (4 groups)</figcaption>
+        </figure>
+        <figure>
+          <img src="results/ACS_medicaid_age_trend.png" alt="Median ages of Medicaid enrollees">
+          <figcaption><span class="fig-num">Fig. 13</span> Median ages of Medicaid enrollees</figcaption>
+        </figure>
+        <figure>
+          <img src="results/ACS_medicaid_age_animated.gif" alt="Medicaid rates by age and immigration status over time">
+          <figcaption><span class="fig-num">Fig. 14</span> Medicaid rates by age and immigration status over time</figcaption>
+        </figure>
+      </div>
+      <a class="table-link" href="results/ACS_medicaid_age.csv">Table — Medicaid by Age</a>
+
+      <h3 id="expansions">State Health Coverage Expansions for Undocumented Immigrants</h3>
+      <div class="note">
+        As of 2024, <strong>seven states and DC</strong> have expanded coverage to income-eligible adults regardless of immigration status: California, Colorado, Illinois, New York, Oregon, Washington, and DC.
+      </div>
+
+      <table>
+        <caption>Adult coverage expansions</caption>
+        <thead>
+          <tr><th>State</th><th>Program</th><th>Population Covered</th><th>Year</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>California</td><td>Medi-Cal</td><td>Children under 19</td><td>2016</td></tr>
+          <tr><td>California</td><td>Medi-Cal</td><td>Young adults under 26</td><td>2020</td></tr>
+          <tr><td>California</td><td>Medi-Cal</td><td>Adults 50 and older</td><td>2022</td></tr>
+          <tr><td>California</td><td>Medi-Cal</td><td>All adults 26–49</td><td>2024</td></tr>
+          <tr><td>Oregon</td><td>Oregon Health Plan</td><td>All ages, full expansion</td><td>2022</td></tr>
+          <tr><td>Illinois</td><td>HBIA/HBIS</td><td>Adults 42 and older</td><td>2022</td></tr>
+          <tr><td>New York</td><td>Medicaid</td><td>Adults 65 and older</td><td>2024</td></tr>
+          <tr><td>Colorado</td><td>OmniSalud</td><td>Adults up to 150% FPL (capped)</td><td>2023</td></tr>
+          <tr><td>Washington</td><td>Cascade Care</td><td>Adults up to 250% FPL (limited funding)</td><td>2024</td></tr>
+          <tr><td>Minnesota</td><td>MinnesotaCare</td><td>Adults</td><td>2024</td></tr>
+          <tr><td>DC</td><td>Medicaid</td><td>All residents</td><td>2010</td></tr>
+        </tbody>
+      </table>
+
+      <table>
+        <caption>Children-only coverage expansions</caption>
+        <thead>
+          <tr><th>State</th><th>Year</th><th>Age Coverage</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Illinois</td><td>2006</td><td>Under 19</td><td>First state — "All Kids" program</td></tr>
+          <tr><td>Washington</td><td>2007</td><td>Under 19</td><td>"Apple Health for Kids"</td></tr>
+          <tr><td>Connecticut</td><td>~2010</td><td>Under 15</td><td>May continue to 19 if already enrolled</td></tr>
+          <tr><td>New York</td><td>2014</td><td>Under 19</td><td>Child Health Plus B</td></tr>
+          <tr><td>California</td><td>2016</td><td>Under 19</td><td>Health4All Kids — later expanded to all ages</td></tr>
+          <tr><td>New Jersey</td><td>2018</td><td>Under 19</td><td>CHIP infrastructure</td></tr>
+          <tr><td>Oregon</td><td>2018</td><td>Under 19</td><td>Cover All Kids</td></tr>
+          <tr><td>Rhode Island</td><td>2022</td><td>Under 19</td><td>Children and pregnant people</td></tr>
+          <tr><td>Maine</td><td>2022</td><td>Under 19</td><td>—</td></tr>
+          <tr><td>Vermont</td><td>2022</td><td>Under 19</td><td>—</td></tr>
+        </tbody>
+      </table>
+
+      <h3>States with Coverage Expansions, Regardless of Immigration Status</h3>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/ACS_undoc_uninsured_expansion.png" alt="Uninsured rate for undocumented immigrants, by expansion">
+          <figcaption><span class="fig-num">Fig. 15</span> Uninsured rate for undocumented immigrants, by expansion</figcaption>
+        </figure>
+        <figure>
+          <img src="results/ACS_undoc_medicaid_expansion.png" alt="Medicaid rate for undocumented immigrants, by expansion">
+          <figcaption><span class="fig-num">Fig. 16</span> Medicaid rate for undocumented immigrants, by expansion</figcaption>
+        </figure>
+      </div>
+
+      <h3 id="california">California</h3>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/ACS_CA_population.png" alt="California population">
+          <figcaption><span class="fig-num">Fig. 17</span> California population</figcaption>
+        </figure>
+        <figure>
+          <img src="results/ACS_CA_uninsured.png" alt="California uninsured">
+          <figcaption><span class="fig-num">Fig. 18</span> California uninsured</figcaption>
+        </figure>
+        <figure>
+          <img src="results/ACS_CA_medicaid.png" alt="California Medicaid">
+          <figcaption><span class="fig-num">Fig. 19</span> California Medicaid</figcaption>
+        </figure>
+        <figure>
+          <img src="results/CA_medicaid_age_trend.png" alt="California Medicaid age trend">
+          <figcaption><span class="fig-num">Fig. 20</span> California Medicaid age trend</figcaption>
+        </figure>
+        <figure>
+          <img src="results/CA_age_density.gif" alt="California age density">
+          <figcaption><span class="fig-num">Fig. 21</span> California age density</figcaption>
+        </figure>
+      </div>
+
+      <p style="margin-top: 26px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-family: 'IBM Plex Mono', monospace;">Median age of Medicaid enrollees, excluding California</p>
+      <figure>
+        <img src="results/NOCA_medicaid_age_trend.png" alt="Median age of Medicaid enrollees, excluding California">
+        <figcaption><span class="fig-num">Fig. 22</span> Median age of Medicaid enrollees, excluding California</figcaption>
+      </figure>
+    </section>
+
+    <section id="cms">
+      <h2>CMS Data</h2>
+      <div class="source-block">
+        <p class="src-label">Dual Enrollment · 2006–2019</p>
+        <p>Medicare–Medicaid dual enrollment trends data brief, published by the Centers for Medicare &amp; Medicaid Services.</p>
+        <a href="https://www.cms.gov/files/document/medicaremedicaiddualenrollmenteverenrolledtrendsdatabrief.pdf">View source PDF ↗</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    ACS &amp; CMS Health Coverage Data · 2010–2024
+  </footer>
+
+</div>
+</body>
+</html>
