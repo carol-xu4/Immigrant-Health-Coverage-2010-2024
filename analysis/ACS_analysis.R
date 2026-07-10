@@ -1160,3 +1160,32 @@ ACS_undoc_medicaid_expansion = ggplot(medicaid_expansion,
 
 ggsave("results/ACS_undoc_medicaid_expansion.png", width = 10, height = 6)
 
+# age 65+ medicaid, misclassification check -----------------------------------------------------------------
+# CMS: total dual eligible enrollees
+CMS_dual_enrollment = data.frame(
+  year = 2006:2019,
+  total_medicare = c(45685188, 46735669, 47868545, 48916671, 50052677,
+                      51667131, 53540256, 55206227, 56767778, 58294184,
+                      59818470, 61205108, 62894069, 64443367),
+  medicare_only = c(37035298, 37873733, 38775366, 39554304, 40290749,
+                     41441332, 42984784, 44399188, 45607720, 46803894,
+                     48062848, 49246041, 50717280, 52104185),
+  dually_eligible = c(8649890, 8861936, 9093179, 9362367, 9761928,
+                       10225799, 10555472, 10807039, 11160058, 11490290,
+                       11755622, 11959067, 12176789, 12339182),
+  full_benefit = c(6819768, 6880844, 7011147, 7115138, 7279339,
+                     7482875, 7617630, 7748066, 8016044, 8234056,
+                     8391305, 8542340, 8661245, 8768749),
+  partial_benefit = c(1830122, 1981092, 2082032, 2247229, 2482589,
+                        2742924, 2937842, 3058973, 3144014, 3256234,
+                        3364317, 3416727, 3515544, 3570433))
+
+write_csv(CMS_dual_enrollment, "data/input/CMS_dual_enrollment.csv")
+
+# toal dual enrollees, ACS
+dual_enrollees = acsdata %>%
+  filter(age >= 65, hinscaid == 2, hinscare == 2) %>%
+  group_by(year) %>%
+  summarise(dual = sum(perwt, na.rm = TRUE)) %>%
+  print(n = Inf)
+
