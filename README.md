@@ -3,5 +3,6 @@
 
 > Estimating health insurance coverage, Medicaid enrollment, and demographic trends among undocumented immigrants, legal immigrants, and native-born residents, using a residual method applied to ACS and CPS-ASEC microdata (2010–2024).
 
-**All findings documented on the GitHub Pages site below:**
+**All findings documented on the GitHub Pages site below:** \
+
 https://carol-xu4.github.io/Immigrant-Health-Coverage-2010-2024/
