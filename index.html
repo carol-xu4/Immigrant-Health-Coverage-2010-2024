@@ -183,19 +183,6 @@
     margin: 34px 0 14px;
   }
 
-  /* Data-source group headings (ACS Data / CPS-ASEC Data) */
-  .data-source-heading{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--amber);
-    margin: 56px 0 20px;
-    padding-top: 40px;
-    border-top: 3px solid var(--ink);
-  }
-  .data-source-heading:first-of-type{ margin-top: 0; padding-top: 0; border-top: none; }
-
   /* Figures */
   figure{
     margin: 20px 0;
@@ -449,10 +436,8 @@ acs = acs <span class="tok-op">%&gt;%</span>
       </details>
     </section>
 
-    <p class="data-source-heading">ACS Data</p>
-
     <section id="overview">
-      <h2>Overview</h2>
+      <h2>ACS Data</h2>
       <figure>
         <img src="results/ACS_population.png" alt="ACS population estimates by immigration status, 2010-2024">
         <figcaption><span class="fig-num">Fig. 1</span> ACS population estimates, 2010–2024</figcaption>
@@ -627,10 +612,8 @@ acs = acs <span class="tok-op">%&gt;%</span>
       </div>
     </section>
 
-    <p class="data-source-heading">CPS-ASEC Data</p>
-
     <section id="cps-overview">
-      <h2>Overview</h2>
+      <h2>CPS-ASEC Data</h2>
       <figure>
         <img src="results/CPS_population.png" alt="CPS population estimates by immigration status, 2010-2024">
         <figcaption>CPS population estimates, 2010–2024</figcaption>
