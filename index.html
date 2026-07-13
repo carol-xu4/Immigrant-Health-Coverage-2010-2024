@@ -315,7 +315,7 @@
       <li class="sub" style="padding-left: 32px;"><a href="#uninsured">Uninsured</a></li>
       <li class="sub" style="padding-left: 32px;"><a href="#medicaid">Medicaid</a></li>
       <li class="sub" style="padding-left: 32px;"><a href="#esi">Employer-Sponsored</a></li>
-      <li class="sub"><a href="#age">Age</a></li>
+      <li class="sub"><a href="#age">Age of Medicaid Enrollees</a></li>
       <li class="sub"><a href="#expansions">State Expansions</a></li>
       <li class="sub"><a href="#california">California</a></li>
       <li><strong>CPS-ASEC data</strong></li>
@@ -499,6 +499,12 @@ acs = acs %>%
       </div>
       <a class="table-link" href="results/ACS_medicaid_age.csv">Table — Medicaid by Age</a>
 
+      <p style="margin-top: 26px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-family: 'IBM Plex Mono', monospace;">Median age of Medicaid enrollees, excluding California</p>
+      <figure>
+        <img src="results/NOCA_medicaid_age_trend.png" alt="Median age of Medicaid enrollees, excluding California">
+        <figcaption><span class="fig-num">Fig. 15</span> Median age of Medicaid enrollees, excluding California</figcaption>
+      </figure>
+
       <h3 id="expansions">State Health Coverage Expansions for Undocumented Immigrants</h3>
       <div class="note">
         As of 2024, <strong>seven states and DC</strong> have expanded coverage to income-eligible adults regardless of immigration status: California, Colorado, Illinois, New York, Oregon, Washington, and DC.
@@ -547,11 +553,11 @@ acs = acs %>%
       <div class="fig-grid">
         <figure>
           <img src="results/ACS_undoc_uninsured_expansion.png" alt="Uninsured rate for undocumented immigrants, by expansion">
-          <figcaption><span class="fig-num">Fig. 15</span> Uninsured rate for undocumented immigrants, by expansion</figcaption>
+          <figcaption><span class="fig-num">Fig. 16</span> Uninsured rate for undocumented immigrants, by expansion</figcaption>
         </figure>
         <figure>
           <img src="results/ACS_undoc_medicaid_expansion.png" alt="Medicaid rate for undocumented immigrants, by expansion">
-          <figcaption><span class="fig-num">Fig. 16</span> Medicaid rate for undocumented immigrants, by expansion</figcaption>
+          <figcaption><span class="fig-num">Fig. 17</span> Medicaid rate for undocumented immigrants, by expansion</figcaption>
         </figure>
       </div>
 
@@ -559,31 +565,25 @@ acs = acs %>%
       <div class="fig-grid">
         <figure>
           <img src="results/ACS_CA_population.png" alt="California population">
-          <figcaption><span class="fig-num">Fig. 17</span> California population</figcaption>
+          <figcaption><span class="fig-num">Fig. 18</span> California population</figcaption>
         </figure>
         <figure>
           <img src="results/ACS_CA_uninsured.png" alt="California uninsured">
-          <figcaption><span class="fig-num">Fig. 18</span> California uninsured</figcaption>
+          <figcaption><span class="fig-num">Fig. 19</span> California uninsured</figcaption>
         </figure>
         <figure>
           <img src="results/ACS_CA_medicaid.png" alt="California Medicaid">
-          <figcaption><span class="fig-num">Fig. 19</span> California Medicaid</figcaption>
+          <figcaption><span class="fig-num">Fig. 20</span> California Medicaid</figcaption>
         </figure>
         <figure>
           <img src="results/CA_medicaid_age_trend.png" alt="California Medicaid age trend">
-          <figcaption><span class="fig-num">Fig. 20</span> California Medicaid age trend</figcaption>
+          <figcaption><span class="fig-num">Fig. 21</span> California Medicaid age trend</figcaption>
         </figure>
         <figure>
           <img src="results/CA_age_density.gif" alt="California age density">
-          <figcaption><span class="fig-num">Fig. 21</span> California age density</figcaption>
+          <figcaption><span class="fig-num">Fig. 22</span> California age density</figcaption>
         </figure>
       </div>
-
-      <p style="margin-top: 26px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-family: 'IBM Plex Mono', monospace;">Median age of Medicaid enrollees, excluding California</p>
-      <figure>
-        <img src="results/NOCA_medicaid_age_trend.png" alt="Median age of Medicaid enrollees, excluding California">
-        <figcaption><span class="fig-num">Fig. 22</span> Median age of Medicaid enrollees, excluding California</figcaption>
-      </figure>
 
       <div class="note" style="font-size: 13px; margin-top: 24px;">
         <strong>A note on ACS editing for respondents 65+:</strong> Under the Census Bureau's ACS health-insurance editing procedure, respondents aged 65 and older who report Medicaid coverage but do not directly report Medicare are automatically assigned Medicare coverage as well, on the assumption that nearly all seniors qualify for Medicare regardless of what they report on the survey. As a result, for the 65+ population, a "Medicaid" flag in ACS data effectively captures dual Medicare–Medicaid eligibility rather than Medicaid coverage alone. This editing rule should be kept in mind when interpreting Medicaid enrollment and median-age trends among older respondents in this analysis, since it can affect comparisons across immigration-status groups differently depending on how each group's older cohort reports coverage.
