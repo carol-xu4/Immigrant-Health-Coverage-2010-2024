@@ -317,7 +317,7 @@
     <h1>Health Coverage by Immigration Status</h1>
     <p class="byline">Author: Carol Xu · 29 June 2026</p>
     <a class="repo-link" href="https://github.com/carol-xu4/Immigrant-Health-Coverage-2010-2024">github.com/carol-xu4/Immigrant-Health-Coverage-2010-2024 ↗</a>
-    <p class="dek">Estimating health insurance coverage, Medicaid enrollment, and demographic trends among undocumented immigrants, legal immigrants, and native-born residents, using a residual method applied to ACS and CPS-ASEC microdata (2010–2024).</p>
+    <p class="dek">Estimating health insurance coverage, Medicaid enrollment, and demographic trends among undocumented immigrants, legal immigrants, and native-born residents, using a residual method applied to ACS (2010–2024) and CPS-ASEC (2010–2025) microdata.</p>
   </div>
 
   <nav class="toc">
@@ -615,8 +615,8 @@ acs = acs <span class="tok-op">%&gt;%</span>
     <section id="cps-overview">
       <h2>CPS-ASEC Data</h2>
       <figure>
-        <img src="results/CPS_population.png" alt="CPS population estimates by immigration status, 2010-2024">
-        <figcaption>CPS population estimates, 2010–2024</figcaption>
+        <img src="results/CPS_population.png" alt="CPS population estimates by immigration status, 2010-2025">
+        <figcaption><span class="fig-num">Fig. 1</span> CPS population estimates, 2010–2025</figcaption>
       </figure>
     </section>
 
@@ -624,24 +624,42 @@ acs = acs <span class="tok-op">%&gt;%</span>
       <h2>Health Coverage (CPS-ASEC)</h2>
       <div class="fig-grid">
         <figure>
-          <img src="results/CPS_coverage_2024.png" alt="Coverage type by immigration status, 2024, CPS-ASEC">
-          <figcaption>Coverage type by immigration status, 2024</figcaption>
+          <img src="results/CPS_coverage_2025.png" alt="Coverage type by immigration status, 2025, CPS-ASEC">
+          <figcaption><span class="fig-num">Fig. 2</span> Coverage type by immigration status, 2025</figcaption>
         </figure>
         <figure>
-          <img src="results/CPS_coverage_2024_grouped.png" alt="Coverage type, native-born vs legal immigrant vs undocumented, 2024, CPS-ASEC">
-          <figcaption>Native-born vs. legal immigrant vs. undocumented</figcaption>
+          <img src="results/CPS_coverage_2025_grouped.png" alt="Coverage type, native-born vs legal immigrant vs undocumented, 2025, CPS-ASEC">
+          <figcaption><span class="fig-num">Fig. 3</span> Native-born vs. legal immigrant vs. undocumented</figcaption>
         </figure>
         <figure>
-          <img src="results/CPS_coverage_2024_COMBINED.png" alt="Coverage type, native-born vs all immigrants, 2024, CPS-ASEC">
-          <figcaption>Native-born vs. all immigrants</figcaption>
+          <img src="results/CPS_coverage_2025_COMBINED.png" alt="Coverage type, native-born vs all immigrants, 2025, CPS-ASEC">
+          <figcaption><span class="fig-num">Fig. 4</span> Native-born vs. all immigrants</figcaption>
         </figure>
       </div>
 
       <h3 id="cps-uninsured">Uninsured</h3>
-      <div class="note">Analysis not yet available for CPS-ASEC.</div>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/CPS_uninsured_trend.png" alt="Uninsured rates by immigration status over time, CPS-ASEC">
+          <figcaption><span class="fig-num">Fig. 5</span> Uninsured rates by immigration status over time</figcaption>
+        </figure>
+        <figure>
+          <img src="results/CPS_uninsured2.png" alt="Uninsured, all immigrants vs native born, CPS-ASEC">
+          <figcaption><span class="fig-num">Fig. 6</span> Uninsured, all immigrants vs. native-born</figcaption>
+        </figure>
+      </div>
 
       <h3 id="cps-medicaid">Medicaid Coverage</h3>
-      <div class="note">Analysis not yet available for CPS-ASEC.</div>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/CPS_medicaid_trend.png" alt="Medicaid rates by immigration status over time, CPS-ASEC">
+          <figcaption><span class="fig-num">Fig. 7</span> Medicaid rates by immigration status over time</figcaption>
+        </figure>
+        <figure>
+          <img src="results/CPS_medicaid2.png" alt="Medicaid, all immigrants vs native born, CPS-ASEC">
+          <figcaption><span class="fig-num">Fig. 8</span> Medicaid, all immigrants vs. native-born</figcaption>
+        </figure>
+      </div>
 
       <h3 id="cps-esi">Employer-Sponsored Insurance</h3>
       <div class="note">Analysis not yet available for CPS-ASEC.</div>
