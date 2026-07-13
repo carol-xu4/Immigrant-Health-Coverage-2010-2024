@@ -18,7 +18,7 @@ immig_counts = acsdata %>%
 
 write_csv(immig_counts, "results/immig_counts_year.csv")
 
-# share of working-age immigrants who are undocumented?
+# share of immigrants who are undocumented?
 immig_counts %>%
   filter(year == 2024, immig_status != "Native-born") %>%
   mutate(undoc_share = population / sum(population))

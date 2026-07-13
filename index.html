@@ -96,7 +96,22 @@
     line-height: 1.55;
     margin: 16px 0 8px;
   }
+  .code-block code{
+    background: transparent;
+    padding: 0;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+  }
   .code-block .comment{ color: #8FAFB3; }
+
+  /* static syntax-highlighting tokens (no JS dependency) */
+  .tok-comment{ color: #8FAFB3; font-style: italic; }
+  .tok-string{ color: #D9A66C; }
+  .tok-number{ color: #E8B074; }
+  .tok-keyword{ color: #7FB8BE; font-weight: 600; }
+  .tok-func{ color: #9FD0D6; }
+  .tok-op{ color: #A8B4B8; }
   details.method-code{
     margin-top: 14px;
   }
@@ -315,11 +330,18 @@
       <li class="sub" style="padding-left: 32px;"><a href="#uninsured">Uninsured</a></li>
       <li class="sub" style="padding-left: 32px;"><a href="#medicaid">Medicaid</a></li>
       <li class="sub" style="padding-left: 32px;"><a href="#esi">Employer-Sponsored</a></li>
-      <li class="sub"><a href="#age">Age of Medicaid Enrollees</a></li>
+      <li class="sub"><a href="#age">Age</a></li>
       <li class="sub"><a href="#expansions">State Expansions</a></li>
       <li class="sub"><a href="#california">California</a></li>
       <li><strong>CPS-ASEC data</strong></li>
-      <li class="sub"><a href="#cps-asec">Overview</a></li>
+      <li class="sub"><a href="#cps-overview">Overview</a></li>
+      <li class="sub"><a href="#cps-coverage">Health Coverage</a></li>
+      <li class="sub" style="padding-left: 32px;"><a href="#cps-uninsured">Uninsured</a></li>
+      <li class="sub" style="padding-left: 32px;"><a href="#cps-medicaid">Medicaid</a></li>
+      <li class="sub" style="padding-left: 32px;"><a href="#cps-esi">Employer-Sponsored</a></li>
+      <li class="sub"><a href="#cps-age">Age</a></li>
+      <li class="sub"><a href="#cps-expansions">State Expansions</a></li>
+      <li class="sub"><a href="#cps-california">California</a></li>
     </ul>
   </nav>
 
@@ -327,90 +349,90 @@
 
     <section id="methodology">
       <h2>Methodology: The Residual Method</h2>
-      <p>ACS and CPS-ASEC don't directly ask respondents whether they're in the country legally, so immigration legal status is imputed using a <strong>residual method</strong>: each immigrant is assumed to be legally present unless nothing in their record indicates otherwise, and whoever is left over is classified as undocumented.</p>
+      <p>Because ACS and CPS-ASEC do not directly measure immigration legal status, this analysis imputes status using a residual method: immigrants are presumed to hold legal status unless their records indicate otherwise, and the remainder are classified as undocumented.</p>
       <details class="method-code">
-        <summary>▸ View classification rules in detail</summary>
-        <p style="margin-top: 12px;">Immigrants are flagged as likely <strong>legal</strong> if they show any of several proxies for lawful status: naturalized citizenship, arrival before 1982 (eligible for the IRCA amnesty), receipt of benefits that require legal status (Social Security, SSI, welfare income), military veteran status, federal government employment, or Cuban/Vietnamese birth-place codes tied to historical refugee admission. It also accounts for <strong>state-specific Medicaid/CHIP eligibility expansions</strong> that extended coverage regardless of status (e.g., California's phased Medi-Cal expansion, Illinois's All Kids/HBIA/HBIS programs), since receiving means-tested Medicaid in those cases doesn't imply legal status the way it does elsewhere. Legal status is also imputed to a household's other members if the household head or spouse is already determined to be legally present. Anyone not captured by these rules is classified as <strong>undocumented</strong>, and their survey weight is adjusted upward using an undercount correction that shrinks the longer they've been in the country, since undocumented respondents are known to be undercounted in survey data.</p>
+        <summary>▸ View classification criteria</summary>
+        <p style="margin-top: 12px;">Legal status is imputed from several proxies established in this literature: naturalized citizenship; arrival before 1982, the residency cutoff for the IRCA amnesty; receipt of benefits restricted to legal residents (Social Security, SSI, public assistance); veteran status; federal employment; and birthplace codes historically associated with refugee admission (e.g., Cuba, Vietnam). Because several states have extended Medicaid or CHIP eligibility to residents regardless of immigration status, Medicaid receipt is treated as a legal-status proxy only outside of these state-specific expansions. Legal status is also imputed to household members of an individual already classified as legally present. Individuals not identified as legal under any of these criteria are classified as undocumented, and their sampling weights are adjusted upward using an undercount correction that declines with time since arrival, reflecting the known underrepresentation of undocumented respondents in household surveys.</p>
       </details>
 
       <details class="method-code">
         <summary>▸ View R implementation</summary>
-        <pre class="code-block"><span class="comment"># residual method -------------------------------------------------------------</span>
-acs = acs %>%
-  mutate(immigrant = ifelse(citizen == 2 |
-                            citizen == 3, 1, 0)) %>%
-  mutate(immig_status = ifelse(bpl < 150 | immigrant == 0 | citizen == 1, 1, NA)) %>%
-  mutate(foreign_born = ifelse(bpl >= 150, 1, 0)) %>%
-  mutate(immig_status = case_when(
-    immigrant == 1 & citizen == 2 ~ 2,
-    immigrant == 1 & yrimmig < 1982 ~ 2,
-    immigrant == 1 & incss > 0 & incss < 99999 ~ 2,
-    immigrant == 1 & incsupp > 0 & incsupp < 99999 ~ 2,
-    immigrant == 1 & incwelfr > 0 & incwelfr < 99999 ~ 2,
-    immigrant == 1 & hinscare == 2 ~ 2,
-    immigrant == 1 & hinscaid == 2 &
-      <span class="comment"># california — phased Medi-Cal expansion</span>
-      !(statefip == 6 & ((year >= 2016 & age <= 18) | (year >= 2020 & age <= 25) | (year >= 2022 & age >= 50) | (year >= 2024 & age >= 26 & age <= 49))) &
-      <span class="comment"># illinois — All Kids children 2006, HBIS seniors 2020, HBIA adults 42-64 2022</span>
-      !(statefip == 17 & ((year >= 2006 & age <= 18) | (year >= 2020 & age >= 65) | (year >= 2022 & age >= 42 & age <= 64))) &
-      <span class="comment"># washington — Apple Health for Kids children 2007 only (adult expansion is marketplace)</span>
-      !(statefip == 53 & year >= 2007 & age <= 18) &
-      <span class="comment"># new york — Child Health Plus children 2014, adults 65+ 2024</span>
-      !(statefip == 36 & ((year >= 2014 & age <= 18) | (year >= 2024 & age >= 65))) &
-      <span class="comment"># oregon — Cover All Kids children 2018, phase 1 ages 19-25/55+ 2022, full expansion 2023</span>
-      !(statefip == 41 & ((year >= 2018 & age <= 18) | (year == 2022 & (age <= 25 | age >= 55)) | (year >= 2023))) &
-      <span class="comment"># new jersey — children 2018</span>
-      !(statefip == 34 & year >= 2018 & age <= 18) &
-      <span class="comment"># connecticut — children under 15, 2010</span>
-      !(statefip == 9  & year >= 2010 & age <= 14) &
-      <span class="comment"># rhode island — children 2022</span>
-      !(statefip == 44 & year >= 2022 & age <= 18) &
-      <span class="comment"># maine — children 2022</span>
-      !(statefip == 23 & year >= 2022 & age <= 18) &
-      <span class="comment"># vermont — children 2022</span>
-      !(statefip == 50 & year >= 2022 & age <= 18) ~ 2,
-    immigrant == 1 & vetstat == 2 ~ 2,
-    immigrant == 1 & classwkrd == 26 ~ 2,
-    immigrant == 1 & bpld == 25000 & yrimmig < 2017 ~ 2,
-    TRUE ~ immig_status
-  )) %>%
-  mutate(legal = ifelse(
-    immig_status == 1 | immig_status == 2, 1, 0
-  )) %>%
-  mutate(good = if_else(relate == 2 & immigrant == 1, 1, NA_real_)) %>%
-  mutate(legal = ifelse(is.na(legal), 0, legal)) %>%
-  group_by(year, serial) %>%
-  mutate(slegal = mean(good * legal, na.rm = TRUE)) %>%
-  ungroup() %>%
-  mutate(immig_status = ifelse((slegal > 0 | is.na(slegal)) & immigrant == 1 & relate == 1 & marst == 1,
-                               2,
-                               immig_status)) %>%
-  mutate(good1 = ifelse(relate == 1 & immigrant == 1, 1, NA_real_)) %>%
-  group_by(year, serial) %>%
-  mutate(hlegal = mean(good1 * legal, na.rm = TRUE)) %>%
-  ungroup() %>%
-  mutate(immig_status =
-           ifelse((hlegal > 0 | is.na(hlegal)) &
-                    immigrant == 1 & ((relate == 2 & marst == 1) | relate == 3 | relate == 9),
-                  2,
+        <pre class="code-block"><code><span class="tok-comment"># residual method -------------------------------------------------------------</span>
+acs = acs <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immigrant = <span class="tok-func">ifelse</span>(citizen <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">|</span>
+                            citizen <span class="tok-op">==</span> <span class="tok-number">3</span>, <span class="tok-number">1</span>, <span class="tok-number">0</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">ifelse</span>(bpl <span class="tok-op">&lt;</span> <span class="tok-number">150</span> <span class="tok-op">|</span> immigrant <span class="tok-op">==</span> <span class="tok-number">0</span> <span class="tok-op">|</span> citizen <span class="tok-op">==</span> <span class="tok-number">1</span>, <span class="tok-number">1</span>, <span class="tok-keyword">NA</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(foreign_born = <span class="tok-func">ifelse</span>(bpl <span class="tok-op">&gt;=</span> <span class="tok-number">150</span>, <span class="tok-number">1</span>, <span class="tok-number">0</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">case_when</span>(
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> citizen <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> yrimmig <span class="tok-op">&lt;</span> <span class="tok-number">1982</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> incss <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">&amp;</span> incss <span class="tok-op">&lt;</span> <span class="tok-number">99999</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> incsupp <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">&amp;</span> incsupp <span class="tok-op">&lt;</span> <span class="tok-number">99999</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> incwelfr <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">&amp;</span> incwelfr <span class="tok-op">&lt;</span> <span class="tok-number">99999</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> hinscare <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> hinscaid <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># california — phased Medi-Cal expansion</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">6</span> <span class="tok-op">&amp;</span> ((year <span class="tok-op">&gt;=</span> <span class="tok-number">2016</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2020</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">25</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">50</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2024</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">26</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">49</span>))) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># illinois — All Kids children 2006, HBIS seniors 2020, HBIA adults 42-64 2022</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">17</span> <span class="tok-op">&amp;</span> ((year <span class="tok-op">&gt;=</span> <span class="tok-number">2006</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2020</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">65</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">42</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">64</span>))) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># washington — Apple Health for Kids children 2007 only (adult expansion is marketplace)</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">53</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2007</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># new york — Child Health Plus children 2014, adults 65+ 2024</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">36</span> <span class="tok-op">&amp;</span> ((year <span class="tok-op">&gt;=</span> <span class="tok-number">2014</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2024</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">65</span>))) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># oregon — Cover All Kids children 2018, phase 1 ages 19-25/55+ 2022, full expansion 2023</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">41</span> <span class="tok-op">&amp;</span> ((year <span class="tok-op">&gt;=</span> <span class="tok-number">2018</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">|</span> (year <span class="tok-op">==</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> (age <span class="tok-op">&lt;=</span> <span class="tok-number">25</span> <span class="tok-op">|</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">55</span>)) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2023</span>))) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># new jersey — children 2018</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">34</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2018</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># connecticut — children under 15, 2010</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">9</span>  <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2010</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">14</span>) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># rhode island — children 2022</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">44</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># maine — children 2022</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">23</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># vermont — children 2022</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">50</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> vetstat <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> classwkrd <span class="tok-op">==</span> <span class="tok-number">26</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> bpld <span class="tok-op">==</span> <span class="tok-number">25000</span> <span class="tok-op">&amp;</span> yrimmig <span class="tok-op">&lt;</span> <span class="tok-number">2017</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    <span class="tok-keyword">TRUE</span> <span class="tok-op">~</span> immig_status
+  )) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(legal = <span class="tok-func">ifelse</span>(
+    immig_status <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">|</span> immig_status <span class="tok-op">==</span> <span class="tok-number">2</span>, <span class="tok-number">1</span>, <span class="tok-number">0</span>
+  )) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(good = <span class="tok-func">if_else</span>(relate <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span> immigrant <span class="tok-op">==</span> <span class="tok-number">1</span>, <span class="tok-number">1</span>, <span class="tok-keyword">NA_real_</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(legal = <span class="tok-func">ifelse</span>(<span class="tok-func">is.na</span>(legal), <span class="tok-number">0</span>, legal)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">group_by</span>(year, serial) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(slegal = <span class="tok-func">mean</span>(good * legal, na.rm = <span class="tok-keyword">TRUE</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">ungroup</span>() <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">ifelse</span>((slegal <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">|</span> <span class="tok-func">is.na</span>(slegal)) <span class="tok-op">&amp;</span> immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> relate <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> marst <span class="tok-op">==</span> <span class="tok-number">1</span>,
+                               <span class="tok-number">2</span>,
+                               immig_status)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(good1 = <span class="tok-func">ifelse</span>(relate <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> immigrant <span class="tok-op">==</span> <span class="tok-number">1</span>, <span class="tok-number">1</span>, <span class="tok-keyword">NA_real_</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">group_by</span>(year, serial) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(hlegal = <span class="tok-func">mean</span>(good1 * legal, na.rm = <span class="tok-keyword">TRUE</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">ungroup</span>() <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status =
+           <span class="tok-func">ifelse</span>((hlegal <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">|</span> <span class="tok-func">is.na</span>(hlegal)) <span class="tok-op">&amp;</span>
+                    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> ((relate <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span> marst <span class="tok-op">==</span> <span class="tok-number">1</span>) <span class="tok-op">|</span> relate <span class="tok-op">==</span> <span class="tok-number">3</span> <span class="tok-op">|</span> relate <span class="tok-op">==</span> <span class="tok-number">9</span>),
+                  <span class="tok-number">2</span>,
                   immig_status
-           )) %>%
-  mutate(immig_status = ifelse(is.na(immig_status), 3, immig_status)) %>%
-  mutate(undercount =
-           ifelse(immig_status == 3,
-                  1 + (0.13) * (0.925) ^ (year - yrimmig), 0)) %>%
-  mutate(perwt = ifelse(undercount > 0, perwt * undercount, perwt)) %>%
-  mutate(immig_status = case_when(
-    immig_status == 1                          ~ "Native-born",
-    immig_status == 2 & citizen == 2           ~ "Naturalized citizen",
-    immig_status == 2 & citizen != 2           ~ "Legal immigrant",
-    immig_status == 3                          ~ "Undocumented",
-  )) %>%
-  mutate(immig_status = factor(immig_status,
-                               levels = c("Native-born",
-                                          "Naturalized citizen",
-                                          "Legal immigrant",
-                                          "Undocumented")))</pre>
+           )) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">ifelse</span>(<span class="tok-func">is.na</span>(immig_status), <span class="tok-number">3</span>, immig_status)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(undercount =
+           <span class="tok-func">ifelse</span>(immig_status <span class="tok-op">==</span> <span class="tok-number">3</span>,
+                  <span class="tok-number">1</span> + (<span class="tok-number">0.13</span>) * (<span class="tok-number">0.925</span>) <span class="tok-op">^</span> (year - yrimmig), <span class="tok-number">0</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(perwt = <span class="tok-func">ifelse</span>(undercount <span class="tok-op">&gt;</span> <span class="tok-number">0</span>, perwt * undercount, perwt)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">case_when</span>(
+    immig_status <span class="tok-op">==</span> <span class="tok-number">1</span>                          <span class="tok-op">~</span> <span class="tok-string">&quot;Native-born&quot;</span>,
+    immig_status <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span> citizen <span class="tok-op">==</span> <span class="tok-number">2</span>           <span class="tok-op">~</span> <span class="tok-string">&quot;Naturalized citizen&quot;</span>,
+    immig_status <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span> citizen <span class="tok-op">!=</span> <span class="tok-number">2</span>           <span class="tok-op">~</span> <span class="tok-string">&quot;Legal immigrant&quot;</span>,
+    immig_status <span class="tok-op">==</span> <span class="tok-number">3</span>                          <span class="tok-op">~</span> <span class="tok-string">&quot;Undocumented&quot;</span>,
+  )) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">factor</span>(immig_status,
+                               levels = <span class="tok-func">c</span>(<span class="tok-string">&quot;Native-born&quot;</span>,
+                                          <span class="tok-string">&quot;Naturalized citizen&quot;</span>,
+                                          <span class="tok-string">&quot;Legal immigrant&quot;</span>,
+                                          <span class="tok-string">&quot;Undocumented&quot;</span>)))</code></pre>
       </details>
     </section>
 
@@ -505,6 +527,10 @@ acs = acs %>%
         <figcaption><span class="fig-num">Fig. 15</span> Median age of Medicaid enrollees, excluding California</figcaption>
       </figure>
 
+      <div class="note" style="font-size: 13px; margin-top: 24px;">
+        <strong>A note on ACS editing for respondents 65+:</strong> Under the Census Bureau's ACS editing procedure, respondents aged 65 and older who report Medicaid but not Medicare are automatically assigned Medicare coverage as well, since nearly all seniors qualify regardless of what they report. As a result, for the 65+ population, a "Medicaid" flag in ACS data reflects dual Medicare–Medicaid eligibility rather than Medicaid alone.
+      </div>
+
       <h3 id="expansions">State Health Coverage Expansions for Undocumented Immigrants</h3>
       <div class="note">
         As of 2024, <strong>seven states and DC</strong> have expanded coverage to income-eligible adults regardless of immigration status: California, Colorado, Illinois, New York, Oregon, Washington, and DC.
@@ -584,17 +610,39 @@ acs = acs %>%
           <figcaption><span class="fig-num">Fig. 22</span> California age density</figcaption>
         </figure>
       </div>
-
-      <div class="note" style="font-size: 13px; margin-top: 24px;">
-        <strong>A note on ACS editing for respondents 65+:</strong> Under the Census Bureau's ACS health-insurance editing procedure, respondents aged 65 and older who report Medicaid coverage but do not directly report Medicare are automatically assigned Medicare coverage as well, on the assumption that nearly all seniors qualify for Medicare regardless of what they report on the survey. As a result, for the 65+ population, a "Medicaid" flag in ACS data effectively captures dual Medicare–Medicaid eligibility rather than Medicaid coverage alone. This editing rule should be kept in mind when interpreting Medicaid enrollment and median-age trends among older respondents in this analysis, since it can affect comparisons across immigration-status groups differently depending on how each group's older cohort reports coverage.
-      </div>
     </section>
 
-    <section id="cps-asec">
-      <h2>CPS-ASEC Data</h2>
-      <div class="note">
-        No analysis has been completed yet for CPS-ASEC. This section will be populated with coverage, enrollment, and demographic estimates using the same residual method applied above to ACS data.
-      </div>
+    <section id="cps-overview">
+      <h2>Overview</h2>
+      <figure>
+        <img src="results/CPS_population.png" alt="CPS population estimates by immigration status, 2010-2024">
+        <figcaption>CPS population estimates, 2010–2024</figcaption>
+      </figure>
+    </section>
+
+    <section id="cps-coverage">
+      <h2>Health Coverage (CPS-ASEC)</h2>
+      <div class="note">Analysis not yet available for CPS-ASEC.</div>
+
+      <h3 id="cps-uninsured">Uninsured</h3>
+      <div class="note">Analysis not yet available for CPS-ASEC.</div>
+
+      <h3 id="cps-medicaid">Medicaid Coverage</h3>
+      <div class="note">Analysis not yet available for CPS-ASEC.</div>
+
+      <h3 id="cps-esi">Employer-Sponsored Insurance</h3>
+      <div class="note">Analysis not yet available for CPS-ASEC.</div>
+    </section>
+
+    <section id="cps-age">
+      <h2>Age of Medicaid Enrollees</h2>
+      <div class="note">Analysis not yet available for CPS-ASEC.</div>
+
+      <h3 id="cps-expansions">State Health Coverage Expansions for Undocumented Immigrants</h3>
+      <div class="note">Analysis not yet available for CPS-ASEC.</div>
+
+      <h3 id="cps-california">California</h3>
+      <div class="note">Analysis not yet available for CPS-ASEC.</div>
     </section>
 
   </main>
@@ -604,5 +652,6 @@ acs = acs %>%
   </footer>
 
 </div>
+
 </body>
 </html>
