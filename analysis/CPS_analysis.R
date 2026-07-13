@@ -65,20 +65,19 @@ CPS_population = ggplot(CPS_immig_counts, aes(x = as.numeric(year), y = populati
 ggsave("results/CPS_population.png", width = 15, height = 10)
 
 # Health Coverage
-coverage_counts = acsdata %>%
+cps_coverage_counts = cpsdata %>%
   mutate(
     coverage_type = case_when(
-      hcovany == 1 ~ "Uninsured",
-      hinsemp == 2 ~ "Employer-sponsored",
-      hinspur == 2 ~ "Direct purchase",
-      hinscaid == 2 ~ "Medicaid",
-      hinscare == 2 ~ "Medicare",
-      hinsmil == 2 ~ "Other public",
-      TRUE ~ "Unknown")) %>%
+        esi == 2 ~ "Employer-sponsored",
+        dpcovly == 2 ~ "Direct purchase",
+        himcaidly == 2 ~ "Medicaid",
+        himcarely == 2 ~ "Medicare",
+        hichamp == 2 | champvaly == 2 | inhcovly == 2 ~ "Other public",
+        TRUE ~ "Uninsured")) %>%
   group_by(year, immig_status, coverage_type) %>%
   summarise(
     n = n(),
     population = sum(asecwt, na.rm = TRUE)) %>%
   ungroup()
 
-write_csv(coverage_counts, "results/coverage_counts_year.csv")
+write_csv(cps_coverage_counts, "results/cps_coverage_counts_year.csv") 

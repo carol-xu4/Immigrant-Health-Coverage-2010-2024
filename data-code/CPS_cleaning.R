@@ -6,18 +6,11 @@ pacman::p_load(tidyverse, ggthemes, readxl, data.table, gdata, ipumsr)
 setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Coverage 2010-2024")
 
 # ACS data -----------------------------------------------------------------
-ddi_cps = read_ipums_ddi("data/input/cps_00003.xml")
+ddi_cps = read_ipums_ddi("data/input/cps_00004.xml")
 cps = read_ipums_micro(ddi_cps)
 
 cps = cps %>%
     rename_with(tolower)
-
-cps = cps %>%
-    select(
-        year, serial, statefip, asecwt, sex, age, race, hispan, marst,
-        citizen, yrimmig, bpl, vetstat, incss, incwelfr, incssi,
-        classwkr, relate, himcaidly, himcarely, hcovany, hcovpriv, hinsemp, hinspur, hcovpub,
-        hinscaid, hinscare, hinsmil, hinswt, hflag)
 
 # remove yrimmig banding: midpoint & round up?
 cps = cps %>%
@@ -69,6 +62,10 @@ cps = cps %>%
 # 2014 experimental survey (keep only 3/8 file)
 cps = cps %>%
     filter(!(year == 2014 & hflag == 0))
+
+# create employer sponsored insurance indicator
+cps = cps %>%
+    mutate(esi = ifelse(grpownly == 2 | grpdeply == 2, 2, 1))
 
 # recode birthplace, citizenship, and welfare variables to match ACS
 cps = cps %>%

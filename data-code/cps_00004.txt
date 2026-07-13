@@ -1,3 +1,4 @@
+Description: Revision of 00003
 Samples selected:
       IPUMS-CPS, ASEC 2010
             Note: 
@@ -111,18 +112,20 @@ Case Selection:               No
   HIMCAIDLY                    P 128              1     X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       
   HIMCARELY                    P 129              1     X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       
   HICHAMP                      P 130              1     X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       
-  DPCOVLY                      P 131-132          2     .       .       .       .       .       .       .       .       .       X       X       X       X       X       X       X       
-  CHAMPVALY                    P 133              1     X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       
-  INHCOVLY                     P 134              1     X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       
-  HINSWT                       P 135-143          9     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
-  HCOVANY                      P 144              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
-  HCOVPRIV                     P 145              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
-  HINSEMP                      P 146              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
-  HINSPUR                      P 147              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
-  HCOVPUB                      P 148              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
-  HINSCAID                     P 149              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
-  HINSCARE                     P 150              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
-  HINSMIL                      P 151              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
+  GRPDEPLY                     P 131              1     X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       
+  GRPOWNLY                     P 132              1     X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       
+  DPCOVLY                      P 133-134          2     .       .       .       .       .       .       .       .       .       X       X       X       X       X       X       X       
+  CHAMPVALY                    P 135              1     X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       
+  INHCOVLY                     P 136              1     X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       X       
+  HINSWT                       P 137-145          9     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
+  HCOVANY                      P 146              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
+  HCOVPRIV                     P 147              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
+  HINSEMP                      P 148              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
+  HINSPUR                      P 149              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
+  HCOVPUB                      P 150              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
+  HINSCAID                     P 151              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
+  HINSCARE                     P 152              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
+  HINSMIL                      P 153              1     X       X       X       X       .       .       .       .       .       .       .       .       .       .       .       .       
 
 Variable Availability Key:
 All Years X - available in this sample
@@ -737,6 +740,16 @@ HICHAMP             Covered by military health insurance last year
 1                   No
 2                   Yes
 9                   NIU
+
+GRPDEPLY            Dependent covered by employment-based insurance last year
+1                   No
+2                   Yes
+9                   NIU
+
+GRPOWNLY            Policyholder for employment-based insurance last year
+0                   NIU
+1                   No
+2                   Yes
 
 DPCOVLY             Direct-purchase insurance coverage last year
 01                  No
