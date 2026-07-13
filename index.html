@@ -183,6 +183,19 @@
     margin: 34px 0 14px;
   }
 
+  /* Data-source group headings (ACS Data / CPS-ASEC Data) */
+  .data-source-heading{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    margin: 56px 0 20px;
+    padding-top: 40px;
+    border-top: 3px solid var(--ink);
+  }
+  .data-source-heading:first-of-type{ margin-top: 0; padding-top: 0; border-top: none; }
+
   /* Figures */
   figure{
     margin: 20px 0;
@@ -436,6 +449,8 @@ acs = acs <span class="tok-op">%&gt;%</span>
       </details>
     </section>
 
+    <p class="data-source-heading">ACS Data</p>
+
     <section id="overview">
       <h2>Overview</h2>
       <figure>
@@ -612,6 +627,8 @@ acs = acs <span class="tok-op">%&gt;%</span>
       </div>
     </section>
 
+    <p class="data-source-heading">CPS-ASEC Data</p>
+
     <section id="cps-overview">
       <h2>Overview</h2>
       <figure>
@@ -622,7 +639,20 @@ acs = acs <span class="tok-op">%&gt;%</span>
 
     <section id="cps-coverage">
       <h2>Health Coverage (CPS-ASEC)</h2>
-      <div class="note">Analysis not yet available for CPS-ASEC.</div>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/CPS_coverage_2024.png" alt="Coverage type by immigration status, 2024, CPS-ASEC">
+          <figcaption>Coverage type by immigration status, 2024</figcaption>
+        </figure>
+        <figure>
+          <img src="results/CPS_coverage_2024_grouped.png" alt="Coverage type, native-born vs legal immigrant vs undocumented, 2024, CPS-ASEC">
+          <figcaption>Native-born vs. legal immigrant vs. undocumented</figcaption>
+        </figure>
+        <figure>
+          <img src="results/CPS_coverage_2024_COMBINED.png" alt="Coverage type, native-born vs all immigrants, 2024, CPS-ASEC">
+          <figcaption>Native-born vs. all immigrants</figcaption>
+        </figure>
+      </div>
 
       <h3 id="cps-uninsured">Uninsured</h3>
       <div class="note">Analysis not yet available for CPS-ASEC.</div>
