@@ -328,7 +328,10 @@
     <section id="methodology">
       <h2>Methodology: The Residual Method</h2>
       <p>ACS and CPS-ASEC don't directly ask respondents whether they're in the country legally, so immigration legal status is imputed using a <strong>residual method</strong>: each immigrant is assumed to be legally present unless nothing in their record indicates otherwise, and whoever is left over is classified as undocumented.</p>
-      <p>Immigrants are flagged as likely <strong>legal</strong> if they show any of several proxies for lawful status: naturalized citizenship, arrival before 1982 (eligible for the IRCA amnesty), receipt of benefits that require legal status (Social Security, SSI, welfare income), military veteran status, federal government employment, or Cuban/Vietnamese birth-place codes tied to historical refugee admission. It also accounts for <strong>state-specific Medicaid/CHIP eligibility expansions</strong> that extended coverage regardless of status (e.g., California's phased Medi-Cal expansion, Illinois's All Kids/HBIA/HBIS programs), since receiving means-tested Medicaid in those cases doesn't imply legal status the way it does elsewhere. Legal status is also imputed to a household's other members if the household head or spouse is already determined to be legally present. Anyone not captured by these rules is classified as <strong>undocumented</strong>, and their survey weight is adjusted upward using an undercount correction that shrinks the longer they've been in the country, since undocumented respondents are known to be undercounted in survey data.</p>
+      <details class="method-code">
+        <summary>▸ View classification rules in detail</summary>
+        <p style="margin-top: 12px;">Immigrants are flagged as likely <strong>legal</strong> if they show any of several proxies for lawful status: naturalized citizenship, arrival before 1982 (eligible for the IRCA amnesty), receipt of benefits that require legal status (Social Security, SSI, welfare income), military veteran status, federal government employment, or Cuban/Vietnamese birth-place codes tied to historical refugee admission. It also accounts for <strong>state-specific Medicaid/CHIP eligibility expansions</strong> that extended coverage regardless of status (e.g., California's phased Medi-Cal expansion, Illinois's All Kids/HBIA/HBIS programs), since receiving means-tested Medicaid in those cases doesn't imply legal status the way it does elsewhere. Legal status is also imputed to a household's other members if the household head or spouse is already determined to be legally present. Anyone not captured by these rules is classified as <strong>undocumented</strong>, and their survey weight is adjusted upward using an undercount correction that shrinks the longer they've been in the country, since undocumented respondents are known to be undercounted in survey data.</p>
+      </details>
 
       <details class="method-code">
         <summary>▸ View R implementation</summary>
@@ -475,7 +478,7 @@ acs = acs %>%
     </section>
 
     <section id="age">
-      <h2>Age</h2>
+      <h2>Age of Medicaid Enrollees</h2>
       <div class="fig-grid">
         <figure>
           <img src="results/ACS_age_density.gif" alt="Age density over time, all immigrants vs native born">
@@ -581,6 +584,10 @@ acs = acs %>%
         <img src="results/NOCA_medicaid_age_trend.png" alt="Median age of Medicaid enrollees, excluding California">
         <figcaption><span class="fig-num">Fig. 22</span> Median age of Medicaid enrollees, excluding California</figcaption>
       </figure>
+
+      <div class="note" style="font-size: 13px; margin-top: 24px;">
+        <strong>A note on ACS editing for respondents 65+:</strong> Under the Census Bureau's ACS health-insurance editing procedure, respondents aged 65 and older who report Medicaid coverage but do not directly report Medicare are automatically assigned Medicare coverage as well, on the assumption that nearly all seniors qualify for Medicare regardless of what they report on the survey. As a result, for the 65+ population, a "Medicaid" flag in ACS data effectively captures dual Medicare–Medicaid eligibility rather than Medicaid coverage alone. This editing rule should be kept in mind when interpreting Medicaid enrollment and median-age trends among older respondents in this analysis, since it can affect comparisons across immigration-status groups differently depending on how each group's older cohort reports coverage.
+      </div>
     </section>
 
     <section id="cps-asec">
