@@ -273,3 +273,7 @@ acs %>% filter(citizen == 3, bpl >= 150, age >= 65) %>%
     .groups = "drop") %>% 
   arrange(year, coverage_type) %>%
   print(n = Inf)
+
+medicaid_65plus %>%
+  count(immig_status)
+

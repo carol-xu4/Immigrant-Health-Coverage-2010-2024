@@ -79,7 +79,8 @@ cps = cps %>%
     relate == 101 ~ 1,
     relate %in% c(201, 202, 203) ~ 2,
     relate %in% c(301, 303) ~ 3,
-    TRUE ~ 9)) %>%
+    relate == 901 ~ 9,
+    TRUE ~ 10)) %>%
   mutate(incssi = ifelse(incssi == 999999, 99999, incssi)) %>%
   mutate(incss = ifelse(incss == 999999, 99999, incss)) %>%
   mutate(incwelfr = ifelse(incwelfr == 999999, 99999, incwelfr))
