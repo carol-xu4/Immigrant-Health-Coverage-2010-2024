@@ -5,7 +5,7 @@ pacman::p_load(tidyverse, ggthemes, readxl, data.table, gdata, ipumsr)
 # Set working directory 
 setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Coverage 2010-2024")
 
-# ACS data -----------------------------------------------------------------
+# CPS data -----------------------------------------------------------------
 ddi_cps = read_ipums_ddi("data/input/cps_00004.xml")
 cps = read_ipums_micro(ddi_cps)
 
