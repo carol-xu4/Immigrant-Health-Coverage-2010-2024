@@ -1189,3 +1189,126 @@ dual_enrollees = acsdata %>%
   summarise(dual = sum(perwt, na.rm = TRUE)) %>%
   print(n = Inf)
 
+# States
+medi_cal = acsdata %>%
+  filter(statefip == 6, hinscaid == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
+
+il_hbia = acsdata %>%
+  filter(statefip == 17, hinscaid == 2, age <= 64 & age >= 42 ) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
+
+ny_kids = acsdata %>%
+  filter(statefip == 36, hinscaid == 2, age <= 18) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
+
+ny_undoc_medicaid = acsdata %>% 
+  filter(statefip == 36, hinscaid == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
+
+wa_undoc_medicaid = acsdata %>% 
+  filter(statefip == 53, hinscaid == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
+
+wa_undoc_uninsured = acsdata %>% 
+  filter(statefip == 53, hcovany == 1) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
+
+or_undoc_medicaid = acsdata %>% 
+  filter(statefip == 41, hinscaid == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
+
+nj_undoc_medicaid = acsdata %>% 
+  filter(statefip == 34, hinscaid == 2, year == 2024) %>%
+  group_by(year, immig_status, age) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
+
+ct_undoc_medicaid = acsdata %>% 
+  filter(statefip == 9, hinscaid == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
+
+ct_undoc = acsdata %>%
+  filter(statefip == 9, year == 2024) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+ print(n = Inf)
+
+ri_undoc_medicaid = acsdata %>% 
+  filter(statefip == 44, hinscaid == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
+
+me_undoc_medicaid = acsdata %>% 
+  filter(statefip == 23, hinscaid == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
+
+vt_undoc_medicaid = acsdata %>% 
+  filter(statefip == 50, hinscaid == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
+
+acsdata %>% 
+  filter(statefip == 25, hinscaid == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup() %>%
+  print(n = Inf)
