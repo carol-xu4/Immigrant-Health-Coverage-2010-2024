@@ -290,6 +290,20 @@
     letter-spacing: 0.08em;
   }
 
+  /* Embedded HTML table (gt) */
+  .table-embed{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 16px;
+    margin: 20px 0;
+  }
+  .table-embed iframe{
+    width: 100%;
+    border: none;
+    display: block;
+  }
+
   footer{
     grid-column: 1 / -1;
     border-top: 1px solid var(--line);
@@ -333,6 +347,10 @@
       <li class="sub"><a href="#age">Age</a></li>
       <li class="sub"><a href="#expansions">State Expansions</a></li>
       <li class="sub"><a href="#california">California</a></li>
+      <li class="sub"><a href="#children">Children</a></li>
+      <li class="sub" style="padding-left: 32px;"><a href="#children-immigration-status">Immigration Status</a></li>
+      <li class="sub" style="padding-left: 32px;"><a href="#children-foreign-parents">Foreign Parents</a></li>
+      <li class="sub" style="padding-left: 32px;"><a href="#children-parental-status">Parental Status</a></li>
       <li><strong>CPS-ASEC data</strong></li>
       <li class="sub"><a href="#cps-overview">Overview</a></li>
       <li class="sub"><a href="#cps-coverage">Health Coverage</a></li>
@@ -528,7 +546,7 @@ acs = acs <span class="tok-op">%&gt;%</span>
       </figure>
 
       <div class="note" style="font-size: 13px; margin-top: 24px;">
-        <strong>A note on ACS editing for respondents 65+:</strong> Under the Census Bureau's ACS editing procedure, respondents aged 65 and older who report Medicaid but not Medicare are automatically assigned Medicare coverage as well, since nearly all seniors qualify regardless of what they report. As a result, for the 65+ population, a "Medicaid" flag in ACS data reflects dual Medicare–Medicaid eligibility rather than Medicaid alone.
+        <strong>A note on ACS editing for respondents 65+:</strong> Under the Census Bureau's ACS editing procedure, respondents aged 65 and older who report Medicaid but not Medicare are automatically assigned Medicare coverage as well, since nearly all seniors qualify regardless of what they report. As a result, the residual method fails to capture a portion of undocumented immigrants age 65+.
       </div>
 
       <h3 id="expansions">State Health Coverage Expansions for Undocumented Immigrants</h3>
@@ -610,6 +628,39 @@ acs = acs <span class="tok-op">%&gt;%</span>
         <figure>
           <img src="results/CA_age_density.gif" alt="California age density">
           <figcaption><span class="fig-num">Fig. 22</span> California age density</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="children">
+      <h2>Children</h2>
+
+      <h3 id="children-immigration-status">Immigration Status</h3>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/kids_by_status_2024.png" alt="Number of children by immigration status, 2024">
+          <figcaption><span class="fig-num">Fig. 23</span> Number of children by immigration status, 2024</figcaption>
+        </figure>
+        <div class="table-embed">
+          <iframe src="results/child_status_table.html" height="420" title="Children by own immigration status, 2014-2024"></iframe>
+        </div>
+      </div>
+
+      <h3 id="children-foreign-parents">Foreign Parents</h3>
+      <figure>
+        <img src="results/foreignparents.png" alt="Native-born children with at least one foreign-born parent">
+        <figcaption><span class="fig-num">Fig. 24</span> Native-born children with at least one foreign-born parent</figcaption>
+      </figure>
+
+      <h3 id="children-parental-status">Parental Status</h3>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/parent_status_composition_all.png" alt="Children by parental immigration status, all children">
+          <figcaption><span class="fig-num">Fig. 25</span> Children by parental immigration status (all children)</figcaption>
+        </figure>
+        <figure>
+          <img src="results/parent_status_composition_native.png" alt="Native-born children by parental immigration status">
+          <figcaption><span class="fig-num">Fig. 26</span> Native-born children by parental immigration status</figcaption>
         </figure>
       </div>
     </section>
