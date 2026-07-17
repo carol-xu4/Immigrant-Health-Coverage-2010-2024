@@ -1,0 +1,139 @@
+<svg width="680" height="1512" viewBox="0 0 680 1512" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Full residual method decision tree</title>
+<desc>Complete flowchart of the ACS residual method: native-born gate, ten legal-status proxy checks, two rounds of household spillover, undocumented fallback with weight adjustment, and the final naturalized-citizen versus legal-immigrant label split.</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+<style>
+  text{ font-family:'IBM Plex Sans','Segoe UI',Helvetica,Arial,sans-serif; }
+  .th{ font-size:14px; font-weight:500; }
+  .ts{ font-size:12px; font-weight:400; }
+  .arr{ stroke:#6B7280; stroke-width:1.5; fill:none; }
+</style>
+
+<rect x="250" y="30" width="180" height="44" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="340" y="52" text-anchor="middle" fill="#1C2530">ACS person record</text>
+<line x1="340" y1="74" x2="340" y2="94" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="94" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="112" text-anchor="middle" fill="#1C2530">Immigrant &amp; foreign-born?</text>
+<text class="ts" x="190" y="132" text-anchor="middle" fill="#6B7280">citizen∈{2,3}, bpl≥150</text>
+<line x1="320" y1="122" x2="420" y2="122" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="330" y="116" fill="#6B7280">No</text>
+<line x1="190" y1="150" x2="190" y2="170" class="arr" marker-end="url(#arrow)"/>
+<text class="ts" x="198" y="164" fill="#6B7280">Yes</text>
+
+<rect x="420" y="94" width="180" height="56" rx="8" fill="#E7F3EA" stroke="#2F7D4F" stroke-width="1"/>
+<text class="th" x="510" y="112" text-anchor="middle" fill="#1F5C3A">Native-born</text>
+<text class="ts" x="510" y="132" text-anchor="middle" fill="#2F7D4F">status = 1</text>
+
+<rect x="420" y="170" width="180" height="892" rx="8" fill="#E7EEEE" stroke="#2E5F63" stroke-width="1"/>
+<text class="th" x="510" y="606" text-anchor="middle" fill="#2E5F63">Legal</text>
+<text class="ts" x="510" y="626" text-anchor="middle" fill="#2E5F63">status = 2</text>
+
+<rect x="60" y="170" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="188" text-anchor="middle" fill="#1C2530">Naturalized citizen?</text>
+<text class="ts" x="190" y="208" text-anchor="middle" fill="#6B7280">citizen == 2</text>
+<line x1="320" y1="198" x2="420" y2="198" class="arr" marker-end="url(#arrow)"/>
+<line x1="190" y1="226" x2="190" y2="246" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="246" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="264" text-anchor="middle" fill="#1C2530">Arrived before 1982?</text>
+<text class="ts" x="190" y="284" text-anchor="middle" fill="#6B7280">yrimmig &lt; 1982</text>
+<line x1="320" y1="274" x2="420" y2="274" class="arr" marker-end="url(#arrow)"/>
+<line x1="190" y1="302" x2="190" y2="322" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="322" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="340" text-anchor="middle" fill="#1C2530">Receives Social Security?</text>
+<text class="ts" x="190" y="360" text-anchor="middle" fill="#6B7280">incss &gt; 0</text>
+<line x1="320" y1="350" x2="420" y2="350" class="arr" marker-end="url(#arrow)"/>
+<line x1="190" y1="378" x2="190" y2="398" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="398" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="416" text-anchor="middle" fill="#1C2530">Receives SSI?</text>
+<text class="ts" x="190" y="436" text-anchor="middle" fill="#6B7280">incsupp &gt; 0</text>
+<line x1="320" y1="426" x2="420" y2="426" class="arr" marker-end="url(#arrow)"/>
+<line x1="190" y1="454" x2="190" y2="474" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="474" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="492" text-anchor="middle" fill="#1C2530">Receives welfare?</text>
+<text class="ts" x="190" y="512" text-anchor="middle" fill="#6B7280">incwelfr &gt; 0</text>
+<line x1="320" y1="502" x2="420" y2="502" class="arr" marker-end="url(#arrow)"/>
+<line x1="190" y1="530" x2="190" y2="550" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="550" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="568" text-anchor="middle" fill="#1C2530">Has Medicare?</text>
+<text class="ts" x="190" y="588" text-anchor="middle" fill="#6B7280">hinscare == 2</text>
+<line x1="320" y1="578" x2="420" y2="578" class="arr" marker-end="url(#arrow)"/>
+<line x1="190" y1="606" x2="190" y2="626" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="626" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="644" text-anchor="middle" fill="#1C2530">Medicaid outside expansion?</text>
+<text class="ts" x="190" y="664" text-anchor="middle" fill="#6B7280">hinscaid==2, 10 carve-outs</text>
+<line x1="320" y1="654" x2="420" y2="654" class="arr" marker-end="url(#arrow)"/>
+<line x1="190" y1="682" x2="190" y2="702" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="702" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="720" text-anchor="middle" fill="#1C2530">Veteran?</text>
+<text class="ts" x="190" y="740" text-anchor="middle" fill="#6B7280">vetstat == 2</text>
+<line x1="320" y1="730" x2="420" y2="730" class="arr" marker-end="url(#arrow)"/>
+<line x1="190" y1="758" x2="190" y2="778" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="778" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="796" text-anchor="middle" fill="#1C2530">Active armed forces?</text>
+<text class="ts" x="190" y="816" text-anchor="middle" fill="#6B7280">classwkrd == 26</text>
+<line x1="320" y1="806" x2="420" y2="806" class="arr" marker-end="url(#arrow)"/>
+<line x1="190" y1="834" x2="190" y2="854" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="854" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="872" text-anchor="middle" fill="#1C2530">Born in Cuba, pre-2017?</text>
+<text class="ts" x="190" y="892" text-anchor="middle" fill="#6B7280">bpld==25000 &amp; yrimmig&lt;2017</text>
+<line x1="320" y1="882" x2="420" y2="882" class="arr" marker-end="url(#arrow)"/>
+<line x1="190" y1="910" x2="190" y2="930" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="930" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="948" text-anchor="middle" fill="#1C2530">Married head; spouse legal?</text>
+<text class="ts" x="190" y="968" text-anchor="middle" fill="#6B7280">round 1: spouse to head</text>
+<line x1="320" y1="958" x2="420" y2="958" class="arr" marker-end="url(#arrow)"/>
+<line x1="190" y1="986" x2="190" y2="1006" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="1006" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="1024" text-anchor="middle" fill="#1C2530">Head confirmed legal?</text>
+<text class="ts" x="190" y="1044" text-anchor="middle" fill="#6B7280">round 2: head to family</text>
+<line x1="320" y1="1034" x2="420" y2="1034" class="arr" marker-end="url(#arrow)"/>
+<line x1="190" y1="1062" x2="190" y2="1082" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="1082" width="260" height="56" rx="8" fill="#FBEAEA" stroke="#B23A3A" stroke-width="1"/>
+<text class="th" x="190" y="1100" text-anchor="middle" fill="#8A2A2A">Undocumented</text>
+<text class="ts" x="190" y="1120" text-anchor="middle" fill="#B23A3A">status = 3</text>
+<line x1="190" y1="1138" x2="190" y2="1158" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="60" y="1158" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="190" y="1176" text-anchor="middle" fill="#1C2530">Weight boosted</text>
+<text class="ts" x="190" y="1196" text-anchor="middle" fill="#6B7280">larger boost for recent arrivals</text>
+
+<path d="M510 1062 L510 1130 L340 1130 L340 1254" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="230" y="1254" width="220" height="56" rx="8" fill="#E7EEEE" stroke="#2E5F63" stroke-width="1"/>
+<text class="th" x="340" y="1272" text-anchor="middle" fill="#2E5F63">Legal</text>
+<text class="ts" x="340" y="1292" text-anchor="middle" fill="#2E5F63">status = 2</text>
+<line x1="340" y1="1310" x2="340" y2="1330" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="210" y="1330" width="260" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="340" y="1348" text-anchor="middle" fill="#1C2530">citizen == 2?</text>
+<text class="ts" x="340" y="1368" text-anchor="middle" fill="#6B7280">naturalization field</text>
+
+<path d="M410 1386 L410 1406 L550 1406 L550 1416" class="arr" marker-end="url(#arrow)"/>
+<path d="M270 1386 L270 1406 L225 1406 L225 1416" class="arr" marker-end="url(#arrow)"/>
+
+<rect x="465" y="1416" width="170" height="56" rx="8" fill="#E7F3EA" stroke="#2F7D4F" stroke-width="1"/>
+<text class="th" x="550" y="1434" text-anchor="middle" fill="#1F5C3A">Naturalized citizen</text>
+<text class="ts" x="550" y="1454" text-anchor="middle" fill="#2F7D4F">final label</text>
+
+<rect x="140" y="1416" width="170" height="56" rx="8" fill="#FFFFFF" stroke="#DCD8CE" stroke-width="1"/>
+<text class="th" x="225" y="1434" text-anchor="middle" fill="#1C2530">Legal immigrant</text>
+<text class="ts" x="225" y="1454" text-anchor="middle" fill="#6B7280">final label</text>
+
+</svg>

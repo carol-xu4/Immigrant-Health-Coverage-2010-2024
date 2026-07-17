@@ -374,6 +374,7 @@
       <li class="sub" style="padding-left: 32px;"><a href="#children-immigration-status">Immigration Status</a></li>
       <li class="sub" style="padding-left: 32px;"><a href="#children-foreign-parents">Foreign Parents</a></li>
       <li class="sub" style="padding-left: 32px;"><a href="#children-parental-status">Parental Status</a></li>
+      <li class="sub" style="padding-left: 32px;"><a href="#children-medicaid">Medicaid</a></li>
       <li><strong>CPS-ASEC data</strong></li>
       <li class="sub"><a href="#cps-overview">Overview</a></li>
       <li class="sub"><a href="#cps-coverage">Health Coverage</a></li>
@@ -474,6 +475,13 @@ acs = acs <span class="tok-op">%&gt;%</span>
                                           <span class="tok-string">&quot;Naturalized citizen&quot;</span>,
                                           <span class="tok-string">&quot;Legal immigrant&quot;</span>,
                                           <span class="tok-string">&quot;Undocumented&quot;</span>)))</code></pre>
+      </details>
+
+      <details class="method-code">
+        <summary>▸ View decision tree</summary>
+        <figure style="margin-top: 12px;">
+          <img src="results/decision_tree.svg" alt="Full decision tree of the residual method classification logic">
+        </figure>
       </details>
     </section>
 
@@ -713,6 +721,18 @@ acs = acs <span class="tok-op">%&gt;%</span>
         <figure>
           <img src="results/parent_status_composition_native.png" alt="Native-born children by parental immigration status">
           <figcaption><span class="fig-num">Fig. 26</span> Native-born children by parental immigration status</figcaption>
+        </figure>
+      </div>
+
+      <h3 id="children-medicaid">Medicaid</h3>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/medicaid_pct_native_by_parent_status.png" alt="Medicaid coverage among native-born children by parental immigration status">
+          <figcaption><span class="fig-num">Fig. 27</span> Medicaid coverage among native-born children, by parental immigration status</figcaption>
+        </figure>
+        <figure>
+          <img src="results/medicaid_undoc_mixed.png" alt="Medicaid coverage among native-born children, both vs one undocumented parent">
+          <figcaption><span class="fig-num">Fig. 28</span> Medicaid coverage, both vs. one undocumented parent</figcaption>
         </figure>
       </div>
     </section>
