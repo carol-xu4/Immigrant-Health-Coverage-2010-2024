@@ -1270,3 +1270,77 @@ ggplot(medicaid_single_parent,
 
 ggsave("results/medicaid_single_parent_by_immig_status.png", width = 15, height = 10)
 
+# kids of separated parents
+marst_lookup = acskids[, .(year, serial, pernum, marst, immig_status)]
+setDT(marst_lookup)
+
+acskids2[marst_lookup, marst_mom  := i.marst, on = .(year, serial, momloc  = pernum)]
+acskids2[marst_lookup, marst_pop  := i.marst, on = .(year, serial, poploc  = pernum)]
+acskids2[marst_lookup, marst_mom2 := i.marst, on = .(year, serial, momloc2 = pernum)]
+acskids2[marst_lookup, marst_pop2 := i.marst, on = .(year, serial, poploc2 = pernum)]
+
+separated_kids = acskids2[
+  (marst_mom == 3 | marst_pop == 3 | marst_mom2 == 3 | marst_pop2 == 3)]
+
+separated_kids[, parent_immig_status_sep := fcase(
+  marst_mom  == 3, as.character(immig_status_mom),
+  marst_pop  == 3, as.character(immig_status_pop),
+  marst_mom2 == 3, as.character(immig_status_mom2),
+  marst_pop2 == 3, as.character(immig_status_pop2))]
+
+table(separated_kids$parent_immig_status_sep)
+
+separated_kids[, .N, by = .(marst_mom == 3, marst_pop == 3)]
+
+medicaid_separated = separated_kids[!is.na(parent_immig_status_sep), .(
+    pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt),
+    pop_medicaid = sum(perwt[hinscaid == 2]),
+    pop = sum(perwt)
+  ), by = .(year, parent_immig_status_sep)]
+
+print(medicaid_separated[order(year, parent_immig_status_sep)], nrow = Inf)
+
+ggplot(medicaid_separated, aes(x = year, y = pct_medicaid, color = parent_immig_status_sep)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_x_continuous(breaks = unique(medicaid_separated$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Native-born"         = "#3043B4",
+    "Naturalized citizen" = "#0D0E51",
+    "Legal immigrant"     = "#7C756D",
+    "Undocumented"        = "#C97703")) +
+  labs(
+    title = "Medicaid coverage among children of separated parents",
+    subtitle = "Parent reports 'separated' marital status; by parent's immigration status",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 18, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/medicaid_kids_separated_parent.png", width = 15, height = 10)
