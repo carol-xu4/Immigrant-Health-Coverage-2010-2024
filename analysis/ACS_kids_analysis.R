@@ -1151,3 +1151,122 @@ ggplot(medicaid_by_marital, aes(x = year, y = pct_medicaid, color = marital_grou
   guides(color = guide_legend(nrow = 1, byrow = TRUE))
 
 ggsave("results/medicaid_kids_by_undoc_parent_marital_status.png", width = 15, height = 10)
+
+# single parent households
+# defined as both single co-resident parent AND that parent has no spouse present in household
+
+# any household head or spouse, 18+, marst == 3 (separated) - check if a spouse still co-resides
+separated_adults_all = acskids %>%
+  filter(age >= 18, relate %in% c(1, 2), marst == 3) %>%
+  distinct(year, serial, pernum)
+
+separated_households_all = separated_adults_all %>% distinct(year, serial)
+
+spouse_present_check_all = acskids %>%
+  semi_join(separated_households_all, by = c("year", "serial")) %>%
+  filter(relate == 2) %>%
+  distinct(year, serial)
+
+sep_with_spouse_all = separated_adults_all %>%
+  semi_join(spouse_present_check_all, by = c("year", "serial")) %>%
+  mutate(flag_spouse_present = TRUE)
+
+adult_spouse_status = acskids %>%
+  filter(age >= 18, relate %in% c(1, 2)) %>%
+  left_join(sep_with_spouse_all %>% select(year, serial, pernum, flag_spouse_present),
+            by = c("year", "serial", "pernum")) %>%
+  mutate(
+    spouse_present = case_when(
+      marst == 1 ~ TRUE,                              # married, spouse present
+      marst == 3 & !is.na(flag_spouse_present) ~ TRUE, # separated, but spouse actually co-resides
+      TRUE ~ FALSE                                     # spouse absent, divorced, widowed, never married
+    )
+  ) %>%
+  select(year, serial, pernum, spouse_present)
+
+setDT(adult_spouse_status)
+
+acskids2[adult_spouse_status, spouse_present_mom  := i.spouse_present, on = .(year, serial, momloc  = pernum)]
+acskids2[adult_spouse_status, spouse_present_pop  := i.spouse_present, on = .(year, serial, poploc  = pernum)]
+acskids2[adult_spouse_status, spouse_present_mom2 := i.spouse_present, on = .(year, serial, momloc2 = pernum)]
+acskids2[adult_spouse_status, spouse_present_pop2 := i.spouse_present, on = .(year, serial, poploc2 = pernum)]
+
+acskids2[, n_parents_present := (momloc > 0) + (poploc > 0) + (momloc2 > 0) + (poploc2 > 0)]
+
+# which slot is the (sole) present parent, and is that parent's spouse present?
+acskids2[, spouse_present_single := fcase(
+  n_parents_present == 1 & momloc  > 0, spouse_present_mom,
+  n_parents_present == 1 & poploc  > 0, spouse_present_pop,
+  n_parents_present == 1 & momloc2 > 0, spouse_present_mom2,
+  n_parents_present == 1 & poploc2 > 0, spouse_present_pop2
+)]
+
+acskids2[, single_parent_hh := n_parents_present == 1 & spouse_present_single == FALSE]
+
+table(acskids2$single_parent_hh, useNA = "always")
+
+acskids2[, parent_immig_status_single := fcase(
+  n_parents_present == 1 & momloc  > 0, as.character(immig_status_mom),
+  n_parents_present == 1 & poploc  > 0, as.character(immig_status_pop),
+  n_parents_present == 1 & momloc2 > 0, as.character(immig_status_mom2),
+  n_parents_present == 1 & poploc2 > 0, as.character(immig_status_pop2)
+)]
+
+single_parent_kids = acskids2[single_parent_hh == TRUE & !is.na(parent_immig_status_single)]
+
+table(single_parent_kids$parent_immig_status_single)
+
+medicaid_single_parent = single_parent_kids[, .(
+    pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt),
+    pop_medicaid = sum(perwt[hinscaid == 2]),
+    pop = sum(perwt)
+  ), by = .(year, parent_immig_status_single)]
+
+print(medicaid_single_parent[order(year, parent_immig_status_single)], nrow = Inf)
+
+ggplot(medicaid_single_parent,
+       aes(x = year, y = pct_medicaid, color = parent_immig_status_single)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(40, 100)) +
+  scale_x_continuous(breaks = unique(medicaid_single_parent$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Native-born"         = "#3043B4",
+    "Naturalized citizen" = "#0D0E51",
+    "Legal immigrant"     = "#7C756D",
+    "Undocumented"        = "#C97703")) +
+  labs(
+    title = "Medicaid coverage among children in single-parent households",
+    subtitle = "By single parent's immigration status; single parent = sole co-resident parent, no spouse present",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 18, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/medicaid_single_parent_by_immig_status.png", width = 15, height = 10)
+
