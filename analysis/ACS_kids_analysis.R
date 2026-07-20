@@ -748,3 +748,406 @@ ggplot(undoc_combined, aes(x = year, y = pct_medicaid, color = group, linetype =
   guides(color = guide_legend(nrow = 1, byrow = TRUE))
 
 ggsave("results/medicaid_undoc_parents_vs_children.png", width = 15, height = 10)
+
+# married parents, where one is out of the household
+# married, spouse absent or separated
+undoc_spouse_absent = acskids %>%
+  filter(immig_status == "Undocumented", marst %in% c(2, 3), age >= 18) %>%
+  group_by(year) %>%
+  summarise(pop = sum(perwt), n = n())
+
+# married spouse absent, separated, divorced, or widowed
+undoc_no_spouse = acskids %>%
+  filter(immig_status == "Undocumented", marst %in% c(2, 3, 4, 5), age >= 18) %>%
+  group_by(year) %>%
+  summarise(pop = sum(perwt), n = n())
+
+print(undoc_spouse_absent, n = Inf)
+print(undoc_no_spouse, n = Inf)
+
+undoc_total = acskids %>%
+  filter(immig_status == "Undocumented", age >= 18) %>%
+  group_by(year) %>%
+  summarise(total_pop = sum(perwt))
+
+undoc_spouse_absent %>%
+  left_join(undoc_total, by = "year") %>%
+  mutate(pct = pop / total_pop * 100)
+
+undoc_spouse_absent_pct = undoc_spouse_absent %>%
+  left_join(undoc_total, by = "year") %>%
+  mutate(pct = pop / total_pop * 100)
+
+ggplot(undoc_spouse_absent_pct, aes(x = year, y = pop)) +
+  geom_line(color = "#3043B4", linewidth = 1.2) +
+  geom_point(color = "#3043B4", size = 2) +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +
+  scale_x_continuous(breaks = unique(undoc_spouse_absent_pct$year)[c(TRUE, FALSE)]) +
+  labs(
+    title = "Undocumented adults, married with spouse absent or separated",
+    subtitle = "ACS; age ≥ 18",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/undoc_spouse_absent_pop.png", width = 15, height = 10)
+
+ggplot(undoc_spouse_absent_pct, aes(x = year, y = pct)) +
+  geom_line(color = "#3043B4", linewidth = 1.2) +
+  geom_point(color = "#3043B4", size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_x_continuous(breaks = unique(undoc_spouse_absent_pct$year)[c(TRUE, FALSE)]) +
+  labs(
+    title = "Share of undocumented adults, married with spouse absent or separated",
+    subtitle = "ACS; age ≥ 18",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/undoc_spouse_absent_pct.png", width = 15, height = 10)
+
+undoc_no_spouse_pct = undoc_no_spouse %>%
+  left_join(undoc_total, by = "year") %>%
+  mutate(pct = pop / total_pop * 100)
+
+ggplot(undoc_no_spouse_pct, aes(x = year, y = pop)) +
+  geom_line(color = "#C97703", linewidth = 1.2) +
+  geom_point(color = "#C97703", size = 2) +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M"), limits = c(1500000, 3000000)) +
+  scale_x_continuous(breaks = unique(undoc_no_spouse_pct$year)[c(TRUE, FALSE)]) +
+  labs(
+    title = "Undocumented adults with no current spouse",
+    subtitle = "Spouse absent, separated, divorced, or widowed; ACS, age ≥ 18",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/undoc_no_spouse_pop.png", width = 15, height = 10)
+
+ggplot(undoc_no_spouse_pct, aes(x = year, y = pct)) +
+  geom_line(color = "#C97703", linewidth = 1.2) +
+  geom_point(color = "#C97703", size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_x_continuous(breaks = unique(undoc_no_spouse_pct$year)[c(TRUE, FALSE)]) +
+  labs(
+    title = "Share of undocumented adults with no current spouse",
+    subtitle = "Spouse absent, separated, divorced, or widowed; ACS, age ≥ 18",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/undoc_no_spouse_pct.png", width = 15, height = 10)
+
+# sanity check: undocumented parents who are separated, who is in the household?
+separated_parents = acskids %>%
+  filter(immig_status == "Undocumented", marst == 3, age >= 18) %>%
+  distinct(year, serial, pernum)
+
+nrow(separated_parents)
+
+separated_households = separated_parents %>% distinct(year, serial)
+
+spouse_present_check_sep = acskids %>%
+  semi_join(separated_households, by = c("year", "serial")) %>%
+  filter(relate == 2) %>%
+  distinct(year, serial)
+
+nrow(spouse_present_check_sep)
+nrow(separated_households)
+nrow(spouse_present_check_sep) / nrow(separated_households) * 100
+
+separated_true_absent = separated_parents %>%
+  anti_join(spouse_present_check_sep, by = c("year", "serial"))
+
+nrow(separated_true_absent)
+
+undoc_parents_marital = acskids %>%
+  filter(immig_status == "Undocumented", age >= 18, relate %in% c(1, 2)) %>%
+  mutate(year_serial_pernum = paste(year, serial, pernum)) 
+
+# flag which separated parents have a spouse still present (the 11%)
+sep_with_spouse = separated_parents %>%
+  semi_join(spouse_present_check_sep, by = c("year", "serial")) %>%
+  mutate(flag = "sep_spouse_present")
+
+undoc_parents_marital = undoc_parents_marital %>%
+  left_join(sep_with_spouse %>% select(year, serial, pernum, flag),
+            by = c("year", "serial", "pernum")) %>%
+  mutate(
+    marital_group = case_when(
+      marst == 1 ~ "Married, spouse present",
+      marst == 3 & !is.na(flag) ~ "Married, spouse present",  # reclassify the 11%
+      marst == 2 | marst == 3 ~ "Separated, spouse not present",
+      marst %in% c(4, 5) ~ "No spouse (divorced/widowed)",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  filter(!is.na(marital_group))
+
+table(undoc_parents_marital$marital_group)
+
+marital_group_year = undoc_parents_marital %>%
+  group_by(year, marital_group) %>%
+  summarise(pop = sum(perwt), .groups = "drop")
+
+print(marital_group_year, n = Inf)
+
+ggplot(marital_group_year, aes(x = year, y = pop, color = marital_group)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +
+  scale_x_continuous(breaks = unique(marital_group_year$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Married, spouse present" = "#3043B4",
+    "Separated, spouse not present" = "#C97703",
+    "No spouse (divorced/widowed)" = "#7C756D")) +
+  labs(
+    title = "Undocumented parents by marital status",
+    subtitle = "ACS; parents defined as coresident household head or spouse",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/undoc_parents_marital_status.png", width = 15, height = 10)
+
+marital_group_year_pct = marital_group_year %>%
+  group_by(year) %>%
+  mutate(pct = pop / sum(pop) * 100) %>%
+  ungroup()
+
+ggplot(marital_group_year_pct, aes(x = year, y = pct, fill = marital_group)) +
+  geom_col(position = "fill", width = 0.7) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_x_continuous(breaks = unique(marital_group_year_pct$year)[c(TRUE, FALSE)]) +
+  scale_fill_manual(values = c(
+    "Married, spouse present" = "#3043B4",
+    "Separated, spouse not present" = "#C97703",
+    "No spouse (divorced/widowed)" = "#7C756D")) +
+  labs(
+    title = "Undocumented parents by marital status",
+    subtitle = "Share of total; ACS, parents defined as coresident household head or spouse",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/undoc_parents_marital_status_pct.png", width = 15, height = 10)
+
+# restrict to parents only
+parent_pernums = acskids %>%
+  filter(momloc > 0 | poploc > 0 | momloc2 > 0 | poploc2 > 0) %>%
+  select(year, serial, momloc, poploc, momloc2, poploc2) %>%
+  pivot_longer(cols = c(momloc, poploc, momloc2, poploc2),
+               values_to = "pernum") %>%
+  filter(pernum > 0) %>%
+  distinct(year, serial, pernum)
+
+undoc_parents_marital = acskids %>%
+  filter(immig_status == "Undocumented", age >= 18) %>%
+  semi_join(parent_pernums, by = c("year", "serial", "pernum"))
+
+sep_with_spouse = separated_parents %>%
+  semi_join(spouse_present_check_sep, by = c("year", "serial")) %>%
+  mutate(flag = "sep_spouse_present")
+
+undoc_parents_marital = undoc_parents_marital %>%
+  left_join(sep_with_spouse %>% select(year, serial, pernum, flag),
+            by = c("year", "serial", "pernum")) %>%
+  mutate(
+    marital_group = case_when(
+    marst == 1 ~ "Married, spouse present",
+    marst == 3 & !is.na(flag) ~ "Married, spouse present",  # reclassify the 11%
+    marst == 2 | marst == 3 ~ "Separated, spouse not present",
+    marst %in% c(4, 5, 6) ~ "No spouse (divorced/widowed/never married)",
+    TRUE ~ NA_character_
+    )
+  ) %>%
+  filter(!is.na(marital_group))
+
+table(undoc_parents_marital$marital_group)
+
+# lookup: undocumented parent's marital_group, keyed by (year, serial, pernum)
+parent_marital_dt = as.data.table(undoc_parents_marital)[, .(year, serial, pernum, marital_group)]
+
+acskids2[parent_marital_dt, marital_group_mom  := i.marital_group, on = .(year, serial, momloc  = pernum)]
+acskids2[parent_marital_dt, marital_group_pop  := i.marital_group, on = .(year, serial, poploc  = pernum)]
+acskids2[parent_marital_dt, marital_group_mom2 := i.marital_group, on = .(year, serial, momloc2 = pernum)]
+acskids2[parent_marital_dt, marital_group_pop2 := i.marital_group, on = .(year, serial, poploc2 = pernum)]
+
+acskids2[, marital_group_child := fcoalesce(marital_group_mom, marital_group_pop,
+                                             marital_group_mom2, marital_group_pop2)]
+
+kids_undoc_parents = acskids2[!is.na(marital_group_child)]
+
+acskids2[!is.na(marital_group_mom) & !is.na(marital_group_pop) &
+         marital_group_mom != marital_group_pop, .N]
+acskids2[!is.na(marital_group_mom) & !is.na(marital_group_pop) &
+         marital_group_mom != marital_group_pop,
+         .N, by = .(marital_group_mom, marital_group_pop)][order(-N)]
+
+medicaid_by_marital = kids_undoc_parents[, .(
+    pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt),
+    pop_medicaid = sum(perwt[hinscaid == 2]),
+    pop = sum(perwt)
+  ), by = .(year, marital_group_child)]
+
+print(medicaid_by_marital[order(year, marital_group_child)], nrow = Inf)
+
+ggplot(medicaid_by_marital, aes(x = year, y = pct_medicaid, color = marital_group_child)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_x_continuous(breaks = unique(medicaid_by_marital$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Married, spouse present" = "#3043B4",
+    "Separated, spouse not present" = "#C97703",
+    "No spouse (divorced/widowed/never married)" = "#7C756D")) +
+  labs(
+    title = "Medicaid coverage among children of undocumented parents",
+    subtitle = "By undocumented parent's marital status",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/medicaid_kids_by_undoc_parent_marital_status.png", width = 15, height = 10)
