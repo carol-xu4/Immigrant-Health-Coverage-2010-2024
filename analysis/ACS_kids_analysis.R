@@ -595,3 +595,156 @@ ggplot(medicaid_undoc_mixed, aes(x = year, y = pct_medicaid, color = undoc_group
   guides(color = guide_legend(nrow = 1, byrow = TRUE))
 
 ggsave("results/medicaid_undoc_mixed.png", width = 15, height = 10)
+
+# mixed household composition
+mat = as.matrix(acskids2 %>% filter(bpl < 150) %>%
+  select(immig_status_mom, immig_status_pop, immig_status_mom2, immig_status_pop2))
+
+other_status = apply(mat, 1, function(x) {
+  x = x[!is.na(x)]
+  if (length(x) == 1) return("No second parent")
+  x[x != "Undocumented"][1]})
+
+onekids = acskids2 %>%
+  filter(bpl < 150) %>%
+  mutate(
+    other_status = other_status,
+    n_present = rowSums(!is.na(cbind(immig_status_mom, immig_status_pop,
+                                      immig_status_mom2, immig_status_pop2))),
+    n_undoc = rowSums(cbind(immig_status_mom, immig_status_pop,
+                             immig_status_mom2, immig_status_pop2) == "Undocumented",
+                       na.rm = TRUE)
+  ) %>%
+  filter(n_present > 0, n_undoc >= 1, n_undoc < n_present | n_present == 1)
+
+one_comp = onekids %>%
+  group_by(year, other_status) %>%
+  summarise(population = sum(perwt), .groups = "drop")
+
+both_total = mixedkids %>%
+  filter(undoc_group == "Both parents undocumented") %>%
+  group_by(year) %>%
+  summarise(population = sum(perwt))
+
+ggplot(one_comp, aes(x = year, y = population, fill = other_status)) +
+  geom_col(width = 0.7) +
+  geom_line(data = both_total, aes(x = year, y = population),
+            inherit.aes = FALSE, linetype = "dashed", linewidth = 1, color = "gray30") +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +
+   annotate("text", x = 2021.5, y = 2750000, label = "Total, both parents undocumented",                
+        hjust = 0, size = 6, color = "gray30") +
+  scale_x_continuous(breaks = unique(one_comp$year)[c(TRUE, FALSE)]) +
+  scale_fill_manual(values = c(
+    "Native-born" = "#3043B4",
+    "Naturalized citizen" = "#0D0E51",
+    "Legal immigrant" = "#7C756D",
+    "No second parent" = "#C97703")) +
+  labs(
+    title = "Children with one undocumented parent: who is the other parent?",
+    subtitle = "ACS; age <18",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 18, color = "gray40", hjust = 0, margin = margin(b = 20)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(fill = guide_legend(nrow = 2, byrow = TRUE))
+
+ggsave("results/one_undoc_parent_composition.png", width = 15, height = 10)
+
+# medicaid, all children
+medicaid_allkids = acskids2 %>%
+  filter(hinscaid == 2) %>%
+  group_by(year)
+
+# family breakdown
+undoc_parents = acskids %>%
+  filter(immig_status == "Undocumented", age >= 18, relate %in% c(1, 2)) %>%
+  group_by(year) %>%
+  summarise(pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt),
+            group = "Undocumented parents")
+
+undoc_children = acskids %>%
+  filter(immig_status == "Undocumented", age < 18) %>%
+  group_by(year) %>%
+  summarise(pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt),
+            group = "Undocumented children")
+
+undoc_all = acskids %>%
+  filter(immig_status == "Undocumented") %>%
+  group_by(year) %>%
+  summarise(pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt))
+
+undoc_all_labeled = undoc_all %>%
+  mutate(group = "All undocumented (any age)")
+
+undoc_combined = bind_rows(undoc_breakdown, undoc_all_labeled)
+
+ggplot(undoc_combined, aes(x = year, y = pct_medicaid, color = group, linetype = group)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(data = filter(undoc_combined, group != "All undocumented (any age)"),
+             size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0, 20)) +
+  scale_x_continuous(breaks = unique(undoc_combined$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Undocumented parents" = "#C97703",
+    "Undocumented children" = "#3043B4",
+    "All undocumented (any age)" = "gray40")) +
+  scale_linetype_manual(values = c(
+    "Undocumented parents" = "solid",
+    "Undocumented children" = "solid",
+    "All undocumented (any age)" = "dashed")) +
+  labs(
+    title = "Medicaid coverage among undocumented immigrants",
+    subtitle = "Parents vs. children",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 18),
+    legend.key.width = unit(1.2, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/medicaid_undoc_parents_vs_children.png", width = 15, height = 10)
