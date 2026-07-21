@@ -61,3 +61,31 @@ comparison = def_marst2 %>%
 print(comparison, n = Inf)
 
 write.csv(comparison, "results/marst_sploc_definition_comparison.csv", row.names = FALSE)
+
+
+# separated
+separated = acs %>%
+  filter(marst == 3) %>%
+  group_by(year) %>%
+  summarise(n = n(), pop = sum(perwt))
+
+print(separated, n = Inf)
+
+# married people (spouse present) but not living with spouse
+married_present_no_spouse = acs %>%
+  filter(marst == 1, sploc == 0) %>%
+  group_by(year) %>%
+  summarise(n = n(), pop = sum(perwt))
+
+print(married_present_no_spouse, n = Inf)
+
+# married spouse absent, and sploc == 0
+acs %>%
+  filter(marst == 2) %>%
+  dplyr::count(sploc == 0)
+
+acs %>%
+  filter(marst == 2) %>%
+  dplyr::count(sploc > 0)
+
+sum(acs$marst == 2 & acs$sploc > 0, na.rm = TRUE)

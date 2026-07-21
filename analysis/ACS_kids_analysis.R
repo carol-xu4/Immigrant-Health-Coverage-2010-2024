@@ -1344,3 +1344,262 @@ ggplot(medicaid_separated, aes(x = year, y = pct_medicaid, color = parent_immig_
   guides(color = guide_legend(nrow = 1, byrow = TRUE))
 
 ggsave("results/medicaid_kids_separated_parent.png", width = 15, height = 10)
+
+
+# all married, spouse absent
+marst_lookup = acskids[, .(year, serial, pernum, marst, immig_status)]
+setDT(marst_lookup)
+
+acskids2[marst_lookup, marst_mom  := i.marst, on = .(year, serial, momloc  = pernum)]
+acskids2[marst_lookup, marst_pop  := i.marst, on = .(year, serial, poploc  = pernum)]
+acskids2[marst_lookup, marst_mom2 := i.marst, on = .(year, serial, momloc2 = pernum)]
+acskids2[marst_lookup, marst_pop2 := i.marst, on = .(year, serial, poploc2 = pernum)]
+
+spouse_absent_kids = acskids2[
+  (marst_mom == 2 | marst_pop == 2 | marst_mom2 == 2 | marst_pop2 == 2)]
+
+spouse_absent_kids[, parent_immig_status_sa := fcase(
+  marst_mom  == 2, as.character(immig_status_mom),
+  marst_pop  == 2, as.character(immig_status_pop),
+  marst_mom2 == 2, as.character(immig_status_mom2),
+  marst_pop2 == 2, as.character(immig_status_pop2))]
+
+spouse_absent_kids[!is.na(parent_immig_status_sa), .(
+    n = .N,
+    pop = sum(perwt)
+  ), by = .(year, parent_immig_status_sa)][order(year, parent_immig_status_sa)]
+
+table(spouse_absent_kids$parent_immig_status_sa)
+
+spouse_absent_composition = spouse_absent_kids[!is.na(parent_immig_status_sa), .(
+    pop = sum(perwt)
+  ), by = .(year, parent_immig_status_sa)]
+
+spouse_absent_composition[, pct := pop / sum(pop) * 100, by = year]
+
+print(spouse_absent_composition[order(year, parent_immig_status_sa)], nrow = Inf)
+
+spouse_absent_composition[, parent_immig_status_sa := factor(
+  parent_immig_status_sa,
+  levels = c("Undocumented", "Legal immigrant", "Naturalized citizen", "Native-born")
+)]
+
+ggplot(spouse_absent_composition, aes(x = year, y = pop, fill = parent_immig_status_sa)) +
+  geom_col(position = "fill", width = 0.7) +
+  scale_y_continuous(labels = scales::label_number(suffix = "%", scale = 100)) +
+  scale_x_continuous(breaks = unique(spouse_absent_composition$year)[c(TRUE, FALSE)]) +
+  scale_fill_manual(values = c(
+    "Native-born"         = "#3043B4",
+    "Naturalized citizen" = "#0D0E51",
+    "Legal immigrant"     = "#7C756D",
+    "Undocumented"        = "#C97703")) +
+  labs(
+    title = "Children of spouse-absent parents, by parent's immigration status",
+    subtitle = "Share of total; parent reports 'married, spouse absent'",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 18, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/spouse_absent_composition_by_immig_status.png", width = 15, height = 10)
+
+marst2_rate_by_immig = acskids %>%
+  filter(age >= 18, relate %in% c(1, 2)) %>%
+  group_by(year, immig_status) %>%
+  summarise(
+    pct_spouse_absent = 100 * sum(perwt[marst == 2]) / sum(perwt),
+    pop_parents = sum(perwt),
+    .groups = "drop")
+
+print(marst2_rate_by_immig, n = Inf)
+
+ggplot(marst2_rate_by_immig, aes(x = year, y = pct_spouse_absent, color = immig_status)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(1, 5)) +
+  scale_x_continuous(breaks = unique(marst2_rate_by_immig$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Native-born"         = "#3043B4",
+    "Naturalized citizen" = "#0D0E51",
+    "Legal immigrant"     = "#7C756D",
+    "Undocumented"        = "#C97703")) +
+  labs(
+    title = "Share of married adults with spouse absent, by immigration status",
+    subtitle = "Among all adults (household heads/spouses); marst == 2 only",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 18, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/marst2_rate_by_immig_status.png", width = 15, height = 10)
+
+parent_pernums = acskids %>%
+  filter(momloc > 0 | poploc > 0 | momloc2 > 0 | poploc2 > 0) %>%
+  select(year, serial, momloc, poploc, momloc2, poploc2) %>%
+  pivot_longer(cols = c(momloc, poploc, momloc2, poploc2),
+               values_to = "pernum") %>%
+  filter(pernum > 0) %>%
+  distinct(year, serial, pernum)
+
+parents_all = parent_pernums %>%
+  left_join(
+    acskids %>% select(year, serial, pernum, marst, immig_status, perwt),
+    by = c("year", "serial", "pernum"))
+
+setDT(parents_all)
+
+marst2_rate_parents = parents_all[, .(
+    pct_spouse_absent = 100 * sum(perwt[marst == 2]) / sum(perwt),
+    pop_parents = sum(perwt)
+  ), by = .(year, immig_status)]
+
+print(marst2_rate_parents[order(year, immig_status)], nrow = Inf)
+
+ggplot(marst2_rate_parents, aes(x = year, y = pct_spouse_absent, color = immig_status)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(1, 4)) +
+  scale_x_continuous(breaks = unique(marst2_rate_parents$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Native-born"         = "#3043B4",
+    "Naturalized citizen" = "#0D0E51",
+    "Legal immigrant"     = "#7C756D",
+    "Undocumented"        = "#C97703")) +
+  labs(
+    title = "Share of parents with spouse absent, by immigration status",
+    subtitle = "Among parents identified via child records; marst == 2 only",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 18, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/marst2_rate_by_immig_status_parents.png", width = 15, height = 10)
+
+# medicaid rates of children in spouse absent households
+medicaid_spouse_absent = spouse_absent_kids[!is.na(parent_immig_status_sa), .(
+    pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt),
+    pop_medicaid = sum(perwt[hinscaid == 2]),
+    pop = sum(perwt)
+  ), by = .(year, parent_immig_status_sa)]
+
+print(medicaid_spouse_absent[order(year, parent_immig_status_sa)], nrow = Inf)
+
+ggplot(medicaid_spouse_absent, aes(x = year, y = pct_medicaid, color = parent_immig_status_sa)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(39, 100)) +
+  scale_x_continuous(breaks = unique(medicaid_spouse_absent$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Native-born"         = "#3043B4",
+    "Naturalized citizen" = "#0D0E51",
+    "Legal immigrant"     = "#7C756D",
+    "Undocumented"        = "#C97703")) +
+  labs(
+    title = "Medicaid coverage among children in single-parent households",
+    subtitle = "By single parent's immigration status; single parent = parent reports married, spouse absent",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 18, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/medicaid_single_parent_by_immig_status.png", width = 15, height = 10)
