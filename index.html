@@ -15,334 +15,105 @@
     --amber: #A8672B;
     --teal-tint: #E7EEEE;
   }
-
   *{ box-sizing: border-box; }
-
   html{ scroll-behavior: smooth; }
-
   body{
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
+    margin: 0; background: var(--bg); color: var(--ink);
     font-family: 'IBM Plex Sans', -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 16px; line-height: 1.6;
   }
-
   h1, h2, h3{
     font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-    font-weight: 600;
-    color: var(--ink);
-    letter-spacing: -0.01em;
+    font-weight: 600; color: var(--ink); letter-spacing: -0.01em;
   }
-
   a{ color: var(--teal); text-decoration: none; border-bottom: 1px solid var(--teal); }
   a:hover{ color: var(--amber); border-color: var(--amber); }
-
-  /* ---------- Layout shell ---------- */
-  .shell{
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    max-width: 1520px;
-    margin: 0 auto;
-  }
-
-  /* ---------- Header / masthead ---------- */
-  .masthead{
-    grid-column: 1 / -1;
-    padding: 48px 40px 28px;
-    border-bottom: 1px solid var(--line);
-  }
+  .shell{ display: grid; grid-template-columns: 260px 1fr; max-width: 1520px; margin: 0 auto; }
+  .masthead{ grid-column: 1 / -1; padding: 48px 40px 28px; border-bottom: 1px solid var(--line); }
   .masthead .repo-link{
-    display: inline-block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--teal);
-    border-bottom: none;
-    background: var(--teal-tint);
-    padding: 5px 10px;
-    border-radius: 4px;
-    margin-bottom: 16px;
+    display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+    color: var(--teal); border-bottom: none; background: var(--teal-tint);
+    padding: 5px 10px; border-radius: 4px; margin-bottom: 16px;
   }
   .masthead .repo-link:hover{ color: var(--amber); background: #F1E7DC; }
-  .masthead h1{
-    font-size: 34px;
-    margin: 0 0 6px;
-  }
+  .masthead h1{ font-size: 34px; margin: 0 0 6px; }
   .masthead p.byline{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--amber);
-    margin: 0 0 16px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--amber); margin: 0 0 16px;
   }
-  .masthead p.dek{
-    color: var(--muted);
-    max-width: 640px;
-    margin: 0 0 20px;
-    font-size: 15.5px;
-  }
-
-  /* Methodology / code block */
+  .masthead p.dek{ color: var(--muted); max-width: 640px; margin: 0 0 20px; font-size: 15.5px; }
   .code-block{
-    background: #1C2530;
-    color: #E7EEEE;
-    border-radius: 6px;
-    padding: 18px 20px;
-    overflow-x: auto;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12.5px;
-    line-height: 1.55;
-    margin: 16px 0 8px;
+    background: #1C2530; color: #E7EEEE; border-radius: 6px; padding: 18px 20px;
+    overflow-x: auto; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px;
+    line-height: 1.55; margin: 16px 0 8px;
   }
-  .code-block code{
-    background: transparent;
-    padding: 0;
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
-  }
-  .code-block .comment{ color: #8FAFB3; }
-
-  /* static syntax-highlighting tokens (no JS dependency) */
+  .code-block code{ background: transparent; padding: 0; font-family: inherit; font-size: inherit; color: inherit; }
   .tok-comment{ color: #8FAFB3; font-style: italic; }
   .tok-string{ color: #D9A66C; }
   .tok-number{ color: #E8B074; }
   .tok-keyword{ color: #7FB8BE; font-weight: 600; }
   .tok-func{ color: #9FD0D6; }
   .tok-op{ color: #A8B4B8; }
-  details.method-code{
-    margin-top: 14px;
-  }
-  details.method-code summary{
-    cursor: pointer;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--teal);
-    padding: 8px 0;
-  }
+  details.method-code{ margin-top: 14px; }
+  details.method-code summary{ cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--teal); padding: 8px 0; }
   details.method-code summary:hover{ color: var(--amber); }
-
-  /* ---------- Sidebar nav ---------- */
   nav.toc{
-    padding: 32px 24px 40px;
-    border-right: 1px solid var(--line);
-    align-self: start;
-    position: sticky;
-    top: 0;
-    max-height: 100vh;
-    overflow-y: auto;
+    padding: 32px 24px 40px; border-right: 1px solid var(--line); align-self: start;
+    position: sticky; top: 0; max-height: 100vh; overflow-y: auto;
   }
-  nav.toc .toc-label{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin-bottom: 14px;
-  }
+  nav.toc .toc-label{ font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 14px; }
   nav.toc ul{ list-style: none; margin: 0; padding: 0; }
   nav.toc li{ margin-bottom: 4px; }
-  nav.toc a{
-    display: block;
-    padding: 6px 10px;
-    border: none;
-    border-radius: 4px;
-    color: var(--ink);
-    font-size: 14px;
-  }
+  nav.toc a{ display: block; padding: 6px 10px; border: none; border-radius: 4px; color: var(--ink); font-size: 14px; }
   nav.toc a:hover{ background: var(--teal-tint); color: var(--teal); }
   nav.toc .sub{ padding-left: 20px; font-size: 13px; color: var(--muted); }
   nav.toc li strong{
-    display: block;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ink);
-    padding: 16px 10px 4px;
-    border-top: 1px solid var(--line);
-    margin-top: 8px;
+    display: block; font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--ink); padding: 16px 10px 4px; border-top: 1px solid var(--line); margin-top: 8px;
   }
   nav.toc li:first-child strong{ border-top: none; margin-top: 0; padding-top: 0; }
-
-  /* ---------- Main content ---------- */
   main{ padding: 40px 48px 100px; min-width: 0; }
-
   section{ margin-bottom: 56px; }
-  section h2{
-    font-size: 24px;
-    margin: 0 0 6px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--ink);
-  }
-  section h3{
-    font-size: 18px;
-    color: var(--teal);
-    margin: 34px 0 14px;
-  }
-
-  /* Figures */
-  figure{
-    margin: 20px 0;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 16px;
-  }
-  figure img{
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 3px;
-  }
-  figcaption{
-    margin-top: 10px;
-    font-size: 13px;
-    color: var(--muted);
-    display: flex;
-    gap: 8px;
-  }
-  figcaption .fig-num{
-    font-family: 'IBM Plex Mono', monospace;
-    color: var(--amber);
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  .fig-grid{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
+  section h2{ font-size: 24px; margin: 0 0 6px; padding-bottom: 10px; border-bottom: 2px solid var(--ink); }
+  section h3{ font-size: 18px; color: var(--teal); margin: 34px 0 14px; }
+  figure{ margin: 20px 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; }
+  figure img{ display: block; width: 100%; height: auto; border-radius: 3px; }
+  figcaption{ margin-top: 10px; font-size: 13px; color: var(--muted); display: flex; gap: 8px; }
+  figcaption .fig-num{ font-family: 'IBM Plex Mono', monospace; color: var(--amber); font-weight: 600; white-space: nowrap; }
+  .fig-grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media (max-width: 720px){ .fig-grid{ grid-template-columns: 1fr; } }
-
-  .fig-grid.status-table-grid{
-    grid-template-columns: 3fr 2fr;
-    align-items: stretch;
-  }
+  .fig-grid.status-table-grid{ grid-template-columns: 3fr 2fr; align-items: stretch; }
   @media (max-width: 900px){ .fig-grid.status-table-grid{ grid-template-columns: 1fr; } }
-
-  .table-scroll{
-    max-height: 420px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    background: var(--surface);
-  }
-  .table-scroll table{
-    margin: 0;
-    font-size: 12.5px;
-  }
-  .table-scroll thead th{
-    position: sticky;
-    top: 0;
-    background: var(--surface);
-    z-index: 1;
-  }
-  .table-scroll th, .table-scroll td{
-    padding: 7px 8px;
-    white-space: nowrap;
-  }
-  .table-scroll caption{
-    padding: 10px 12px 0;
-  }
-
-  figure.fig-single{
-    max-width: calc(50% - 8px);
-  }
+  .table-scroll{ max-height: 420px; overflow-y: auto; overflow-x: hidden; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+  .table-scroll table{ margin: 0; font-size: 12.5px; }
+  .table-scroll thead th{ position: sticky; top: 0; background: var(--surface); z-index: 1; }
+  .table-scroll th, .table-scroll td{ padding: 7px 8px; white-space: nowrap; }
+  .table-scroll caption{ padding: 10px 12px 0; }
+  figure.fig-single{ max-width: calc(50% - 8px); }
   @media (max-width: 720px){ figure.fig-single{ max-width: 100%; } }
-
   .table-link{
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    padding: 6px 10px;
-    background: var(--teal-tint);
-    border-radius: 4px;
-    border-bottom: none;
-    margin: 6px 0 18px;
+    display: inline-flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; padding: 6px 10px; background: var(--teal-tint); border-radius: 4px; border-bottom: none; margin: 6px 0 18px;
   }
   .table-link:before{ content: "⇩"; color: var(--teal); }
-
-  /* Data tables */
-  table{
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-    margin: 12px 0 24px;
-    background: var(--surface);
-  }
-  caption{
-    text-align: left;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  th, td{
-    text-align: left;
-    padding: 9px 12px;
-    border-bottom: 1px solid var(--line);
-  }
-  th{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--teal);
-    border-bottom: 2px solid var(--ink);
-  }
+  table{ width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0 24px; background: var(--surface); }
+  caption{ text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+  th, td{ text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+  th{ font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal); border-bottom: 2px solid var(--ink); }
   tr:hover td{ background: var(--teal-tint); }
   td:last-child, th:last-child{ font-family: 'IBM Plex Mono', monospace; }
-
-  .note{
-    background: var(--teal-tint);
-    border-left: 3px solid var(--teal);
-    padding: 14px 18px;
-    border-radius: 0 6px 6px 0;
-    font-size: 14.5px;
-    margin: 16px 0 26px;
-  }
+  .note{ background: var(--teal-tint); border-left: 3px solid var(--teal); padding: 14px 18px; border-radius: 0 6px 6px 0; font-size: 14.5px; margin: 16px 0 26px; }
   .note strong{ color: var(--teal); }
-
-  .source-block{
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 20px 22px;
-  }
+  .source-block{ background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 20px 22px; }
   .source-block p{ margin: 0 0 8px; }
-  .source-block .src-label{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    text-transform: uppercase;
-    color: var(--amber);
-    letter-spacing: 0.08em;
-  }
-
-  footer{
-    grid-column: 1 / -1;
-    border-top: 1px solid var(--line);
-    padding: 24px 40px;
-    font-size: 13px;
-    color: var(--muted);
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
+  .source-block .src-label{ font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; color: var(--amber); letter-spacing: 0.08em; }
+  footer{ grid-column: 1 / -1; border-top: 1px solid var(--line); padding: 24px 40px; font-size: 13px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
   @media (max-width: 860px){
     .shell{ grid-template-columns: 1fr; }
     nav.toc{ position: relative; border-right: none; border-bottom: 1px solid var(--line); max-height: none; }
     main{ padding: 32px 22px 80px; }
     .masthead{ padding: 32px 22px 24px; }
   }
-
   :focus-visible{ outline: 2px solid var(--amber); outline-offset: 2px; }
 </style>
 </head>
@@ -396,87 +167,6 @@
         <summary>▸ View classification criteria</summary>
         <p style="margin-top: 12px;">Legal status is imputed from several proxies established in this literature: naturalized citizenship; arrival before 1982, the residency cutoff for the IRCA amnesty; receipt of benefits restricted to legal residents (Social Security, SSI, public assistance); veteran status; federal employment; and birthplace codes historically associated with refugee admission (e.g., Cuba, Vietnam). Because several states have extended Medicaid or CHIP eligibility to residents regardless of immigration status, Medicaid receipt is treated as a legal-status proxy only outside of these state-specific expansions. Legal status is also imputed to household members of an individual already classified as legally present. Individuals not identified as legal under any of these criteria are classified as undocumented, and their sampling weights are adjusted upward using an undercount correction that declines with time since arrival, reflecting the known underrepresentation of undocumented respondents in household surveys.</p>
       </details>
-
-      <details class="method-code">
-        <summary>▸ View R implementation</summary>
-        <pre class="code-block"><code><span class="tok-comment"># residual method -------------------------------------------------------------</span>
-acs = acs <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(immigrant = <span class="tok-func">ifelse</span>(citizen <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">|</span>
-                            citizen <span class="tok-op">==</span> <span class="tok-number">3</span>, <span class="tok-number">1</span>, <span class="tok-number">0</span>)) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">ifelse</span>(bpl <span class="tok-op">&lt;</span> <span class="tok-number">150</span> <span class="tok-op">|</span> immigrant <span class="tok-op">==</span> <span class="tok-number">0</span> <span class="tok-op">|</span> citizen <span class="tok-op">==</span> <span class="tok-number">1</span>, <span class="tok-number">1</span>, <span class="tok-keyword">NA</span>)) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(foreign_born = <span class="tok-func">ifelse</span>(bpl <span class="tok-op">&gt;=</span> <span class="tok-number">150</span>, <span class="tok-number">1</span>, <span class="tok-number">0</span>)) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">case_when</span>(
-    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> citizen <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
-    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> yrimmig <span class="tok-op">&lt;</span> <span class="tok-number">1982</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
-    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> incss <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">&amp;</span> incss <span class="tok-op">&lt;</span> <span class="tok-number">99999</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
-    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> incsupp <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">&amp;</span> incsupp <span class="tok-op">&lt;</span> <span class="tok-number">99999</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
-    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> incwelfr <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">&amp;</span> incwelfr <span class="tok-op">&lt;</span> <span class="tok-number">99999</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
-    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> hinscare <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
-    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> hinscaid <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span>
-      <span class="tok-comment"># california — phased Medi-Cal expansion</span>
-      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">6</span> <span class="tok-op">&amp;</span> ((year <span class="tok-op">&gt;=</span> <span class="tok-number">2016</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2020</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">25</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">50</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2024</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">26</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">49</span>))) <span class="tok-op">&amp;</span>
-      <span class="tok-comment"># illinois — All Kids children 2006, HBIS seniors 2020, HBIA adults 42-64 2022</span>
-      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">17</span> <span class="tok-op">&amp;</span> ((year <span class="tok-op">&gt;=</span> <span class="tok-number">2006</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2020</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">65</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">42</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">64</span>))) <span class="tok-op">&amp;</span>
-      <span class="tok-comment"># washington — Apple Health for Kids children 2007 only (adult expansion is marketplace)</span>
-      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">53</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2007</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">&amp;</span>
-      <span class="tok-comment"># new york — Child Health Plus children 2014, adults 65+ 2024</span>
-      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">36</span> <span class="tok-op">&amp;</span> ((year <span class="tok-op">&gt;=</span> <span class="tok-number">2014</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2024</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">65</span>))) <span class="tok-op">&amp;</span>
-      <span class="tok-comment"># oregon — Cover All Kids children 2018, phase 1 ages 19-25/55+ 2022, full expansion 2023</span>
-      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">41</span> <span class="tok-op">&amp;</span> ((year <span class="tok-op">&gt;=</span> <span class="tok-number">2018</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">|</span> (year <span class="tok-op">==</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> (age <span class="tok-op">&lt;=</span> <span class="tok-number">25</span> <span class="tok-op">|</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">55</span>)) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2023</span>))) <span class="tok-op">&amp;</span>
-      <span class="tok-comment"># new jersey — children 2018</span>
-      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">34</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2018</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">&amp;</span>
-      <span class="tok-comment"># connecticut — children under 15, 2010</span>
-      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">9</span>  <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2010</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">14</span>) <span class="tok-op">&amp;</span>
-      <span class="tok-comment"># rhode island — children 2022</span>
-      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">44</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">&amp;</span>
-      <span class="tok-comment"># maine — children 2022</span>
-      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">23</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">&amp;</span>
-      <span class="tok-comment"># vermont — children 2022</span>
-      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">50</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">~</span> <span class="tok-number">2</span>,
-    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> vetstat <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
-    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> classwkrd <span class="tok-op">==</span> <span class="tok-number">26</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
-    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> bpld <span class="tok-op">==</span> <span class="tok-number">25000</span> <span class="tok-op">&amp;</span> yrimmig <span class="tok-op">&lt;</span> <span class="tok-number">2017</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
-    <span class="tok-keyword">TRUE</span> <span class="tok-op">~</span> immig_status
-  )) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(legal = <span class="tok-func">ifelse</span>(
-    immig_status <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">|</span> immig_status <span class="tok-op">==</span> <span class="tok-number">2</span>, <span class="tok-number">1</span>, <span class="tok-number">0</span>
-  )) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(good = <span class="tok-func">if_else</span>(relate <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span> immigrant <span class="tok-op">==</span> <span class="tok-number">1</span>, <span class="tok-number">1</span>, <span class="tok-keyword">NA_real_</span>)) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(legal = <span class="tok-func">ifelse</span>(<span class="tok-func">is.na</span>(legal), <span class="tok-number">0</span>, legal)) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">group_by</span>(year, serial) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(slegal = <span class="tok-func">mean</span>(good * legal, na.rm = <span class="tok-keyword">TRUE</span>)) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">ungroup</span>() <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">ifelse</span>((slegal <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">|</span> <span class="tok-func">is.na</span>(slegal)) <span class="tok-op">&amp;</span> immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> relate <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> marst <span class="tok-op">==</span> <span class="tok-number">1</span>,
-                               <span class="tok-number">2</span>,
-                               immig_status)) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(good1 = <span class="tok-func">ifelse</span>(relate <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> immigrant <span class="tok-op">==</span> <span class="tok-number">1</span>, <span class="tok-number">1</span>, <span class="tok-keyword">NA_real_</span>)) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">group_by</span>(year, serial) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(hlegal = <span class="tok-func">mean</span>(good1 * legal, na.rm = <span class="tok-keyword">TRUE</span>)) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">ungroup</span>() <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(immig_status =
-           <span class="tok-func">ifelse</span>((hlegal <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">|</span> <span class="tok-func">is.na</span>(hlegal)) <span class="tok-op">&amp;</span>
-                    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> ((relate <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span> marst <span class="tok-op">==</span> <span class="tok-number">1</span>) <span class="tok-op">|</span> relate <span class="tok-op">==</span> <span class="tok-number">3</span> <span class="tok-op">|</span> relate <span class="tok-op">==</span> <span class="tok-number">9</span>),
-                  <span class="tok-number">2</span>,
-                  immig_status
-           )) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">ifelse</span>(<span class="tok-func">is.na</span>(immig_status), <span class="tok-number">3</span>, immig_status)) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(undercount =
-           <span class="tok-func">ifelse</span>(immig_status <span class="tok-op">==</span> <span class="tok-number">3</span>,
-                  <span class="tok-number">1</span> + (<span class="tok-number">0.13</span>) * (<span class="tok-number">0.925</span>) <span class="tok-op">^</span> (year - yrimmig), <span class="tok-number">0</span>)) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(perwt = <span class="tok-func">ifelse</span>(undercount <span class="tok-op">&gt;</span> <span class="tok-number">0</span>, perwt * undercount, perwt)) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">case_when</span>(
-    immig_status <span class="tok-op">==</span> <span class="tok-number">1</span>                          <span class="tok-op">~</span> <span class="tok-string">&quot;Native-born&quot;</span>,
-    immig_status <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span> citizen <span class="tok-op">==</span> <span class="tok-number">2</span>           <span class="tok-op">~</span> <span class="tok-string">&quot;Naturalized citizen&quot;</span>,
-    immig_status <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span> citizen <span class="tok-op">!=</span> <span class="tok-number">2</span>           <span class="tok-op">~</span> <span class="tok-string">&quot;Legal immigrant&quot;</span>,
-    immig_status <span class="tok-op">==</span> <span class="tok-number">3</span>                          <span class="tok-op">~</span> <span class="tok-string">&quot;Undocumented&quot;</span>,
-  )) <span class="tok-op">%&gt;%</span>
-  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">factor</span>(immig_status,
-                               levels = <span class="tok-func">c</span>(<span class="tok-string">&quot;Native-born&quot;</span>,
-                                          <span class="tok-string">&quot;Naturalized citizen&quot;</span>,
-                                          <span class="tok-string">&quot;Legal immigrant&quot;</span>,
-                                          <span class="tok-string">&quot;Undocumented&quot;</span>)))</code></pre>
-      </details>
-
       <details class="method-code">
         <summary>▸ View decision tree</summary>
         <figure style="margin-top: 12px;">
@@ -496,7 +186,6 @@ acs = acs <span class="tok-op">%&gt;%</span>
     <section id="coverage">
       <h2>Health Coverage (ACS)</h2>
       <a class="table-link" href="results/coverage_counts_year.csv">Table — All Years</a>
-
       <div class="fig-grid">
         <figure>
           <img src="results/ACS_coverage_2024.png" alt="Coverage by immigration status, 2024">
@@ -569,13 +258,11 @@ acs = acs <span class="tok-op">%&gt;%</span>
         </figure>
       </div>
       <a class="table-link" href="results/ACS_medicaid_age.csv">Table — Medicaid by Age</a>
-
       <p style="margin-top: 26px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-family: 'IBM Plex Mono', monospace;">Median age of Medicaid enrollees, excluding California</p>
       <figure class="fig-single">
         <img src="results/NOCA_medicaid_age_trend.png" alt="Median age of Medicaid enrollees, excluding California">
         <figcaption><span class="fig-num">Fig. 15</span> Median age of Medicaid enrollees, excluding California</figcaption>
       </figure>
-
       <div class="note" style="font-size: 13px; margin-top: 24px;">
         <strong>A note on ACS editing for respondents 65+:</strong> Under the Census Bureau's ACS editing procedure, respondents aged 65 and older who report Medicaid but not Medicare are automatically assigned Medicare coverage as well, since nearly all seniors qualify regardless of what they report. As a result, the residual method fails to capture a portion of undocumented immigrants age 65+.
       </div>
@@ -584,12 +271,9 @@ acs = acs <span class="tok-op">%&gt;%</span>
       <div class="note">
         Seven states and DC provide state-funded coverage to income-eligible adults regardless of immigration status: California, Colorado, Illinois, New York, Oregon, Washington, and DC.
       </div>
-
       <table>
         <caption>Adult coverage expansions</caption>
-        <thead>
-          <tr><th>State</th><th>Program</th><th>Population Covered</th><th>Year</th></tr>
-        </thead>
+        <thead><tr><th>State</th><th>Program</th><th>Population Covered</th><th>Year</th></tr></thead>
         <tbody>
           <tr><td>California</td><td>Medi-Cal</td><td>Children under 19</td><td>2016</td></tr>
           <tr><td>California</td><td>Medi-Cal</td><td>Young adults under 26</td><td>2020</td></tr>
@@ -606,12 +290,9 @@ acs = acs <span class="tok-op">%&gt;%</span>
         </tbody>
       </table>
       <p style="font-size: 12px; color: var(--muted); margin: -8px 0 20px;">Sources: <a href="https://www.kff.org/racial-equity-and-health-policy/state-health-coverage-for-immigrants-and-implications-for-health-coverage-and-care/">KFF</a>, <a href="https://www.cbpp.org/research/immigration/states-are-providing-affordable-health-coverage-to-people-barred-from-certain">CBPP</a>, <a href="https://www.dhs.state.il.us/page.aspx?item=161600">Illinois DHS</a>. Several of these programs (HBIA, HBIS, DC Healthcare Alliance, Apple Health Expansion) have since paused new enrollment or narrowed eligibility due to funding constraints.</p>
-
       <table>
         <caption>Children-only coverage expansions</caption>
-        <thead>
-          <tr><th>State</th><th>Year</th><th>Age Coverage</th><th>Notes</th></tr>
-        </thead>
+        <thead><tr><th>State</th><th>Year</th><th>Age Coverage</th><th>Notes</th></tr></thead>
         <tbody>
           <tr><td>Illinois</td><td>2006</td><td>Under 19</td><td>First state — "All Kids" program</td></tr>
           <tr><td>Washington</td><td>2007</td><td>Under 19</td><td>"Apple Health for Kids"</td></tr>
@@ -678,21 +359,13 @@ acs = acs <span class="tok-op">%&gt;%</span>
           <figcaption><span class="fig-num">Fig. 24</span> Medicaid coverage among the undocumented population, parents vs. children</figcaption>
         </figure>
       </div>
-
       <div class="table-scroll">
         <table>
           <caption>Children by own immigration status, 2014–2024</caption>
           <thead>
             <tr>
-              <th>Year</th>
-              <th>Native-born</th>
-              <th>Native-born (%)</th>
-              <th>Naturalized</th>
-              <th>Naturalized (%)</th>
-              <th>Legal immigrant</th>
-              <th>Legal immigrant (%)</th>
-              <th>Undocumented</th>
-              <th>Undocumented (%)</th>
+              <th>Year</th><th>Native-born</th><th>Native-born (%)</th><th>Naturalized</th><th>Naturalized (%)</th>
+              <th>Legal immigrant</th><th>Legal immigrant (%)</th><th>Undocumented</th><th>Undocumented (%)</th>
             </tr>
           </thead>
           <tbody>
@@ -763,6 +436,16 @@ acs = acs <span class="tok-op">%&gt;%</span>
         <img src="results/medicaid_kids_by_undoc_parent_marital_status_v2.png" alt="Medicaid coverage among children of undocumented parents, by parent's marital status">
         <figcaption><span class="fig-num">Fig. 34</span> Medicaid coverage among children of undocumented parents, by parent's marital status</figcaption>
       </figure>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/medicaid_native_one_vs_two_undoc_parents.png" alt="Medicaid coverage among native-born children, one vs two undocumented parents">
+          <figcaption><span class="fig-num">Fig. 35</span> Medicaid coverage among native-born children, one vs. two undocumented parents</figcaption>
+        </figure>
+        <figure>
+          <img src="results/medicaid_native_one_vs_two_married_undoc_parents.png" alt="Medicaid coverage among native-born children, one vs two married undocumented parents">
+          <figcaption><span class="fig-num">Fig. 36</span> Medicaid coverage, one undocumented parent vs. two married undocumented parents</figcaption>
+        </figure>
+      </div>
     </section>
 
     <section id="cps-overview">
@@ -838,7 +521,6 @@ acs = acs <span class="tok-op">%&gt;%</span>
         </figure>
       </div>
       <a class="table-link" href="results/CPS_medicaid_age.csv">Table — Medicaid by Age</a>
-
       <p style="margin-top: 26px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-family: 'IBM Plex Mono', monospace;">Median age of Medicaid enrollees, excluding California</p>
       <figure class="fig-single">
         <img src="results/cps_NOCA_medicaid_age_trend.png" alt="Median age of Medicaid enrollees, excluding California, CPS-ASEC">

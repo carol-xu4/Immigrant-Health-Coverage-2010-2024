@@ -1680,3 +1680,189 @@ ggplot(medicaid_by_marital_v2, aes(x = year, y = pct_medicaid, color = marital_g
   guides(color = guide_legend(nrow = 1, byrow = TRUE))
 
 ggsave("results/medicaid_kids_by_undoc_parent_marital_status_v2.png", width = 15, height = 10)
+
+# native born children of undocumented parents, 1 vs 2 parents home
+acskids3 = acskids[age < 18 & bpl < 150]
+
+acskids3[, n_parents_present := (momloc > 0) + (poploc > 0) + (momloc2 > 0) + (poploc2 > 0)]
+
+c("immig_status_mom", "immig_status_pop", "immig_status_mom2", "immig_status_pop2") %in% names(acskids3)
+
+marst_lookup = acskids[, .(year, serial, pernum, marst)]
+setDT(marst_lookup)
+
+acskids3[marst_lookup, marst_mom  := i.marst, on = .(year, serial, momloc  = pernum)]
+acskids3[marst_lookup, marst_pop  := i.marst, on = .(year, serial, poploc  = pernum)]
+acskids3[marst_lookup, marst_mom2 := i.marst, on = .(year, serial, momloc2 = pernum)]
+acskids3[marst_lookup, marst_pop2 := i.marst, on = .(year, serial, poploc2 = pernum)]
+
+acskids3[, parent_marst_single := fcase(
+  n_parents_present == 1 & momloc  > 0, marst_mom,
+  n_parents_present == 1 & poploc  > 0, marst_pop,
+  n_parents_present == 1 & momloc2 > 0, marst_mom2,
+  n_parents_present == 1 & poploc2 > 0, marst_pop2
+)]
+
+acskids3[, parent_immig_single := fcase(
+  n_parents_present == 1 & momloc  > 0, as.character(immig_status_mom),
+  n_parents_present == 1 & poploc  > 0, as.character(immig_status_pop),
+  n_parents_present == 1 & momloc2 > 0, as.character(immig_status_mom2),
+  n_parents_present == 1 & poploc2 > 0, as.character(immig_status_pop2)
+)]
+
+single_undoc_kids = acskids3[n_parents_present == 1 &
+                              parent_marst_single == 2 &
+                              parent_immig_single == "Undocumented"]
+
+nrow(single_undoc_kids)
+
+acskids3[, n_undoc_parents := (
+  (!is.na(immig_status_mom)  & immig_status_mom  == "Undocumented") +
+  (!is.na(immig_status_pop)  & immig_status_pop  == "Undocumented") +
+  (!is.na(immig_status_mom2) & immig_status_mom2 == "Undocumented") +
+  (!is.na(immig_status_pop2) & immig_status_pop2 == "Undocumented")
+)]
+
+two_undoc_kids = acskids3[n_parents_present == 2 & n_undoc_parents == 2]
+
+nrow(two_undoc_kids)
+
+single_undoc_kids[, group := "Single undocumented parent (marst == 2)"]
+two_undoc_kids[, group := "Two undocumented parents"]
+
+combined_compare = rbindlist(list(
+  single_undoc_kids[, .(year, hinscaid, perwt, group)],
+  two_undoc_kids[, .(year, hinscaid, perwt, group)]
+))
+
+medicaid_compare = combined_compare[, .(
+    pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt),
+    pop = sum(perwt)
+  ), by = .(year, group)]
+
+print(medicaid_compare[order(year, group)], nrow = Inf)
+
+medicaid_compare[, .(year, group, pop)][order(year, group)]
+
+ggplot(medicaid_compare, aes(x = year, y = pct_medicaid, color = group)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(50, 65)) +
+  scale_x_continuous(breaks = unique(medicaid_compare$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Single undocumented parent (marst == 2)" = "#3043B4",
+    "Two undocumented parents"                = "#C97703")) +
+  labs(
+    title = "Medicaid coverage among native-born children of undocumented parents",
+    subtitle = "One undocumented parent (spouse absent) vs. two undocumented parents",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 18, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/medicaid_native_one_vs_two_undoc_parents.png", width = 15, height = 10)
+
+# check unmarried couples
+acskids3[n_parents_present == 2, .N, by = .(momloc > 0, poploc > 0, momloc2 > 0, poploc2 > 0)]
+
+two_undoc_kids[, .N, by = .(marst_mom, marst_pop)]
+
+# keep married couples only for 2 parent households
+acskids4 = copy(acskids3)
+
+acskids4[, both_married := marst_mom == 1 & marst_pop == 1]
+
+two_undoc_kids_v2 = acskids4[n_parents_present == 2 & n_undoc_parents == 2 & both_married == TRUE]
+
+nrow(two_undoc_kids_v2)
+sum(two_undoc_kids_v2$perwt)
+
+single_undoc_kids_v2 = acskids4[n_parents_present == 1 &
+                                 parent_marst_single == 2 &
+                                 parent_immig_single == "Undocumented"]
+
+nrow(single_undoc_kids_v2)
+
+single_undoc_kids_v2[, group := "Single undocumented parent (marst == 2)"]
+two_undoc_kids_v2[, group := "Two undocumented parents (married)"]
+
+combined_compare_v2 = rbindlist(list(
+  single_undoc_kids_v2[, .(year, hinscaid, perwt, group)],
+  two_undoc_kids_v2[, .(year, hinscaid, perwt, group)]
+))
+
+medicaid_compare_v2 = combined_compare_v2[, .(
+    pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt),
+    pop = sum(perwt)
+  ), by = .(year, group)]
+
+print(medicaid_compare_v2[order(year, group)], nrow = Inf)
+medicaid_compare_v2[, .(year, group, pop)][order(year, group)]
+
+ggplot(medicaid_compare_v2, aes(x = year, y = pct_medicaid, color = group)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(45, 65)) +
+  scale_x_continuous(breaks = unique(medicaid_compare_v2$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Single undocumented parent (marst == 2)" = "#3043B4",
+    "Two undocumented parents (married)"      = "#C97703")) +
+  labs(
+    title = "Medicaid coverage among native-born children of undocumented parents",
+    subtitle = "One undocumented parent (spouse absent) vs. two married undocumented parents",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 18, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/medicaid_native_one_vs_two_married_undoc_parents.png", width = 15, height = 10)
