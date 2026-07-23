@@ -149,7 +149,7 @@ ggplot(ftotinc_by_family, aes(x = year, y = mean_ftotinc, color = immig_status))
         "Legal immigrant"     = "#7C756D",
         "Undocumented"        = "#C97703")) +
     labs(
-        title = "Total family income, by immigration status",
+        title = "Mean Total family income, by immigration status",
         subtitle = "Mean family income (2024 dollars)",
         x = NULL, y = NULL,
         caption = "Source: ACS PUMS via IPUMS") +
@@ -194,7 +194,7 @@ ggplot(ftotinc_by_family, aes(x = year, y = median_ftotinc, color = immig_status
     "Legal immigrant"     = "#7C756D",
     "Undocumented"        = "#C97703")) +
   labs(
-    title = "Total family income, by immigration status",
+    title = "Median Total family income, by immigration status",
     subtitle = "Median family income (2024 dollars);",
     x = NULL, y = NULL,
     caption = "Source: ACS PUMS via IPUMS") +
@@ -252,7 +252,7 @@ ggplot(inctot_immig, aes(x = year, y = mean_inctot, color = immig_status)) +
     "Legal immigrant"     = "#7C756D",
     "Undocumented"        = "#C97703")) +
   labs(
-    title = "Personal income, by immigration status",
+    title = "Mean Personal income, by immigration status",
     subtitle = "Mean personal income (2024 dollars); working-age adults 18-64",
     x = NULL, y = NULL,
     caption = "Source: ACS PUMS via IPUMS") +
@@ -297,7 +297,7 @@ ggplot(inctot_immig, aes(x = year, y = median_inctot, color = immig_status)) +
     "Legal immigrant"     = "#7C756D",
     "Undocumented"        = "#C97703")) +
   labs(
-    title = "Personal income, by immigration status",
+    title = "Median Personal income, by immigration status",
     subtitle = "Median personal income (2024 dollars); working-age adults 18-64",
     x = NULL, y = NULL,
     caption = "Source: ACS PUMS via IPUMS") +
