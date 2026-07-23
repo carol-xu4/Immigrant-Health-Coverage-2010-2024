@@ -169,9 +169,89 @@
       </details>
       <details class="method-code">
         <summary>▸ View decision tree</summary>
-        <figure style="margin-top: 12px;">
+        <figure style="margin-top: 12px; max-width: 50%;">
           <img src="results/decision_tree.svg" alt="Full decision tree of the residual method classification logic">
         </figure>
+      </details>
+
+      <details class="method-code">
+        <summary>▸ View R implementation</summary>
+        <pre class="code-block"><code><span class="tok-comment"># residual method -------------------------------------------------------------</span>
+acs = acs <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immigrant = <span class="tok-func">ifelse</span>(citizen <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">|</span>
+                            citizen <span class="tok-op">==</span> <span class="tok-number">3</span>, <span class="tok-number">1</span>, <span class="tok-number">0</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">ifelse</span>(bpl <span class="tok-op">&lt;</span> <span class="tok-number">150</span> <span class="tok-op">|</span> immigrant <span class="tok-op">==</span> <span class="tok-number">0</span> <span class="tok-op">|</span> citizen <span class="tok-op">==</span> <span class="tok-number">1</span>, <span class="tok-number">1</span>, <span class="tok-keyword">NA</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(foreign_born = <span class="tok-func">ifelse</span>(bpl <span class="tok-op">&gt;=</span> <span class="tok-number">150</span>, <span class="tok-number">1</span>, <span class="tok-number">0</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">case_when</span>(
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> citizen <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> yrimmig <span class="tok-op">&lt;</span> <span class="tok-number">1982</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> incss <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">&amp;</span> incss <span class="tok-op">&lt;</span> <span class="tok-number">99999</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> incsupp <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">&amp;</span> incsupp <span class="tok-op">&lt;</span> <span class="tok-number">99999</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> incwelfr <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">&amp;</span> incwelfr <span class="tok-op">&lt;</span> <span class="tok-number">99999</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> hinscare <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> hinscaid <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># california — phased Medi-Cal expansion</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">6</span> <span class="tok-op">&amp;</span> ((year <span class="tok-op">&gt;=</span> <span class="tok-number">2016</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2020</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">25</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">50</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2024</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">26</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">49</span>))) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># illinois — All Kids children 2006, HBIS seniors 2020, HBIA adults 42-64 2022</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">17</span> <span class="tok-op">&amp;</span> ((year <span class="tok-op">&gt;=</span> <span class="tok-number">2006</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2020</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">65</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">42</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">64</span>))) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># washington — Apple Health for Kids children 2007 only (adult expansion is marketplace)</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">53</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2007</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># new york — Child Health Plus children 2014, adults 65+ 2024</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">36</span> <span class="tok-op">&amp;</span> ((year <span class="tok-op">&gt;=</span> <span class="tok-number">2014</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2024</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">65</span>))) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># oregon — Cover All Kids children 2018, phase 1 ages 19-25/55+ 2022, full expansion 2023</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">41</span> <span class="tok-op">&amp;</span> ((year <span class="tok-op">&gt;=</span> <span class="tok-number">2018</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">|</span> (year <span class="tok-op">==</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> (age <span class="tok-op">&lt;=</span> <span class="tok-number">25</span> <span class="tok-op">|</span> age <span class="tok-op">&gt;=</span> <span class="tok-number">55</span>)) <span class="tok-op">|</span> (year <span class="tok-op">&gt;=</span> <span class="tok-number">2023</span>))) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># new jersey — children 2018</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">34</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2018</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># connecticut — children under 15, 2010</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">9</span>  <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2010</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">14</span>) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># rhode island — children 2022</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">44</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># maine — children 2022</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">23</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">&amp;</span>
+      <span class="tok-comment"># vermont — children 2022</span>
+      <span class="tok-op">!</span>(statefip <span class="tok-op">==</span> <span class="tok-number">50</span> <span class="tok-op">&amp;</span> year <span class="tok-op">&gt;=</span> <span class="tok-number">2022</span> <span class="tok-op">&amp;</span> age <span class="tok-op">&lt;=</span> <span class="tok-number">18</span>) <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> vetstat <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> classwkrd <span class="tok-op">==</span> <span class="tok-number">26</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> bpld <span class="tok-op">==</span> <span class="tok-number">25000</span> <span class="tok-op">&amp;</span> yrimmig <span class="tok-op">&lt;</span> <span class="tok-number">2017</span> <span class="tok-op">~</span> <span class="tok-number">2</span>,
+    <span class="tok-keyword">TRUE</span> <span class="tok-op">~</span> immig_status
+  )) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(legal = <span class="tok-func">ifelse</span>(
+    immig_status <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">|</span> immig_status <span class="tok-op">==</span> <span class="tok-number">2</span>, <span class="tok-number">1</span>, <span class="tok-number">0</span>
+  )) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(good = <span class="tok-func">if_else</span>(relate <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span> immigrant <span class="tok-op">==</span> <span class="tok-number">1</span>, <span class="tok-number">1</span>, <span class="tok-keyword">NA_real_</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(legal = <span class="tok-func">ifelse</span>(<span class="tok-func">is.na</span>(legal), <span class="tok-number">0</span>, legal)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">group_by</span>(year, serial) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(slegal = <span class="tok-func">mean</span>(good * legal, na.rm = <span class="tok-keyword">TRUE</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">ungroup</span>() <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">ifelse</span>((slegal <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">|</span> <span class="tok-func">is.na</span>(slegal)) <span class="tok-op">&amp;</span> immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> relate <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> marst <span class="tok-op">==</span> <span class="tok-number">1</span>,
+                               <span class="tok-number">2</span>,
+                               immig_status)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(good1 = <span class="tok-func">ifelse</span>(relate <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> immigrant <span class="tok-op">==</span> <span class="tok-number">1</span>, <span class="tok-number">1</span>, <span class="tok-keyword">NA_real_</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">group_by</span>(year, serial) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(hlegal = <span class="tok-func">mean</span>(good1 * legal, na.rm = <span class="tok-keyword">TRUE</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">ungroup</span>() <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status =
+           <span class="tok-func">ifelse</span>((hlegal <span class="tok-op">&gt;</span> <span class="tok-number">0</span> <span class="tok-op">|</span> <span class="tok-func">is.na</span>(hlegal)) <span class="tok-op">&amp;</span>
+                    immigrant <span class="tok-op">==</span> <span class="tok-number">1</span> <span class="tok-op">&amp;</span> ((relate <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span> marst <span class="tok-op">==</span> <span class="tok-number">1</span>) <span class="tok-op">|</span> relate <span class="tok-op">==</span> <span class="tok-number">3</span> <span class="tok-op">|</span> relate <span class="tok-op">==</span> <span class="tok-number">9</span>),
+                  <span class="tok-number">2</span>,
+                  immig_status
+           )) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">ifelse</span>(<span class="tok-func">is.na</span>(immig_status), <span class="tok-number">3</span>, immig_status)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(undercount =
+           <span class="tok-func">ifelse</span>(immig_status <span class="tok-op">==</span> <span class="tok-number">3</span>,
+                  <span class="tok-number">1</span> + (<span class="tok-number">0.13</span>) * (<span class="tok-number">0.925</span>) <span class="tok-op">^</span> (year - yrimmig), <span class="tok-number">0</span>)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(perwt = <span class="tok-func">ifelse</span>(undercount <span class="tok-op">&gt;</span> <span class="tok-number">0</span>, perwt * undercount, perwt)) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">case_when</span>(
+    immig_status <span class="tok-op">==</span> <span class="tok-number">1</span>                          <span class="tok-op">~</span> <span class="tok-string">&quot;Native-born&quot;</span>,
+    immig_status <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span> citizen <span class="tok-op">==</span> <span class="tok-number">2</span>           <span class="tok-op">~</span> <span class="tok-string">&quot;Naturalized citizen&quot;</span>,
+    immig_status <span class="tok-op">==</span> <span class="tok-number">2</span> <span class="tok-op">&amp;</span> citizen <span class="tok-op">!=</span> <span class="tok-number">2</span>           <span class="tok-op">~</span> <span class="tok-string">&quot;Legal immigrant&quot;</span>,
+    immig_status <span class="tok-op">==</span> <span class="tok-number">3</span>                          <span class="tok-op">~</span> <span class="tok-string">&quot;Undocumented&quot;</span>,
+  )) <span class="tok-op">%&gt;%</span>
+  <span class="tok-func">mutate</span>(immig_status = <span class="tok-func">factor</span>(immig_status,
+                               levels = <span class="tok-func">c</span>(<span class="tok-string">&quot;Native-born&quot;</span>,
+                                          <span class="tok-string">&quot;Naturalized citizen&quot;</span>,
+                                          <span class="tok-string">&quot;Legal immigrant&quot;</span>,
+                                          <span class="tok-string">&quot;Undocumented&quot;</span>)))</code></pre>
       </details>
     </section>
 
