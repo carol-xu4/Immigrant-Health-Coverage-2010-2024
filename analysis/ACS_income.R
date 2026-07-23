@@ -150,7 +150,7 @@ ggplot(ftotinc_by_family, aes(x = year, y = mean_ftotinc, color = immig_status))
         "Undocumented"        = "#C97703")) +
     labs(
         title = "Total family income, by immigration status",
-        subtitle = "Mean family income (2024 dollars); one person per family",
+        subtitle = "Mean family income (2024 dollars)",
         x = NULL, y = NULL,
         caption = "Source: ACS PUMS via IPUMS") +
     theme_minimal() +
@@ -195,7 +195,7 @@ ggplot(ftotinc_by_family, aes(x = year, y = median_ftotinc, color = immig_status
     "Undocumented"        = "#C97703")) +
   labs(
     title = "Total family income, by immigration status",
-    subtitle = "Median family income (2024 dollars); one person per family",
+    subtitle = "Median family income (2024 dollars);",
     x = NULL, y = NULL,
     caption = "Source: ACS PUMS via IPUMS") +
   theme_minimal() +
