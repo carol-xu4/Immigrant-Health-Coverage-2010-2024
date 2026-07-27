@@ -1,0 +1,111 @@
+<svg viewBox="0 0 900 1554" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#9AA5AC"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="900" height="1554" fill="#FFFFFF"/>
+<rect x="66.0" y="20" width="260" height="46" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="47" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="14" font-weight="700" fill="#1C2530">ACS person record</text>
+<line x1="196.0" y1="66" x2="196.0" y2="112" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="112" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="134" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="14" font-weight="700" fill="#1C2530">Immigrant &amp; foreign-born?</text>
+<text x="196.0" y="152" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#8A929A">citizen∈{2,3}, bpl≥150</text>
+<rect x="436" y="106" width="210" height="46" rx="8" fill="#E6F4EA" stroke="#6FAE7F" stroke-width="1.3"/>
+<text x="541.0" y="126" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="14" font-weight="700" fill="#1E6B3A">Native-born</text>
+<text x="541.0" y="143" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#3C8256">status = 1</text>
+<text x="360" y="129.0" font-family="IBM Plex Sans, Arial" font-size="12" fill="#8A929A">No</text>
+<line x1="346" y1="135.0" x2="436" y2="135.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="164" x2="196.0" y2="210" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<text x="204.0" y="184" font-family="IBM Plex Sans, Arial" font-size="12" fill="#8A929A">Yes</text>
+<rect x="436" y="210" width="240" height="844" rx="14" fill="#E3EEF0" stroke="#6B8E95" stroke-width="1.3"/>
+<text x="556.0" y="628.0" text-anchor="middle" font-family="Source Serif 4, Georgia, serif" font-size="16" font-weight="700" fill="#2E5F63">Legal immigrant</text>
+<text x="556.0" y="648.0" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#4E7378">status = 2</text>
+<rect x="46" y="210" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="231" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Naturalized citizen?</text>
+<text x="196.0" y="249" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">citizen == 2</text>
+<line x1="346" y1="236.0" x2="436" y2="236.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="262" x2="196.0" y2="276" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="276" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="297" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Arrived before 1982?</text>
+<text x="196.0" y="315" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">yrimmig &lt; 1982</text>
+<line x1="346" y1="302.0" x2="436" y2="302.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="328" x2="196.0" y2="342" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="342" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="363" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Receives Social Security?</text>
+<text x="196.0" y="381" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">incss &gt; 0</text>
+<line x1="346" y1="368.0" x2="436" y2="368.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="394" x2="196.0" y2="408" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="408" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="429" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Receives SSI?</text>
+<text x="196.0" y="447" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">incsupp &gt; 0</text>
+<line x1="346" y1="434.0" x2="436" y2="434.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="460" x2="196.0" y2="474" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="474" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="495" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Receives welfare?</text>
+<text x="196.0" y="513" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">incwelfr &gt; 0</text>
+<line x1="346" y1="500.0" x2="436" y2="500.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="526" x2="196.0" y2="540" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="540" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="561" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Has Medicare?</text>
+<text x="196.0" y="579" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">hinscare == 2</text>
+<line x1="346" y1="566.0" x2="436" y2="566.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="592" x2="196.0" y2="606" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="606" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="627" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Medicaid outside expansion?</text>
+<text x="196.0" y="645" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">hinscaid==2, 10 carve-outs</text>
+<line x1="346" y1="632.0" x2="436" y2="632.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="658" x2="196.0" y2="672" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="672" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="693" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Veteran?</text>
+<text x="196.0" y="711" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">vetstat == 2</text>
+<line x1="346" y1="698.0" x2="436" y2="698.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="724" x2="196.0" y2="738" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="738" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="759" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Government employment?</text>
+<text x="196.0" y="777" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">classwkrd ∈ {25,26,27,28}</text>
+<line x1="346" y1="764.0" x2="436" y2="764.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="790" x2="196.0" y2="804" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="804" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="825" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Licensed occupation?</text>
+<text x="196.0" y="838" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#8A929A">occ2010 ∈ {lawyers, police,</text>
+<text x="196.0" y="851" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#8A929A">physicians, nurses, ...}</text>
+<line x1="346" y1="830.0" x2="436" y2="830.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="856" x2="196.0" y2="870" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="870" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="891" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Born in Cuba, pre-2017?</text>
+<text x="196.0" y="909" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">bpld==25000 &amp; yrimmig&lt;2017</text>
+<line x1="346" y1="896.0" x2="436" y2="896.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="922" x2="196.0" y2="936" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="936" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="957" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Married head; spouse legal?</text>
+<text x="196.0" y="975" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">round 1: spouse to head</text>
+<line x1="346" y1="962.0" x2="436" y2="962.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="988" x2="196.0" y2="1002" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="1002" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="1023" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="13.5" font-weight="700" fill="#1C2530">Head confirmed legal?</text>
+<text x="196.0" y="1041" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">round 2: head to family</text>
+<line x1="346" y1="1028.0" x2="436" y2="1028.0" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<line x1="196.0" y1="1054" x2="196.0" y2="1100" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="1100" width="300" height="52" rx="8" fill="#FDECEA" stroke="#D9534F" stroke-width="1.3"/>
+<text x="196.0" y="1122" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="14" font-weight="700" fill="#B02A25">Undocumented</text>
+<text x="196.0" y="1140" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#B7554F">status = 3</text>
+<line x1="196.0" y1="1152" x2="196.0" y2="1184" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="46" y="1184" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="196.0" y="1206" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="14" font-weight="700" fill="#1C2530">Weight boosted</text>
+<text x="196.0" y="1224" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A929A">larger boost for recent arrivals</text>
+<polyline points="556.0,1054 556.0,1356 316.0,1356 316.0,1380" fill="none" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="166.0" y="1380" width="300" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="316.0" y="1402" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="14" font-weight="700" fill="#1C2530">citizen == 2?</text>
+<text x="316.0" y="1420" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#8A929A">naturalization field</text>
+<text x="296.0" y="1452" font-family="IBM Plex Sans, Arial" font-size="12" fill="#8A929A" text-anchor="end">No</text>
+<text x="336.0" y="1452" font-family="IBM Plex Sans, Arial" font-size="12" fill="#8A929A">Yes</text>
+<polyline points="296.0,1432 176.0,1478" fill="none" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<polyline points="336.0,1432 456.0,1478" fill="none" stroke="#9AA5AC" stroke-width="1.3" marker-end="url(#arrow)"/>
+<rect x="76.0" y="1478" width="200" height="52" rx="8" fill="#FFFFFF" stroke="#D8DEE2" stroke-width="1.3"/>
+<text x="176.0" y="1500" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="14" font-weight="700" fill="#1C2530">Legal noncitizen</text>
+<text x="176.0" y="1518" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#8A929A">final label</text>
+<rect x="356.0" y="1478" width="200" height="52" rx="8" fill="#E6F4EA" stroke="#6FAE7F" stroke-width="1.3"/>
+<text x="456.0" y="1500" text-anchor="middle" font-family="IBM Plex Sans, Arial" font-size="14" font-weight="700" fill="#1E6B3A">Naturalized citizen</text>
+<text x="456.0" y="1518" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11.5" fill="#3C8256">final label</text>
+</svg>
