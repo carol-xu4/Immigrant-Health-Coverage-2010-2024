@@ -320,7 +320,7 @@ ACS_medicaid_age_gif <- ggplot(medicaid_age,
   scale_color_manual(values = c(
     "Native-born"         = "#3043B4",
     "Naturalized citizen" = "#0D0E51",
-    "Legal immigrant"     = "#7C756D",
+    "Legal noncitizen"     = "#7C756D",
     "Undocumented"        = "#C97703")) +
   scale_x_continuous(breaks = seq(0, 100, by = 10), expand = c(0.02, 0)) +
   scale_y_continuous(

@@ -1,12 +1,12 @@
 year,immig_status,coverage_type,n,population
-2010,Legal immigrant,Direct purchase,4691,453667
-2010,Legal immigrant,Employer-sponsored,24932,2655821
-2010,Legal immigrant,Medicaid,22435,2748441
-2010,Legal immigrant,Medicare,3951,426405
-2010,Legal immigrant,Other public,694,68752
-2010,Legal immigrant,Uninsured,20322,2510568
+2010,Legal noncitizen,Direct purchase,6251,634881
+2010,Legal noncitizen,Employer-sponsored,37555,4047202
+2010,Legal noncitizen,Medicaid,22460,2751224
+2010,Legal noncitizen,Medicare,3951,426405
+2010,Legal noncitizen,Other public,812,82558
+2010,Legal noncitizen,Uninsured,22912,2814682
 2010,Native-born,Direct purchase,294364,25675177
-2010,Native-born,Employer-sponsored,1564949,151621195
+2010,Native-born,Employer-sponsored,1564948,151621056
 2010,Native-born,Medicaid,369201,41000259
 2010,Native-born,Medicare,127972,11115306
 2010,Native-born,Other public,48137,4928366
@@ -17,19 +17,19 @@ year,immig_status,coverage_type,n,population
 2010,Naturalized citizen,Medicare,13753,1307120
 2010,Naturalized citizen,Other public,2042,206371
 2010,Naturalized citizen,Uninsured,24172,2843442
-2010,Undocumented,Direct purchase,7153,928283.1101449007
-2010,Undocumented,Employer-sponsored,36160,4601441.093355514
-2010,Undocumented,Medicaid,373,62294.29604265011
-2010,Undocumented,Other public,272,35010.000217495945
-2010,Undocumented,Uninsured,57941,8905821.44044188
-2011,Legal immigrant,Direct purchase,4304,434604
-2011,Legal immigrant,Employer-sponsored,24252,2663300
-2011,Legal immigrant,Medicaid,24457,2866941
-2011,Legal immigrant,Medicare,4190,449080
-2011,Legal immigrant,Other public,616,63401
-2011,Legal immigrant,Uninsured,20267,2483420
+2010,Undocumented,Direct purchase,5593,730497.8772517401
+2010,Undocumented,Employer-sponsored,23538,3102949.125775846
+2010,Undocumented,Medicaid,348,59255.80135232643
+2010,Undocumented,Other public,154,19982.082474390514
+2010,Undocumented,Uninsured,55351,8579800.619646562
+2011,Legal noncitizen,Direct purchase,5997,619009
+2011,Legal noncitizen,Employer-sponsored,35938,4057383
+2011,Legal noncitizen,Medicaid,24479,2869157
+2011,Legal noncitizen,Medicare,4190,449080
+2011,Legal noncitizen,Other public,738,75309
+2011,Legal noncitizen,Uninsured,22818,2794394
 2011,Native-born,Direct purchase,288660,24663845
-2011,Native-born,Employer-sponsored,1532959,151807378
+2011,Native-born,Employer-sponsored,1532957,151807054
 2011,Native-born,Medicaid,419755,42848022
 2011,Native-born,Medicare,152382,12512454
 2011,Native-born,Other public,49769,5026708
@@ -40,19 +40,19 @@ year,immig_status,coverage_type,n,population
 2011,Naturalized citizen,Medicare,15224,1426573
 2011,Naturalized citizen,Other public,1837,189158
 2011,Naturalized citizen,Uninsured,25035,3015037
-2011,Undocumented,Direct purchase,7663,914820.2775944496
-2011,Undocumented,Employer-sponsored,34321,4581071.857770244
-2011,Undocumented,Medicaid,377,60477.55074217484
-2011,Undocumented,Other public,234,27592.40517168474
-2011,Undocumented,Uninsured,56456,8565374.134986117
-2012,Legal immigrant,Direct purchase,4529,449577
-2012,Legal immigrant,Employer-sponsored,24300,2672161
-2012,Legal immigrant,Medicaid,24436,2914716
-2012,Legal immigrant,Medicare,4541,490431
-2012,Legal immigrant,Other public,634,63676
-2012,Legal immigrant,Uninsured,20169,2487926
+2011,Undocumented,Direct purchase,5970,713482.2619176626
+2011,Undocumented,Employer-sponsored,22637,3079838.5395074845
+2011,Undocumented,Medicaid,355,58078.66241372061
+2011,Undocumented,Other public,112,14601.446680697598
+2011,Undocumented,Uninsured,53905,8232661.040542886
+2012,Legal noncitizen,Direct purchase,6221,640159
+2012,Legal noncitizen,Employer-sponsored,36583,4090050
+2012,Legal noncitizen,Medicaid,24451,2916505
+2012,Legal noncitizen,Medicare,4541,490431
+2012,Legal noncitizen,Other public,760,75720
+2012,Legal noncitizen,Uninsured,22605,2781282
 2012,Native-born,Direct purchase,286411,24754589
-2012,Native-born,Employer-sponsored,1541669,152817554
+2012,Native-born,Employer-sponsored,1541668,152817532
 2012,Native-born,Medicaid,415571,43651532
 2012,Native-born,Medicare,156419,13082241
 2012,Native-born,Other public,50194,5114280
@@ -63,40 +63,40 @@ year,immig_status,coverage_type,n,population
 2012,Naturalized citizen,Medicare,16158,1496033
 2012,Naturalized citizen,Other public,1957,203034
 2012,Naturalized citizen,Uninsured,25034,2998403
-2012,Undocumented,Direct purchase,7722,934623.4349363332
-2012,Undocumented,Employer-sponsored,34571,4559317.829950045
-2012,Undocumented,Medicaid,356,52074.874413352605
-2012,Undocumented,Other public,251,29285.550200929236
-2012,Undocumented,Uninsured,54915,8310994.027217711
-2013,Legal immigrant,Direct purchase,4689,461482
-2013,Legal immigrant,Employer-sponsored,24224,2613108
-2013,Legal immigrant,Medicaid,23158,2905457
-2013,Legal immigrant,Medicare,4565,512079
-2013,Legal immigrant,Other public,646,62552
-2013,Legal immigrant,Uninsured,19169,2429807
+2012,Undocumented,Direct purchase,6030,726665.1378694221
+2012,Undocumented,Employer-sponsored,22289,3032673.990511034
+2012,Undocumented,Medicaid,341,50118.56120945089
+2012,Undocumented,Other public,125,16255.968523561773
+2012,Undocumented,Uninsured,52479,7996803.060458546
+2013,Legal noncitizen,Direct purchase,6475,648671
+2013,Legal noncitizen,Employer-sponsored,37119,4064163
+2013,Legal noncitizen,Medicaid,23177,2908365
+2013,Legal noncitizen,Medicare,4565,512079
+2013,Legal noncitizen,Other public,764,73975
+2013,Legal noncitizen,Uninsured,21613,2712900
 2013,Native-born,Direct purchase,303216,26208946
 2013,Native-born,Employer-sponsored,1548842,151822408
 2013,Native-born,Medicaid,408603,44278308
 2013,Native-born,Medicare,162530,13952580
 2013,Native-born,Other public,50277,5112246
-2013,Native-born,Uninsured,301908,33415824
+2013,Native-born,Uninsured,301907,33415727
 2013,Naturalized citizen,Direct purchase,19083,1822187
 2013,Naturalized citizen,Employer-sponsored,96809,10032061
 2013,Naturalized citizen,Medicaid,23395,2539146
 2013,Naturalized citizen,Medicare,16533,1602061
 2013,Naturalized citizen,Other public,2098,211956
 2013,Naturalized citizen,Uninsured,25336,3116995
-2013,Undocumented,Direct purchase,8393,965502.5433181151
-2013,Undocumented,Employer-sponsored,35768,4677126.059507389
-2013,Undocumented,Medicaid,294,43870.7089746901
-2013,Undocumented,Other public,241,27267.317542031225
-2013,Undocumented,Uninsured,53018,8149570.928175147
-2014,Legal immigrant,Direct purchase,6459,669315
-2014,Legal immigrant,Employer-sponsored,24806,2728947
-2014,Legal immigrant,Medicaid,26694,3388591
-2014,Legal immigrant,Medicare,4870,541809
-2014,Legal immigrant,Other public,643,65898
-2014,Legal immigrant,Uninsured,15318,1991258
+2013,Undocumented,Direct purchase,6607,761943.0765572514
+2013,Undocumented,Employer-sponsored,22873,3114289.584751147
+2013,Undocumented,Medicaid,275,40661.61979733905
+2013,Undocumented,Other public,123,14773.73307509968
+2013,Undocumented,Uninsured,50575,7847259.715118748
+2014,Legal noncitizen,Direct purchase,8428,879966
+2014,Legal noncitizen,Employer-sponsored,37612,4201831
+2014,Legal noncitizen,Medicaid,26715,3391126
+2014,Legal noncitizen,Medicare,4870,541809
+2014,Legal noncitizen,Other public,724,75415
+2014,Legal noncitizen,Uninsured,17489,2264161
 2014,Native-born,Direct purchase,329701,29077369
 2014,Native-born,Employer-sponsored,1542754,153228446
 2014,Native-born,Medicaid,434863,47455010
@@ -109,22 +109,22 @@ year,immig_status,coverage_type,n,population
 2014,Naturalized citizen,Medicare,17958,1748891
 2014,Naturalized citizen,Other public,2064,209218
 2014,Naturalized citizen,Uninsured,17937,2250021
-2014,Undocumented,Direct purchase,10490,1294717.1425083512
-2014,Undocumented,Employer-sponsored,36942,4910260.180414553
-2014,Undocumented,Medicaid,507,72184.24071708668
-2014,Undocumented,Other public,186,22224.406967329072
-2014,Undocumented,Uninsured,47005,7398350.599260667
-2015,Legal immigrant,Direct purchase,7379,804133
-2015,Legal immigrant,Employer-sponsored,25340,2805628
-2015,Legal immigrant,Medicaid,29815,3852156
-2015,Legal immigrant,Medicare,5081,576372
-2015,Legal immigrant,Other public,656,72268
-2015,Legal immigrant,Uninsured,12243,1634001
+2014,Undocumented,Direct purchase,8521,1065173.1759052938
+2014,Undocumented,Employer-sponsored,24136,3323935.566780173
+2014,Undocumented,Medicaid,486,69413.07897300203
+2014,Undocumented,Other public,105,11815.74031613741
+2014,Undocumented,Uninsured,44834,7106677.4424210675
+2015,Legal noncitizen,Direct purchase,9820,1070355
+2015,Legal noncitizen,Employer-sponsored,38942,4399841
+2015,Legal noncitizen,Medicaid,29837,3854280
+2015,Legal noncitizen,Medicare,5081,576372
+2015,Legal noncitizen,Other public,758,82494
+2015,Legal noncitizen,Uninsured,13945,1842029
 2015,Native-born,Direct purchase,351792,31498957
 2015,Native-born,Employer-sponsored,1549646,154244200
 2015,Native-born,Medicaid,458374,50595866
 2015,Native-born,Medicare,179974,15397982
-2015,Native-born,Other public,47532,4932959
+2015,Native-born,Other public,47529,4932682
 2015,Native-born,Uninsured,192869,21591293
 2015,Naturalized citizen,Direct purchase,25585,2620151
 2015,Naturalized citizen,Employer-sponsored,101922,10843899
@@ -132,22 +132,22 @@ year,immig_status,coverage_type,n,population
 2015,Naturalized citizen,Medicare,19115,1843344
 2015,Naturalized citizen,Other public,2110,223626
 2015,Naturalized citizen,Uninsured,13432,1746769
-2015,Undocumented,Direct purchase,12488,1565055.3805293364
-2015,Undocumented,Employer-sponsored,39001,5265847.751033343
-2015,Undocumented,Medicaid,521,71576.17643096847
-2015,Undocumented,Other public,228,26690.06040283892
-2015,Undocumented,Uninsured,41098,6577033.050698016
-2016,Legal immigrant,Direct purchase,7478,815155
-2016,Legal immigrant,Employer-sponsored,25695,2885090
-2016,Legal immigrant,Medicaid,30261,4003892
-2016,Legal immigrant,Medicare,5191,596274
-2016,Legal immigrant,Other public,604,64211
-2016,Legal immigrant,Uninsured,11340,1514710
+2015,Undocumented,Direct purchase,10047,1274880.6810187942
+2015,Undocumented,Employer-sponsored,25399,3545174.293717076
+2015,Undocumented,Medicaid,499,69230.31548018726
+2015,Undocumented,Other public,129,15846.574840992253
+2015,Undocumented,Uninsured,39396,6354239.895951664
+2016,Legal noncitizen,Direct purchase,9899,1081292
+2016,Legal noncitizen,Employer-sponsored,40208,4567025
+2016,Legal noncitizen,Medicaid,30301,4009453
+2016,Legal noncitizen,Medicare,5191,596274
+2016,Legal noncitizen,Other public,727,75628
+2016,Legal noncitizen,Uninsured,12935,1719252
 2016,Native-born,Direct purchase,353838,31848763
-2016,Native-born,Employer-sponsored,1559664,155425220
+2016,Native-born,Employer-sponsored,1559662,155424988
 2016,Native-born,Medicaid,460344,51479165
 2016,Native-born,Medicare,188170,16059624
-2016,Native-born,Other public,46437,4870712
+2016,Native-born,Other public,46436,4870690
 2016,Native-born,Uninsured,176997,19763810
 2016,Naturalized citizen,Direct purchase,26403,2706993
 2016,Naturalized citizen,Employer-sponsored,104793,11135582
@@ -155,19 +155,19 @@ year,immig_status,coverage_type,n,population
 2016,Naturalized citizen,Medicare,20186,1956770
 2016,Naturalized citizen,Other public,2050,220612
 2016,Naturalized citizen,Uninsured,12834,1639544
-2016,Undocumented,Direct purchase,12863,1629842.775810178
-2016,Undocumented,Employer-sponsored,40378,5450731.795737499
-2016,Undocumented,Medicaid,1149,163299.29913854972
-2016,Undocumented,Other public,243,29373.359016207833
-2016,Undocumented,Uninsured,37684,6079454.277702799
-2017,Legal immigrant,Direct purchase,7596,840229
-2017,Legal immigrant,Employer-sponsored,26118,2908949
-2017,Legal immigrant,Medicaid,29971,3984244
-2017,Legal immigrant,Medicare,5314,611694
-2017,Legal immigrant,Other public,682,71380
-2017,Legal immigrant,Uninsured,11303,1527722
+2016,Undocumented,Direct purchase,10442,1340195.154857163
+2016,Undocumented,Employer-sponsored,25867,3634771.852951574
+2016,Undocumented,Medicaid,1109,157207.97398857164
+2016,Undocumented,Other public,121,16943.468556997883
+2016,Undocumented,Uninsured,36089,5859926.485097656
+2017,Legal noncitizen,Direct purchase,9872,1088977
+2017,Legal noncitizen,Employer-sponsored,41933,4695096
+2017,Legal noncitizen,Medicaid,30005,3987552
+2017,Legal noncitizen,Medicare,5314,611694
+2017,Legal noncitizen,Other public,762,78878
+2017,Legal noncitizen,Uninsured,13065,1751267
 2017,Native-born,Direct purchase,339156,30481734
-2017,Native-born,Employer-sponsored,1581504,157317459
+2017,Native-born,Employer-sponsored,1581502,157317245
 2017,Native-born,Medicaid,462994,51137260
 2017,Native-born,Medicare,196225,16955702
 2017,Native-born,Other public,46870,4869570
@@ -178,45 +178,45 @@ year,immig_status,coverage_type,n,population
 2017,Naturalized citizen,Medicare,20962,2061638
 2017,Naturalized citizen,Other public,2074,214410
 2017,Naturalized citizen,Uninsured,13655,1735255
-2017,Undocumented,Direct purchase,12588,1586042.6626734417
-2017,Undocumented,Employer-sponsored,43219,5676639.588273316
-2017,Undocumented,Medicaid,1040,145090.75982894705
-2017,Undocumented,Other public,272,25622.774181492463
-2017,Undocumented,Uninsured,36709,5907353.007925004
-2018,Legal immigrant,Direct purchase,7231,807675
-2018,Legal immigrant,Employer-sponsored,26041,2980071
-2018,Legal immigrant,Medicaid,27895,3773130
-2018,Legal immigrant,Medicare,5299,599828
-2018,Legal immigrant,Other public,662,66739
-2018,Legal immigrant,Uninsured,10954,1497309
+2017,Undocumented,Direct purchase,10312,1315329.1493346638
+2017,Undocumented,Employer-sponsored,27406,3749007.5994813517
+2017,Undocumented,Medicaid,1006,141478.853764866
+2017,Undocumented,Other public,192,17419.419010850466
+2017,Undocumented,Uninsured,34947,5667496.42365922
+2018,Legal noncitizen,Direct purchase,9262,1031189
+2018,Legal noncitizen,Employer-sponsored,41625,4812015
+2018,Legal noncitizen,Medicaid,27924,3776438
+2018,Legal noncitizen,Medicare,5299,599828
+2018,Legal noncitizen,Other public,766,76481
+2018,Legal noncitizen,Uninsured,12529,1699889
 2018,Native-born,Direct purchase,335394,29862188
-2018,Native-born,Employer-sponsored,1598258,158279308
+2018,Native-born,Employer-sponsored,1598256,158279061
 2018,Native-born,Medicaid,459794,50983400
 2018,Native-born,Medicare,204951,17361472
 2018,Native-born,Other public,46585,4796023
-2018,Native-born,Uninsured,191309,21126932
+2018,Native-born,Uninsured,191307,21126701
 2018,Naturalized citizen,Direct purchase,26578,2726224
 2018,Naturalized citizen,Employer-sponsored,111128,11893186
 2018,Naturalized citizen,Medicaid,32332,3749945
 2018,Naturalized citizen,Medicare,22594,2228012
 2018,Naturalized citizen,Other public,2161,223025
 2018,Naturalized citizen,Uninsured,14207,1859133
-2018,Undocumented,Direct purchase,12026,1495876.0779626425
-2018,Undocumented,Employer-sponsored,42893,5771273.8577862205
-2018,Undocumented,Medicaid,1051,156765.27409094365
-2018,Undocumented,Other public,205,21949.925958201555
-2018,Undocumented,Uninsured,34991,5722442.275811828
-2019,Legal immigrant,Direct purchase,6739,745735
-2019,Legal immigrant,Employer-sponsored,25538,2947743
-2019,Legal immigrant,Medicaid,24933,3450350
-2019,Legal immigrant,Medicare,5489,621857
-2019,Legal immigrant,Other public,630,63727
-2019,Legal immigrant,Uninsured,10360,1478468
+2018,Undocumented,Direct purchase,9995,1252462.9797995505
+2018,Undocumented,Employer-sponsored,27311,3794630.9174868357
+2018,Undocumented,Medicaid,1022,153134.15871485998
+2018,Undocumented,Other public,101,11343.062105433244
+2018,Undocumented,Uninsured,33418,5505772.708394249
+2019,Legal noncitizen,Direct purchase,8844,978855
+2019,Legal noncitizen,Employer-sponsored,42069,4825027
+2019,Legal noncitizen,Medicaid,24984,3455973
+2019,Legal noncitizen,Medicare,5489,621857
+2019,Legal noncitizen,Other public,741,74400
+2019,Legal noncitizen,Uninsured,12115,1709390
 2019,Native-born,Direct purchase,334299,29094988
-2019,Native-born,Employer-sponsored,1616765,159190292
+2019,Native-born,Employer-sponsored,1616764,159190119
 2019,Native-born,Medicaid,445109,50059692
 2019,Native-born,Medicare,222758,18336496
-2019,Native-born,Other public,46469,4740742
+2019,Native-born,Other public,46467,4740222
 2019,Native-born,Uninsured,197395,22034641
 2019,Naturalized citizen,Direct purchase,26441,2700316
 2019,Naturalized citizen,Employer-sponsored,114159,12178090
@@ -224,123 +224,123 @@ year,immig_status,coverage_type,n,population
 2019,Naturalized citizen,Medicare,24269,2373645
 2019,Naturalized citizen,Other public,2061,222652
 2019,Naturalized citizen,Uninsured,14994,1949628
-2019,Undocumented,Direct purchase,11536,1462886.3999920953
-2019,Undocumented,Employer-sponsored,42841,5691719.151543554
-2019,Undocumented,Medicaid,1007,147846.810164129
-2019,Undocumented,Other public,229,24716.90543213994
-2019,Undocumented,Uninsured,33816,5873451.085236972
-2020,Legal immigrant,Direct purchase,5546,844209
-2020,Legal immigrant,Employer-sponsored,20360,2980555
-2020,Legal immigrant,Medicaid,20764,3128370
-2020,Legal immigrant,Medicare,4397,590264
-2020,Legal immigrant,Other public,473,65710
-2020,Legal immigrant,Uninsured,8359,1447418
+2019,Undocumented,Direct purchase,9431,1209017.8931464748
+2019,Undocumented,Employer-sponsored,26311,3667267.2180259894
+2019,Undocumented,Medicaid,956,141772.8484653105
+2019,Undocumented,Other public,120,13619.971948974387
+2019,Undocumented,Uninsured,32061,5626403.675271422
+2020,Legal noncitizen,Direct purchase,7332,1108762
+2020,Legal noncitizen,Employer-sponsored,33585,4895036
+2020,Legal noncitizen,Medicaid,20834,3137395
+2020,Legal noncitizen,Medicare,4397,590264
+2020,Legal noncitizen,Other public,627,81148
+2020,Legal noncitizen,Uninsured,9934,1706318
 2020,Native-born,Direct purchase,277190,30797049
-2020,Native-born,Employer-sponsored,1296336,160151684
+2020,Native-born,Employer-sponsored,1296332,160150908
 2020,Native-born,Medicaid,375540,49389973
 2020,Native-born,Medicare,186104,18998491
-2020,Native-born,Other public,37347,4741375
-2020,Native-born,Uninsured,165916,21943274
+2020,Native-born,Other public,37336,4740696
+2020,Native-born,Uninsured,165915,21943174
 2020,Naturalized citizen,Direct purchase,20878,2829082
 2020,Naturalized citizen,Employer-sponsored,90330,11989415
 2020,Naturalized citizen,Medicaid,27208,3821937
 2020,Naturalized citizen,Medicare,19575,2437996
 2020,Naturalized citizen,Other public,1614,217300
 2020,Naturalized citizen,Uninsured,12003,1972670
-2020,Undocumented,Direct purchase,9607,1451104.8759616811
-2020,Undocumented,Employer-sponsored,33841,5416659.055837626
-2020,Undocumented,Medicaid,1217,199742.96259292643
-2020,Undocumented,Other public,241,31834.468468026706
-2020,Undocumented,Uninsured,26208,4776244.794815847
-2021,Legal immigrant,Direct purchase,7563,833720
-2021,Legal immigrant,Employer-sponsored,26121,2979174
-2021,Legal immigrant,Medicaid,28312,3526089
-2021,Legal immigrant,Medicare,6282,666329
-2021,Legal immigrant,Other public,587,68427
-2021,Legal immigrant,Uninsured,10667,1427340
-2021,Native-born,Direct purchase,339427,30223109
-2021,Native-born,Employer-sponsored,1562554,158945312
+2020,Undocumented,Direct purchase,7821,1163186.129755279
+2020,Undocumented,Employer-sponsored,20620,3355258.6576464544
+2020,Undocumented,Medicaid,1147,190061.36113288096
+2020,Undocumented,Other public,98,15816.614773758827
+2020,Undocumented,Uninsured,24634,4500510.148464007
+2021,Legal noncitizen,Direct purchase,9601,1061096
+2021,Legal noncitizen,Employer-sponsored,43045,4854089
+2021,Legal noncitizen,Medicaid,28403,3536736
+2021,Legal noncitizen,Medicare,6282,666329
+2021,Legal noncitizen,Other public,713,78868
+2021,Legal noncitizen,Uninsured,12496,1657821
+2021,Native-born,Direct purchase,339421,30222513
+2021,Native-born,Employer-sponsored,1562550,158945090
 2021,Native-born,Medicaid,473801,52347093
 2021,Native-born,Medicare,241792,19527371
 2021,Native-born,Other public,44486,4694066
-2021,Native-born,Uninsured,190900,20870872
+2021,Native-born,Uninsured,190899,20870505
 2021,Naturalized citizen,Direct purchase,28690,2918904
 2021,Naturalized citizen,Employer-sponsored,117229,12395300
 2021,Naturalized citizen,Medicaid,36780,4078658
 2021,Naturalized citizen,Medicare,27935,2600792
 2021,Naturalized citizen,Other public,2091,217646
 2021,Naturalized citizen,Uninsured,15196,1909253
-2021,Undocumented,Direct purchase,11397,1375540.971556274
-2021,Undocumented,Employer-sponsored,42448,5316359.962405807
-2021,Undocumented,Medicaid,1642,216467.38413205981
-2021,Undocumented,Other public,255,23988.163655785902
-2021,Undocumented,Uninsured,36444,5461541.240079342
-2022,Legal immigrant,Direct purchase,7748,831711
-2022,Legal immigrant,Employer-sponsored,25583,2851933
-2022,Legal immigrant,Medicaid,26919,3407922
-2022,Legal immigrant,Medicare,6550,666690
-2022,Legal immigrant,Other public,593,65044
-2022,Legal immigrant,Uninsured,10073,1328980
-2022,Native-born,Direct purchase,352635,30495938
-2022,Native-born,Employer-sponsored,1623496,160018407
+2021,Undocumented,Direct purchase,9365,1130250.0641222694
+2021,Undocumented,Employer-sponsored,25528,3304531.401882616
+2021,Undocumented,Medicaid,1551,205006.30287251063
+2021,Undocumented,Other public,129,12767.018761291001
+2021,Undocumented,Uninsured,34616,5216586.416199907
+2022,Legal noncitizen,Direct purchase,10243,1078824
+2022,Legal noncitizen,Employer-sponsored,43566,4804710
+2022,Legal noncitizen,Medicaid,27142,3432245
+2022,Legal noncitizen,Medicare,6550,666690
+2022,Legal noncitizen,Other public,803,81017
+2022,Legal noncitizen,Uninsured,11990,1563088
+2022,Native-born,Direct purchase,352634,30495860
+2022,Native-born,Employer-sponsored,1623491,160017791
 2022,Native-born,Medicaid,491137,52495820
 2022,Native-born,Medicare,262909,20514862
-2022,Native-born,Other public,46322,4578981
-2022,Native-born,Uninsured,183829,19069106
+2022,Native-born,Other public,46319,4578758
+2022,Native-born,Uninsured,183827,19068673
 2022,Naturalized citizen,Direct purchase,29708,2954012
 2022,Naturalized citizen,Employer-sponsored,121983,12624641
 2022,Naturalized citizen,Medicaid,37655,4186290
 2022,Naturalized citizen,Medicare,29724,2734168
 2022,Naturalized citizen,Other public,2169,214293
 2022,Naturalized citizen,Uninsured,14570,1782214
-2022,Undocumented,Direct purchase,13865,1627574.5653431595
-2022,Undocumented,Employer-sponsored,45369,5580385.090327049
-2022,Undocumented,Medicaid,3833,487967.29988049617
-2022,Undocumented,Other public,316,32766.21454696416
-2022,Undocumented,Uninsured,36392,5546911.867134793
-2023,Legal immigrant,Direct purchase,7826,874535
-2023,Legal immigrant,Employer-sponsored,25619,2891642
-2023,Legal immigrant,Medicaid,28780,3670980
-2023,Legal immigrant,Medicare,6716,666429
-2023,Legal immigrant,Other public,590,58911
-2023,Legal immigrant,Uninsured,9642,1271428
-2023,Native-born,Direct purchase,353071,30150111
-2023,Native-born,Employer-sponsored,1632506,159942060
+2022,Undocumented,Direct purchase,11371,1359479.7962411686
+2022,Undocumented,Employer-sponsored,27391,3482956.5686091417
+2022,Undocumented,Medicaid,3610,462267.21738686616
+2022,Undocumented,Other public,109,15564.074637351458
+2022,Undocumented,Uninsured,34477,5297427.17699822
+2023,Legal noncitizen,Direct purchase,10457,1151798
+2023,Legal noncitizen,Employer-sponsored,44661,4986645
+2023,Legal noncitizen,Medicaid,29059,3699774
+2023,Legal noncitizen,Medicare,6716,666429
+2023,Legal noncitizen,Other public,753,71050
+2023,Legal noncitizen,Uninsured,11774,1535860
+2023,Native-born,Direct purchase,353068,30149037
+2023,Native-born,Employer-sponsored,1632503,159941409
 2023,Native-born,Medicaid,492226,52592831
 2023,Native-born,Medicare,278719,21263322
 2023,Native-born,Other public,46100,4602443
-2023,Native-born,Uninsured,177904,18565415
+2023,Native-born,Uninsured,177902,18565298
 2023,Naturalized citizen,Direct purchase,29798,2989684
 2023,Naturalized citizen,Employer-sponsored,125171,12874103
 2023,Naturalized citizen,Medicaid,38614,4342010
 2023,Naturalized citizen,Medicare,31272,2866775
 2023,Naturalized citizen,Other public,2294,230607
 2023,Naturalized citizen,Uninsured,13783,1686089
-2023,Undocumented,Direct purchase,14370,1745465.6686033641
-2023,Undocumented,Employer-sponsored,47908,5953691.058382686
-2023,Undocumented,Medicaid,4419,575749.8147563715
-2023,Undocumented,Other public,290,26727.756203608096
-2023,Undocumented,Uninsured,38191,5967714.502415584
-2024,Legal immigrant,Direct purchase,7778,896460
-2024,Legal immigrant,Employer-sponsored,24770,2848656
-2024,Legal immigrant,Medicaid,24835,3358758
-2024,Legal immigrant,Medicare,7167,743264
-2024,Legal immigrant,Other public,604,68597
-2024,Legal immigrant,Uninsured,8981,1236530
-2024,Native-born,Direct purchase,359189,31066087
-2024,Native-born,Employer-sponsored,1634968,161417600
-2024,Native-born,Medicaid,473235,50740823
+2023,Undocumented,Direct purchase,11742,1445420.6615302123
+2023,Undocumented,Employer-sponsored,28869,3702599.561986696
+2023,Undocumented,Medicaid,4140,545396.5028076493
+2023,Undocumented,Other public,127,13424.22117389425
+2023,Undocumented,Uninsured,36061,5684382.46062398
+2024,Legal noncitizen,Direct purchase,10370,1193437
+2024,Legal noncitizen,Employer-sponsored,43967,5124884
+2024,Legal noncitizen,Medicaid,25595,3434703
+2024,Legal noncitizen,Medicare,7167,743264
+2024,Legal noncitizen,Other public,732,79012
+2024,Legal noncitizen,Uninsured,11161,1521671
+2024,Native-born,Direct purchase,359188,31066042
+2024,Native-born,Employer-sponsored,1634963,161416739
+2024,Native-born,Medicaid,473234,50740764
 2024,Native-born,Medicare,294554,22329804
-2024,Native-born,Other public,46251,4632937
-2024,Native-born,Uninsured,184414,19647528
+2024,Native-born,Other public,46249,4632627
+2024,Native-born,Uninsured,184412,19647281
 2024,Naturalized citizen,Direct purchase,30252,3106968
 2024,Naturalized citizen,Employer-sponsored,126388,13397026
 2024,Naturalized citizen,Medicaid,38057,4328358
 2024,Naturalized citizen,Medicare,32614,3023351
 2024,Naturalized citizen,Other public,2385,250604
 2024,Naturalized citizen,Uninsured,13849,1772206
-2024,Undocumented,Direct purchase,15626,2124198.747137504
-2024,Undocumented,Employer-sponsored,48597,6428573.561479227
-2024,Undocumented,Medicaid,10269,1409332.9255748354
-2024,Undocumented,Other public,265,25016.369719693765
-2024,Undocumented,Uninsured,37840,6302747.968795062
+2024,Undocumented,Direct purchase,13035,1801636.5125336412
+2024,Undocumented,Employer-sponsored,29405,3980820.4229274793
+2024,Undocumented,Medicaid,9510,1328882.3958526575
+2024,Undocumented,Other public,139,13993.424213392913
+2024,Undocumented,Uninsured,35662,5997099.85930398
