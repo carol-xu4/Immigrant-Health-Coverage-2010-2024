@@ -427,3 +427,5 @@ ggplot(income_by_5yr_bins, aes(x = tenure_bin, y = mean_inctot, color = immig_st
 ggsave("results/income_by_years_in_us_5yr_bins.png", width = 15, height = 10)
 
 table(acsdata$age[acsdata$immig_status == "Legal noncitizen"])
+
+income_by_5yr_bins %>% filter(immig_status == "Legal noncitizen") %>% select(tenure_bin, n, mean_inctot)

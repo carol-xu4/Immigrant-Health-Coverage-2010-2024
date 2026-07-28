@@ -8,7 +8,7 @@ setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Cover
 # ACS kids data ------------------------------------------------------------------
 # new data extract only 2014-2024, to reduce sample size 
 
-ddi_acs = read_ipums_ddi("data/input/usa_00005.xml")
+ddi_acs = read_ipums_ddi("data/input/usa_00011.xml")
 acs = read_ipums_micro(ddi_acs)
 
 acs = acs %>%
@@ -25,7 +25,8 @@ acs = acs %>%
     hcovpub, hinscaid, hinscare, hinsva, hinstri,
     momloc, momloc2, poploc, poploc2,
     bpld_mom, bpld_mom2, citizen_mom, citizen_mom2, yrimmig_mom, yrimmig_mom2,
-    bpld_pop, bpld_pop2, citizen_pop, citizen_pop2, yrimmig_pop, yrimmig_pop2)
+    bpld_pop, bpld_pop2, citizen_pop, citizen_pop2, yrimmig_pop, yrimmig_pop2,
+    inctot, ftotinc, poverty, cpi99, occ2010)
 
 # residual method 
 acs = acs %>%
@@ -62,7 +63,23 @@ acs = acs %>%
       # vermont — children 2022
       !(statefip == 50 & year >= 2022 & age <= 18) ~ 2,
     immigrant == 1 & vetstat == 2 ~ 2,
-    immigrant == 1 & classwkrd == 26 ~ 2,
+    immigrant == 1 & classwkrd %in% c(25, 26, 27, 28) ~ 2,
+    # occupations requiring licensing/lawful status, per Pew (2018) methodology -----
+    immigrant == 1 & occ2010 %in% c(
+      2100, 3850, 3060, 3255,                                        # lawyers, police, physicians, RNs
+      3000, 3010, 3030, 3040, 3050, 3110, 3120, 3140, 3150,
+      3160, 3200, 3210, 3220, 3230, 3245, 3250, 3256, 3258, 3260,
+      3310, 3500,                                                     # health care professionals
+      2040, 2050, 2060,                                               # religious workers
+      2600, 2630, 2700, 2710, 2720, 2740, 2750, 2760,                 # athletes/artists/entertainers
+      9800, 9810, 9820, 9830                                          # current miligary
+    ) ~ 2,
+    # inferred from Pew's named visa categories (visiting scholars, high-tech workers) --
+    immigrant == 1 & occ2010 %in% c(
+      2200,                                                           # visiting scholars -> postsecondary teachers
+      1005, 1006, 1007, 1010, 1020, 1030, 1050, 1060, 1105, 1106, 1107,  # high-tech: computer occupations
+      1320, 1340, 1350, 1360, 1400, 1410, 1420, 1430, 1440, 1450, 1460, 1520, 1530  # high-tech: engineers
+    ) ~ 2,
     immigrant == 1 & bpld == 25000 & yrimmig < 2017 ~ 2,
     TRUE ~ immig_status
   )) %>%
@@ -95,16 +112,17 @@ acs = acs %>%
   mutate(immig_status = case_when(
     immig_status == 1                          ~ "Native-born",
     immig_status == 2 & citizen == 2           ~ "Naturalized citizen",
-    immig_status == 2 & citizen != 2           ~ "Legal immigrant",
+    immig_status == 2 & citizen != 2           ~ "Legal noncitizen",
     immig_status == 3                          ~ "Undocumented",
   )) %>%
   mutate(immig_status = factor(immig_status,
                                levels = c("Native-born",
                                           "Naturalized citizen",
-                                          "Legal immigrant",
+                                          "Legal noncitizen",
                                           "Undocumented")))
 
 # rewrite final ACS kids dataset
+acs = acs %>% select(-good, -good1, -slegal, -hlegal, -legal)
 fwrite(acs, "data/output/acskids.csv")
 
 # new acs data, --------------------------------------------------------------------------------------
@@ -126,7 +144,7 @@ ggplot(medicaid_kids, aes(x = as.numeric(year), y = pct_medicaid, color = immig_
   scale_color_manual(values = c(
     "Native-born"         = "#3043B4",
     "Naturalized citizen" = "#0D0E51",
-    "Legal immigrant"     = "#7C756D",
+    "Legal noncitizen"     = "#7C756D",
     "Undocumented"        = "#C97703")) +
   scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
   scale_y_continuous(breaks = seq(0, 100, by = 20), expand = c(0.02, 0),
@@ -172,7 +190,7 @@ ggplot(kids_2024, aes(x = reorder(immig_status, n_kids), y = n_kids,
   scale_fill_manual(values = c(
     "Native-born"         = "#3043B4",
     "Naturalized citizen" = "#0D0E51",
-    "Legal immigrant"     = "#7C756D",
+    "Legal noncitizen"     = "#7C756D",
     "Undocumented"        = "#C97703")) +
   scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M"),
                      expand = expansion(mult = c(0, 0.15))) +
@@ -318,8 +336,8 @@ child_status_table = child_status_table_data %>%
     `pct_Native-born` = "Native-born (%)",
     `population_Naturalized citizen` = "Naturalized (N)",
     `pct_Naturalized citizen` = "Naturalized (%)",
-    `population_Legal immigrant` = "Legal immigrant (N)",
-    `pct_Legal immigrant` = "Legal immigrant (%)",
+    `population_Legal noncitizen` = "Legal noncitizen (N)",
+    `pct_Legal noncitizen` = "Legal noncitizen (%)",
     `population_Undocumented` = "Undocumented (N)",
     `pct_Undocumented` = "Undocumented (%)") %>%
   tab_source_note(source_note = "Source: ACS PUMS via IPUMS") %>%
@@ -345,18 +363,18 @@ table(acskids2$n_immigrant_parents)
 sum(acskids2$perwt[acskids2$n_immigrant_parents > 0])
 sum(acskids2$perwt)
 
-# priority: both parents native born > at least one naturalized parent > at least one legal immigrant parent > at least one undocumented parent
+# priority: both parents native born > at least one naturalized parent > at least one legal noncitizen parent > at least one undocumented parent
 acskids2 = acskids2 %>%
   mutate(
     has_naturalized = if_any(c(immig_status_mom, immig_status_pop, immig_status_mom2, immig_status_pop2),
                               ~ .x == "Naturalized citizen"),
     has_legal = if_any(c(immig_status_mom, immig_status_pop, immig_status_mom2, immig_status_pop2),
-                        ~ .x == "Legal immigrant"),
+                        ~ .x == "Legal noncitizen"),
     has_undocumented = if_any(c(immig_status_mom, immig_status_pop, immig_status_mom2, immig_status_pop2),
                                ~ .x == "Undocumented"),
     parent_group = case_when(
       has_naturalized ~ "At least one naturalized citizen parent",
-      has_legal ~ "At least one legal immigrant parent",
+      has_legal ~ "At least one legal noncitizen parent",
       has_undocumented ~ "At least one undocumented parent",
       TRUE ~ "Both parents native-born"))
 
@@ -371,7 +389,7 @@ ggplot(parent_year_group_all, aes(x = year, y = population, fill = parent_group)
   scale_y_continuous(labels = scales::label_number(suffix = "%", scale = 100)) +
   scale_x_continuous(breaks = unique(parent_year_group_all$year)[c(TRUE, FALSE)]) +
   scale_fill_manual(values = c(
-    "At least one legal immigrant parent" = "#7C756D",
+    "At least one legal noncitizen parent" = "#7C756D",
     "Both parents native-born" = "#3043B4",
     "At least one naturalized citizen parent" = "#0D0E51",
     "At least one undocumented parent" = "#C97703")) +
@@ -420,7 +438,7 @@ ggplot(parent_year_group_native, aes(x = year, y = population, fill = parent_gro
   scale_y_continuous(labels = scales::label_number(suffix = "%", scale = 100)) +
   scale_x_continuous(breaks = unique(parent_year_group_native$year)[c(TRUE, FALSE)]) +
   scale_fill_manual(values = c(
-    "At least one legal immigrant parent" = "#7C756D",
+    "At least one legal noncitizen parent" = "#7C756D",
     "Both parents native-born" = "#3043B4",
     "At least one naturalized citizen parent" = "#0D0E51",
     "At least one undocumented parent" = "#C97703")) +
@@ -482,7 +500,7 @@ ggplot(medicaid_parent_native, aes(x = year, y = pct_medicaid, color = parent_gr
       limits = c(30, 70)) +
   scale_x_continuous(breaks = unique(medicaid_parent_native$year)[c(TRUE, FALSE)]) +
   scale_color_manual(values = c(
-    "At least one legal immigrant parent" = "#7C756D",
+    "At least one legal noncitizen parent" = "#7C756D",
     "Both parents native-born" = "#3043B4",
     "At least one naturalized citizen parent" = "#0D0E51",
     "At least one undocumented parent" = "#C97703")) +
@@ -556,7 +574,7 @@ print(medicaid_undoc_mixed, n = Inf)
 ggplot(medicaid_undoc_mixed, aes(x = year, y = pct_medicaid, color = undoc_group)) +
   geom_line(linewidth = 1.2) +
   geom_point(size = 2) +
-  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(60, 75)) +
   scale_x_continuous(breaks = unique(medicaid_undoc_mixed$year)[c(TRUE, FALSE)]) +
   scale_color_manual(values = c(
     "Both parents undocumented" = "#C97703",
@@ -630,14 +648,14 @@ ggplot(one_comp, aes(x = year, y = population, fill = other_status)) +
   geom_col(width = 0.7) +
   geom_line(data = both_total, aes(x = year, y = population),
             inherit.aes = FALSE, linetype = "dashed", linewidth = 1, color = "gray30") +
-  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +
-   annotate("text", x = 2021.5, y = 2750000, label = "Total, both parents undocumented",                
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M"), limits = c(0, 3000000)) +
+   annotate("text", x = 2021.5, y = 2250000, label = "Total, both parents undocumented",                
         hjust = 0, size = 6, color = "gray30") +
   scale_x_continuous(breaks = unique(one_comp$year)[c(TRUE, FALSE)]) +
   scale_fill_manual(values = c(
     "Native-born" = "#3043B4",
     "Naturalized citizen" = "#0D0E51",
-    "Legal immigrant" = "#7C756D",
+    "Legal noncitizen" = "#7C756D",
     "No second parent" = "#C97703")) +
   labs(
     title = "Children with one undocumented parent: who is the other parent?",
@@ -1233,7 +1251,7 @@ ggplot(medicaid_single_parent,
   scale_color_manual(values = c(
     "Native-born"         = "#3043B4",
     "Naturalized citizen" = "#0D0E51",
-    "Legal immigrant"     = "#7C756D",
+    "Legal noncitizen"     = "#7C756D",
     "Undocumented"        = "#C97703")) +
   labs(
     title = "Medicaid coverage among children in single-parent households",
@@ -1308,7 +1326,7 @@ ggplot(medicaid_separated, aes(x = year, y = pct_medicaid, color = parent_immig_
   scale_color_manual(values = c(
     "Native-born"         = "#3043B4",
     "Naturalized citizen" = "#0D0E51",
-    "Legal immigrant"     = "#7C756D",
+    "Legal noncitizen"     = "#7C756D",
     "Undocumented"        = "#C97703")) +
   labs(
     title = "Medicaid coverage among children of separated parents",
@@ -1381,7 +1399,7 @@ print(spouse_absent_composition[order(year, parent_immig_status_sa)], nrow = Inf
 
 spouse_absent_composition[, parent_immig_status_sa := factor(
   parent_immig_status_sa,
-  levels = c("Undocumented", "Legal immigrant", "Naturalized citizen", "Native-born")
+  levels = c("Undocumented", "Legal noncitizen", "Naturalized citizen", "Native-born")
 )]
 
 ggplot(spouse_absent_composition, aes(x = year, y = pop, fill = parent_immig_status_sa)) +
@@ -1391,7 +1409,7 @@ ggplot(spouse_absent_composition, aes(x = year, y = pop, fill = parent_immig_sta
   scale_fill_manual(values = c(
     "Native-born"         = "#3043B4",
     "Naturalized citizen" = "#0D0E51",
-    "Legal immigrant"     = "#7C756D",
+    "Legal noncitizen"     = "#7C756D",
     "Undocumented"        = "#C97703")) +
   labs(
     title = "Children of spouse-absent parents, by parent's immigration status",
@@ -1441,12 +1459,12 @@ print(marst2_rate_by_immig, n = Inf)
 ggplot(marst2_rate_by_immig, aes(x = year, y = pct_spouse_absent, color = immig_status)) +
   geom_line(linewidth = 1.2) +
   geom_point(size = 2) +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(1, 5)) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0, 6)) +
   scale_x_continuous(breaks = unique(marst2_rate_by_immig$year)[c(TRUE, FALSE)]) +
   scale_color_manual(values = c(
     "Native-born"         = "#3043B4",
     "Naturalized citizen" = "#0D0E51",
-    "Legal immigrant"     = "#7C756D",
+    "Legal noncitizen"     = "#7C756D",
     "Undocumented"        = "#C97703")) +
   labs(
     title = "Share of married adults with spouse absent, by immigration status",
@@ -1508,12 +1526,12 @@ print(marst2_rate_parents[order(year, immig_status)], nrow = Inf)
 ggplot(marst2_rate_parents, aes(x = year, y = pct_spouse_absent, color = immig_status)) +
   geom_line(linewidth = 1.2) +
   geom_point(size = 2) +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(1, 4)) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(0, 5)) +
   scale_x_continuous(breaks = unique(marst2_rate_parents$year)[c(TRUE, FALSE)]) +
   scale_color_manual(values = c(
     "Native-born"         = "#3043B4",
     "Naturalized citizen" = "#0D0E51",
-    "Legal immigrant"     = "#7C756D",
+    "Legal noncitizen"     = "#7C756D",
     "Undocumented"        = "#C97703")) +
   labs(
     title = "Share of parents with spouse absent, by immigration status",
@@ -1567,7 +1585,7 @@ ggplot(medicaid_spouse_absent, aes(x = year, y = pct_medicaid, color = parent_im
   scale_color_manual(values = c(
     "Native-born"         = "#3043B4",
     "Naturalized citizen" = "#0D0E51",
-    "Legal immigrant"     = "#7C756D",
+    "Legal noncitizen"     = "#7C756D",
     "Undocumented"        = "#C97703")) +
   labs(
     title = "Medicaid coverage among children in single-parent households",
@@ -1747,7 +1765,7 @@ medicaid_compare[, .(year, group, pop)][order(year, group)]
 ggplot(medicaid_compare, aes(x = year, y = pct_medicaid, color = group)) +
   geom_line(linewidth = 1.2) +
   geom_point(size = 2) +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(50, 65)) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(50, 70)) +
   scale_x_continuous(breaks = unique(medicaid_compare$year)[c(TRUE, FALSE)]) +
   scale_color_manual(values = c(
     "Single undocumented parent (marst == 2)" = "#3043B4",
@@ -1827,7 +1845,7 @@ medicaid_compare_v2[, .(year, group, pop)][order(year, group)]
 ggplot(medicaid_compare_v2, aes(x = year, y = pct_medicaid, color = group)) +
   geom_line(linewidth = 1.2) +
   geom_point(size = 2) +
-  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(45, 65)) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), limits = c(45, 75)) +
   scale_x_continuous(breaks = unique(medicaid_compare_v2$year)[c(TRUE, FALSE)]) +
   scale_color_manual(values = c(
     "Single undocumented parent (marst == 2)" = "#3043B4",
