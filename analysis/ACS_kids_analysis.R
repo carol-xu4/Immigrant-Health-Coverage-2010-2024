@@ -1884,3 +1884,141 @@ ggplot(medicaid_compare_v2, aes(x = year, y = pct_medicaid, color = group)) +
   guides(color = guide_legend(nrow = 1, byrow = TRUE))
 
 ggsave("results/medicaid_native_one_vs_two_married_undoc_parents.png", width = 15, height = 10)
+
+
+# medicaid, age 19-64
+# medicaid, ages 18-64, by immigration status (with combined noncitizen line) --------
+
+age1864 = acskids %>%
+  filter(age >= 18, age <= 64)
+
+medicaid_1864_status = age1864 %>%
+  group_by(year, immig_status) %>%
+  summarise(
+    pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt),
+    pop = sum(perwt),
+    .groups = "drop") %>%
+  mutate(group = as.character(immig_status)) %>%
+  select(year, group, pct_medicaid, pop)
+
+medicaid_1864_noncitizen = age1864 %>%
+  filter(immig_status %in% c("Legal noncitizen", "Undocumented")) %>%
+  group_by(year) %>%
+  summarise(
+    pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt),
+    pop = sum(perwt),
+    .groups = "drop") %>%
+  mutate(group = "All noncitizens (legal + undocumented)")
+
+medicaid_1864_combined = bind_rows(medicaid_1864_status, medicaid_1864_noncitizen) %>%
+  mutate(group = factor(group, levels = c(
+    "Native-born",
+    "Naturalized citizen",
+    "Legal noncitizen",
+    "Undocumented",
+    "All noncitizens (legal + undocumented)")))
+
+print(medicaid_1864_combined, n = Inf)
+
+ggplot(medicaid_1864_combined, aes(x = year, y = pct_medicaid, color = group, linetype = group)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(data = filter(medicaid_1864_combined, group != "All noncitizens (legal + undocumented)"),
+             size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_x_continuous(breaks = unique(medicaid_1864_combined$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Native-born"                              = "#3043B4",
+    "Naturalized citizen"                      = "#0D0E51",
+    "Legal noncitizen"                         = "#7C756D",
+    "Undocumented"                             = "#C97703",
+    "All noncitizens (legal + undocumented)"   = "gray40")) +
+  scale_linetype_manual(values = c(
+    "Native-born"                              = "solid",
+    "Naturalized citizen"                      = "solid",
+    "Legal noncitizen"                         = "solid",
+    "Undocumented"                             = "solid",
+    "All noncitizens (legal + undocumented)"   = "dashed")) +
+  labs(
+    title = "Medicaid Coverage by Immigration Status, Ages 18–64",
+    x = NULL, y = NULL,
+    color = NULL, linetype = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 10),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 10, color = "gray40"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 2, byrow = TRUE),
+         linetype = guide_legend(nrow = 2, byrow = TRUE))
+
+ggsave("results/medicaid_1864_by_status_with_noncitizen.png", width = 10, height = 6)
+
+# medicaid, ages 18-64: noncitizens vs naturalized vs native-born ----------------
+
+medicaid_1864_simple = medicaid_1864_combined %>%
+  filter(group %in% c("Native-born", "Naturalized citizen", "All noncitizens (legal + undocumented)"))
+
+print(medicaid_1864_simple, n = Inf)
+
+ggplot(medicaid_1864_simple, aes(x = year, y = pct_medicaid, color = group, linetype = group)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(data = filter(medicaid_1864_simple, group != "All noncitizens (legal + undocumented)"),
+             size = 2) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  scale_x_continuous(breaks = unique(medicaid_1864_simple$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Native-born"                              = "#3043B4",
+    "Naturalized citizen"                      = "#0D0E51",
+    "All noncitizens (legal + undocumented)"   = "gray40")) +
+  scale_linetype_manual(values = c(
+    "Native-born"                              = "solid",
+    "Naturalized citizen"                      = "solid",
+    "All noncitizens (legal + undocumented)"   = "dashed")) +
+  labs(
+    title = "Medicaid Coverage, Ages 18–64",
+    subtitle = "Native-born vs. naturalized citizens vs. all noncitizens (legal + undocumented)",
+    x = NULL, y = NULL,
+    color = NULL, linetype = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 11, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 10),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 10, color = "gray40"),
+    axis.text.y = element_text(size = 10, color = "gray40"),
+    plot.caption = element_text(size = 8, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE),
+         linetype = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave("results/medicaid_1864_native_naturalized_noncitizen.png", width = 10, height = 6)
+

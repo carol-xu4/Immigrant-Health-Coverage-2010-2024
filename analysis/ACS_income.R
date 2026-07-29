@@ -429,3 +429,153 @@ ggsave("results/income_by_years_in_us_5yr_bins.png", width = 15, height = 10)
 table(acsdata$age[acsdata$immig_status == "Legal noncitizen"])
 
 income_by_5yr_bins %>% filter(immig_status == "Legal noncitizen") %>% select(tenure_bin, n, mean_inctot)
+
+# medicaid use, poor vs poor immigrants
+medicaid_poor = acsdata %>%
+  filter(
+    !is.na(poverty),
+    poverty < 100,
+    hinscaid %in% c(1, 2)) %>%   # 1 = no, 2 = yes
+  group_by(year, immig_status) %>%
+  summarise(
+    pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt),
+    pop = sum(perwt),
+    n = n(),
+    .groups = "drop")
+
+print(medicaid_poor, n = Inf)
+
+ggplot(medicaid_poor, aes(
+  x = year,
+  y = pct_medicaid,
+  color = immig_status)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    breaks = seq(0, 80, by = 10)) +
+  scale_x_continuous(
+    breaks = unique(medicaid_poor$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Native-born"         = "#3043B4",
+    "Naturalized citizen" = "#0D0E51",
+    "Legal noncitizen"    = "#7C756D",
+    "Undocumented"        = "#C97703")) +
+  labs(
+    title = "Medicaid coverage among people below the poverty line",
+    subtitle = "Share reporting Medicaid coverage, by immigration status",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(
+      size = 28, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(
+      size = 18, color = "gray40", hjust = 0,
+      margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(
+      color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(
+      size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave(
+  "results/medicaid_coverage_below_poverty_by_immig_status.png",
+  width = 15, height = 10)
+
+medicaid_poor_nativity = acsdata %>%
+  filter(
+    !is.na(poverty),
+    poverty < 100,
+    hinscaid %in% c(1, 2)) %>%
+  mutate(
+    nativity = if_else(
+      immig_status == "Native-born",
+      "Native-born",
+      "Immigrant"),
+    nativity = factor(
+      nativity,
+      levels = c("Native-born", "Immigrant"))) %>%
+  group_by(year, nativity) %>%
+  summarise(
+    pct_medicaid = 100 * sum(perwt[hinscaid == 2]) / sum(perwt),
+    pop = sum(perwt),
+    n = n(),
+    .groups = "drop")
+
+print(medicaid_poor_nativity, n = Inf)
+
+ggplot(
+  medicaid_poor_nativity,
+  aes(x = year, y = pct_medicaid, color = nativity)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    limits = c(0, NA)) +
+  scale_x_continuous(
+    breaks = unique(medicaid_poor_nativity$year)[c(TRUE, FALSE)]) +
+  scale_color_manual(values = c(
+    "Native-born" = "#3043B4",
+    "Immigrant"   = "#C97703")) +
+  labs(
+    title = "Medicaid coverage among people below the poverty line",
+    subtitle = "Share reporting Medicaid coverage, by nativity",
+    x = NULL, y = NULL,
+    caption = "Source: ACS PUMS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(
+      size = 28, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(
+      size = 18, color = "gray40", hjust = 0,
+      margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    legend.text = element_text(size = 16),
+    legend.key.width = unit(1, "cm"),
+    legend.key.height = unit(0.5, "cm"),
+    legend.spacing.x = unit(0.3, "cm"),
+    legend.box.margin = margin(b = 5),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(
+      color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(
+      size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.margin = margin(t = 10, r = 20, b = 10, l = 10),
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA)) +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
+
+ggsave(
+  "results/medicaid_coverage_below_poverty_by_nativity.png",
+  width = 15, height = 10)
