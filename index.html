@@ -147,6 +147,7 @@
       <li class="sub" style="padding-left: 32px;"><a href="#children-parental-status">Parental Status</a></li>
       <li class="sub" style="padding-left: 32px;"><a href="#children-mixed-households">Mixed Households</a></li>
       <li class="sub"><a href="#income">Income</a></li>
+      <li class="sub"><a href="#three-groups">3 Groups</a></li>
       <li><strong>CPS-ASEC data</strong></li>
       <li class="sub"><a href="#cps-overview">Overview</a></li>
       <li class="sub"><a href="#cps-coverage">Health Coverage</a></li>
@@ -602,6 +603,65 @@ acs = acs <span class="tok-op">%&gt;%</span>
           <figcaption><span class="fig-num">Fig. 45</span> Medicaid coverage among people below the poverty line, native-born vs. all immigrants</figcaption>
         </figure>
       </div>
+    </section>
+
+    <section id="three-groups">
+      <h2>3 Groups</h2>
+      <p style="font-size: 13.5px; color: var(--muted); margin: 0 0 20px;">Legal noncitizen &amp; naturalized citizens combined to legal immigrant category</p>
+
+      <div class="table-scroll" style="max-height: 280px; max-width: 720px;">
+        <table>
+          <caption>Population by immigration status, 2010–2024 (3 groups)</caption>
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Native-born n</th><th>Native-born population</th>
+              <th>Legal immigrant n</th><th>Legal immigrant population</th>
+              <th>Illegal immigrant n</th><th>Illegal immigrant population</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>2010</td><td>2,713,754</td><td>269,433,948</td><td>262,954</td><td>28,213,264</td><td>84,984</td><td>12,492,486</td></tr>
+            <tr><td>2011</td><td>2,762,863</td><td>271,211,679</td><td>266,175</td><td>29,020,370</td><td>82,979</td><td>12,098,662</td></tr>
+            <tr><td>2012</td><td>2,758,907</td><td>273,177,026</td><td>272,859</td><td>29,617,390</td><td>81,264</td><td>11,822,517</td></tr>
+            <tr><td>2013</td><td>2,775,375</td><td>274,790,215</td><td>276,967</td><td>30,244,559</td><td>80,453</td><td>11,778,928</td></tr>
+            <tr><td>2014</td><td>2,771,940</td><td>276,622,102</td><td>282,588</td><td>31,326,696</td><td>78,082</td><td>11,577,015</td></tr>
+            <tr><td>2015</td><td>2,780,184</td><td>278,260,980</td><td>291,351</td><td>32,557,281</td><td>75,470</td><td>11,259,372</td></tr>
+            <tr><td>2016</td><td>2,785,447</td><td>279,447,040</td><td>297,412</td><td>33,315,266</td><td>73,628</td><td>11,009,045</td></tr>
+            <tr><td>2017</td><td>2,811,994</td><td>281,313,013</td><td>304,183</td><td>34,160,172</td><td>73,863</td><td>10,890,731</td></tr>
+            <tr><td>2018</td><td>2,836,287</td><td>282,408,845</td><td>306,405</td><td>34,675,365</td><td>71,847</td><td>10,717,344</td></tr>
+            <tr><td>2019</td><td>2,862,792</td><td>283,456,158</td><td>307,882</td><td>34,760,258</td><td>68,879</td><td>10,658,082</td></tr>
+            <tr><td>2020</td><td>2,338,417</td><td>286,020,291</td><td>248,317</td><td>34,787,323</td><td>54,320</td><td>9,224,833</td></tr>
+            <tr><td>2021</td><td>2,852,949</td><td>286,606,638</td><td>328,461</td><td>35,975,492</td><td>71,189</td><td>9,869,141</td></tr>
+            <tr><td>2022</td><td>2,960,317</td><td>287,171,764</td><td>336,103</td><td>36,122,192</td><td>76,958</td><td>10,617,695</td></tr>
+            <tr><td>2023</td><td>2,980,518</td><td>287,114,340</td><td>344,352</td><td>37,100,824</td><td>80,939</td><td>11,391,223</td></tr>
+            <tr><td>2024</td><td>2,992,600</td><td>289,833,257</td><td>342,537</td><td>37,975,484</td><td>87,751</td><td>13,122,433</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="fig-grid">
+        <figure>
+          <img src="results/3medicaid_rate.png" alt="Medicaid rate by immigration status, 3 groups">
+          <figcaption><span class="fig-num">Fig. 46</span> Medicaid rate by immigration status</figcaption>
+        </figure>
+        <figure>
+          <img src="results/3medicaid_age_2024.png" alt="Medicaid rate by age and immigration status, 2024, 3 groups">
+          <figcaption><span class="fig-num">Fig. 47</span> Medicaid rate by age and immigration status, 2024</figcaption>
+        </figure>
+        <figure>
+          <img src="results/3mean_ftotinc.png" alt="Mean total family income by immigration status, 3 groups">
+          <figcaption><span class="fig-num">Fig. 48</span> Mean total family income, by immigration status</figcaption>
+        </figure>
+        <figure>
+          <img src="results/3median_ftotinc.png" alt="Median total family income by immigration status, 3 groups">
+          <figcaption><span class="fig-num">Fig. 49</span> Median total family income, by immigration status</figcaption>
+        </figure>
+      </div>
+      <figure class="fig-single">
+        <img src="results/3poverty_rate.png" alt="Poverty rate by immigration status, 3 groups">
+        <figcaption><span class="fig-num">Fig. 50</span> Poverty rate by immigration status</figcaption>
+      </figure>
     </section>
 
     <section id="cps-overview">

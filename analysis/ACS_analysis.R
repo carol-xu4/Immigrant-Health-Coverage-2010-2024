@@ -6,10 +6,10 @@ pacman::p_load(tidyverse, ggthemes, readxl, data.table, gdata, ipumsr, matrixSta
 setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Coverage 2010-2024")
 
 # ACS data ------------------------------------------------------------------
-acsdata = fread("data/output/acsdata.csv")
+acs3 = fread("data/output/acsdata.csv")
 
 # immigrant status counts
-immig_counts = acsdata %>%
+immig_counts = acs3 %>%
   group_by(year, immig_status) %>%
   summarise(
     n = n(),
@@ -24,7 +24,7 @@ immig_counts %>%
   mutate(undoc_share = population / sum(population))
 
 # how many legal noncitizen children are there (non-citizen)
-acsdata %>% filter(immig_status == "Legal noncitizen", age <= 18) %>%
+acs3 %>% filter(immig_status == "Legal noncitizen", age <= 18) %>%
   group_by(year) %>%
   summarise(n = n(), population = sum(perwt, na.rm = TRUE))
 
@@ -75,7 +75,7 @@ ACS_population = ggplot(immig_counts, aes(x = as.numeric(year), y = population /
 ggsave("results/ACS_population.png", width = 15, height = 10)
 
 # HEALTH COVERAGE ------------------------------------------------------------------------
-coverage_counts = acsdata %>%
+coverage_counts = acs3 %>%
   mutate(
     coverage_type = case_when(
       hcovany == 1 ~ "Uninsured",
@@ -301,7 +301,7 @@ ACS_coverage_2024_COMBINED = ggplot(coverage_2024_COMBINED, aes(x = group, y = r
 ggsave("results/ACS_coverage_2024_COMBINED.png", ACS_coverage_2024_COMBINED, width = 8, height = 6)
 
 # UNINSURED & MEDICAID RATES ---------------------------------------------------------
-uninsured_trend = acsdata %>%
+uninsured_trend = acs3 %>%
   mutate(uninsured = ifelse(hcovany == 1, perwt, 0)) %>%
   group_by(year, immig_status) %>%
   summarise(
@@ -358,7 +358,7 @@ ACS_uninsured_trend = ggplot(uninsured_trend, aes(x = as.numeric(year), y = unin
 ggsave("results/ACS_uninsured_trend.png", ACS_uninsured_trend, width = 10, height = 6)
 
 # medicaid rate
-medicaid_trend = acsdata %>%
+medicaid_trend = acs3 %>%
   mutate(medicaid = ifelse(hinscaid == 2, perwt, 0)) %>%
   group_by(year, immig_status) %>%
   summarise(
@@ -416,7 +416,7 @@ ACS_medicaid_trend = ggplot(medicaid_trend, aes(x = as.numeric(year), y = medica
 ggsave("results/ACS_medicaid_trend.png", ACS_medicaid_trend, width = 10, height = 6)
 
 # EMPLOYER-SPONSORED INSURANCE -----------------------------------------------------------------------------
-esi_trend = acsdata %>%
+esi_trend = acs3 %>%
   mutate(esi = ifelse(hinsemp == 2, perwt, 0)) %>%
   group_by(year, immig_status) %>%
   summarise(
@@ -473,7 +473,7 @@ ACS_esi_trend = ggplot(esi_trend, aes(x = as.numeric(year), y = esi_rate, color 
 ggsave("results/ACS_esi_trend.png", ACS_esi_trend, width = 10, height = 6)
 
 # All Immigrants vs. Native-born uninsured and medicaid
-uninsured2 = acsdata %>%
+uninsured2 = acs3 %>%
   mutate(
     group = ifelse(as.character(immig_status) == "Native-born", "Native-born", "Immigrants"),
     uninsured = ifelse(hcovany == 1, perwt, 0)) %>%
@@ -528,7 +528,7 @@ ggplot(uninsured2, aes(x = as.numeric(year), y = uninsured_rate, color = group))
 ggsave("results/ACS_uninsured2.png", width = 10, height = 6)
 
 # medicaid, all immigrants vs. native- born
-medicaid2 = acsdata %>%
+medicaid2 = acs3 %>%
   mutate(
     group    = ifelse(as.character(immig_status) == "Native-born", "Native-born", "Immigrants"),
     medicaid = ifelse(hinscaid == 2, perwt, 0)) %>%
@@ -584,7 +584,7 @@ ACS_medicaid2 = ggplot(medicaid2, aes(x = as.numeric(year), y = medicaid_rate, c
 ggsave("results/ACS_medicaid2.png", ACS_medicaid2, width = 10, height = 6)
 
 ## AGE -------------------------------------------------------------------------------
-age_medicaid2024 = acsdata %>%
+age_medicaid2024 = acs3 %>%
     filter(year == 2024, hinscaid ==2) %>%
     mutate(group = ifelse(as.character(immig_status) == "Native-born", "Native-born", "Immigrants"))   
 
@@ -627,7 +627,7 @@ ACS_age_density = ggplot(age_medicaid2024, aes(x = age, fill = group, color = gr
 
 ggsave("results/ACS_age_density2024.png", width = 10, height = 6)
 
-age_medicaid2024 = acsdata %>%
+age_medicaid2024 = acs3 %>%
   filter(year == 2024, hinscaid == 2)
 
 ggplot(age_medicaid2024, aes(x = age, fill = immig_status, color = immig_status, weight = perwt)) +
@@ -680,7 +680,7 @@ ggplot(age_medicaid2024, aes(x = age, fill = immig_status, color = immig_status,
 ggsave("results/ACS_age_density2024_2.png", width = 10, height = 6, dpi = 300)
 
 # median age of medicaid enrollees over time, by immigration status
-medicaid_age_trend = acsdata %>%
+medicaid_age_trend = acs3 %>%
   filter(hinscaid ==2) %>%
   group_by(year, immig_status) %>%
   summarise(median_age = weightedMedian(age, w = perwt, na.rm = TRUE),
@@ -727,7 +727,7 @@ ACS_medicaid_age_trend = ggplot(medicaid_age_trend, aes(x = as.numeric(year), y 
 ggsave("results/ACS_medicaid_age_trend.png", ACS_medicaid_age_trend, width = 10, height = 6)
 
 # medicaid rate by age, 2024 only
-medicaid_age_2024 = acsdata %>%
+medicaid_age_2024 = acs3 %>%
     filter(year == 2024) %>%
     mutate(medicaid = ifelse(hinscaid == 2, perwt, 0)) %>%
     group_by(immig_status, age) %>%
@@ -789,7 +789,7 @@ ggplot(medicaid_age_2024,
 ggsave("results/ACS_medicaid_age_2024.png", width = 10, height = 6)
 
 # CALIFORNIA --------------------------------------------------------------------
-acs_ca = acsdata %>%
+acs_ca = acs3 %>%
   filter(statefip == 6)
 
 ca_immig_counts = acs_ca %>%
@@ -959,7 +959,7 @@ ACS_CA_medicaid = ggplot(ca_medicaid,
 
 ggsave("results/ACS_CA_medicaid.png", width = 10, height = 6)
 
-ca_medicaid_age_trend = acsdata %>%
+ca_medicaid_age_trend = acs3 %>%
   filter(hinscaid == 2, statefip == 6) %>%
   group_by(year, immig_status) %>%
   summarise(median_age = weightedMedian(age, w = perwt, na.rm = TRUE), 
@@ -1014,7 +1014,7 @@ CA_medicaid_age_trend = ggplot(ca_medicaid_age_trend, aes(x = as.numeric(year), 
 ggsave("results/CA_medicaid_age_trend.png", CA_medicaid_age_trend, width = 10, height = 6)
 
 # removing california
-acs_noca = acsdata %>%
+acs_noca = acs3 %>%
   filter(statefip != 6) %>%
   group_by(year, immig_status) %>%
   summarise(median_age = weightedMedian(age, w = perwt, na.rm = TRUE), 
@@ -1061,7 +1061,7 @@ ggplot(acs_noca, aes(x = as.numeric(year), y = median_age, color = immig_status)
 ggsave("results/NOCA_medicaid_age_trend.png", width = 10, height = 6)
 
 # STATE EXPANSIONS ----------------------------------------------------------------------------
-acsdata = acsdata %>%
+acs3 = acs3 %>%
   mutate(expansion_state = case_when(
     # California — phased expansion
     statefip == 6  & year >= 2016 & age <= 18                        ~ 1,  # children under 19
@@ -1085,7 +1085,7 @@ acsdata = acsdata %>%
                                   "Expansion state",
                                   "Non-expansion state"))
 
-undoc_expansion = acsdata %>%
+undoc_expansion = acs3 %>%
   filter(immig_status == "Undocumented")
 
 uninsured_expansion = undoc_expansion %>%
@@ -1245,14 +1245,14 @@ CMS_dual_enrollment = data.frame(
 write_csv(CMS_dual_enrollment, "data/input/CMS_dual_enrollment.csv")
 
 # toal dual enrollees, ACS
-dual_enrollees = acsdata %>%
+dual_enrollees = acs3 %>%
   filter(age >= 65, hinscaid == 2, hinscare == 2) %>%
   group_by(year) %>%
   summarise(dual = sum(perwt, na.rm = TRUE)) %>%
   print(n = Inf)
 
 # States
-medi_cal = acsdata %>%
+medi_cal = acs3 %>%
   filter(statefip == 6, hinscaid == 2) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
@@ -1261,7 +1261,7 @@ medi_cal = acsdata %>%
   ungroup() %>%
   print(n = Inf)
 
-il_hbia = acsdata %>%
+il_hbia = acs3 %>%
   filter(statefip == 17, hinscaid == 2, age <= 64 & age >= 42 ) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
@@ -1270,7 +1270,7 @@ il_hbia = acsdata %>%
   ungroup() %>%
   print(n = Inf)
 
-ny_kids = acsdata %>%
+ny_kids = acs3 %>%
   filter(statefip == 36, hinscaid == 2, age <= 18) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
@@ -1279,7 +1279,7 @@ ny_kids = acsdata %>%
   ungroup() %>%
   print(n = Inf)
 
-ny_undoc_medicaid = acsdata %>% 
+ny_undoc_medicaid = acs3 %>% 
   filter(statefip == 36, hinscaid == 2) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
@@ -1288,7 +1288,7 @@ ny_undoc_medicaid = acsdata %>%
   ungroup() %>%
   print(n = Inf)
 
-wa_undoc_medicaid = acsdata %>% 
+wa_undoc_medicaid = acs3 %>% 
   filter(statefip == 53, hinscaid == 2) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
@@ -1297,7 +1297,7 @@ wa_undoc_medicaid = acsdata %>%
   ungroup() %>%
   print(n = Inf)
 
-wa_undoc_uninsured = acsdata %>% 
+wa_undoc_uninsured = acs3 %>% 
   filter(statefip == 53, hcovany == 1) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
@@ -1306,7 +1306,7 @@ wa_undoc_uninsured = acsdata %>%
   ungroup() %>%
   print(n = Inf)
 
-or_undoc_medicaid = acsdata %>% 
+or_undoc_medicaid = acs3 %>% 
   filter(statefip == 41, hinscaid == 2) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
@@ -1315,7 +1315,7 @@ or_undoc_medicaid = acsdata %>%
   ungroup() %>%
   print(n = Inf)
 
-nj_undoc_medicaid = acsdata %>% 
+nj_undoc_medicaid = acs3 %>% 
   filter(statefip == 34, hinscaid == 2, year == 2024) %>%
   group_by(year, immig_status, age) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
@@ -1324,7 +1324,7 @@ nj_undoc_medicaid = acsdata %>%
   ungroup() %>%
   print(n = Inf)
 
-ct_undoc_medicaid = acsdata %>% 
+ct_undoc_medicaid = acs3 %>% 
   filter(statefip == 9, hinscaid == 2) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
@@ -1333,13 +1333,13 @@ ct_undoc_medicaid = acsdata %>%
   ungroup() %>%
   print(n = Inf)
 
-ct_undoc = acsdata %>%
+ct_undoc = acs3 %>%
   filter(statefip == 9, year == 2024) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
  print(n = Inf)
 
-ri_undoc_medicaid = acsdata %>% 
+ri_undoc_medicaid = acs3 %>% 
   filter(statefip == 44, hinscaid == 2) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
@@ -1348,7 +1348,7 @@ ri_undoc_medicaid = acsdata %>%
   ungroup() %>%
   print(n = Inf)
 
-me_undoc_medicaid = acsdata %>% 
+me_undoc_medicaid = acs3 %>% 
   filter(statefip == 23, hinscaid == 2) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
@@ -1357,7 +1357,7 @@ me_undoc_medicaid = acsdata %>%
   ungroup() %>%
   print(n = Inf)
 
-vt_undoc_medicaid = acsdata %>% 
+vt_undoc_medicaid = acs3 %>% 
   filter(statefip == 50, hinscaid == 2) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
@@ -1366,7 +1366,7 @@ vt_undoc_medicaid = acsdata %>%
   ungroup() %>%
   print(n = Inf)
 
-acsdata %>% 
+acs3 %>% 
   filter(statefip == 25, hinscaid == 2) %>%
   group_by(year, immig_status) %>%
   summarise(pop = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
