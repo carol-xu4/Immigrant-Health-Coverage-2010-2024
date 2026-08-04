@@ -119,6 +119,7 @@ meps_medicaid_cost_nativity = meps %>%
   group_by(nativity) %>%
   summarise(
     n = n(),
+    population = sum(perweight, na.rm = TRUE),
     avg_medicaid_cost = weighted.mean(expmapay, w = perweight, na.rm = TRUE),
     .groups = "drop")
 
@@ -141,6 +142,7 @@ meps_medicaid_cost_age = meps %>%
   group_by(age_group) %>%
   summarise(
     n = n(),
+    population = sum(perweight, na.rm = TRUE),
     avg_medicaid_cost = weighted.mean(expmapay, w = perweight, na.rm = TRUE),
     .groups = "drop")
 
@@ -168,6 +170,7 @@ meps_medicaid_cost_nativity_age = meps %>%
   group_by(nativity, age_group) %>%
   summarise(
     n = n(),
+    population = sum(perweight, na.rm = TRUE),
     avg_medicaid_cost = weighted.mean(expmapay, w = perweight, na.rm = TRUE),
     .groups = "drop")
 
@@ -188,6 +191,7 @@ meps_medicaid_cost_nativity_2023 = meps %>%
   group_by(nativity) %>%
   summarise(
     n = n(),
+    population = sum(perweight, na.rm = TRUE),
     avg_medicaid_cost = weighted.mean(expmapay, w = perweight, na.rm = TRUE),
     .groups = "drop")
 
@@ -211,6 +215,7 @@ meps_medicaid_cost_age_2023 = meps %>%
   group_by(age_group) %>%
   summarise(
     n = n(),
+    population = sum(perweight, na.rm = TRUE),
     avg_medicaid_cost = weighted.mean(expmapay, w = perweight, na.rm = TRUE),
     .groups = "drop")
 
@@ -239,6 +244,7 @@ meps_medicaid_cost_nativity_age_2023 = meps %>%
   group_by(nativity, age_group) %>%
   summarise(
     n = n(),
+    population = sum(perweight, na.rm = TRUE),
     avg_medicaid_cost = weighted.mean(expmapay, w = perweight, na.rm = TRUE),
     .groups = "drop")
 
