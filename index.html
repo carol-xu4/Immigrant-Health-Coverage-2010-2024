@@ -151,6 +151,7 @@
       <li><strong>MEPS data</strong></li>
       <li class="sub"><a href="#meps-vs-acs">Comparing MEPS to ACS</a></li>
       <li class="sub"><a href="#meps-expenditures">Medicaid Expenditures</a></li>
+      <li class="sub"><a href="#meps-kids-immigrant-parents">Kids of Immigrant Parents</a></li>
       <li><strong>CPS-ASEC data</strong></li>
       <li class="sub"><a href="#cps-overview">Overview</a></li>
       <li class="sub"><a href="#cps-coverage">Health Coverage</a></li>
@@ -684,45 +685,6 @@ acs = acs <span class="tok-op">%&gt;%</span>
 
       <h3 id="meps-expenditures">Medicaid Expenditures</h3>
 
-      <p style="font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-family: 'IBM Plex Mono', monospace; margin: 26px 0 10px;">All years, 2010–2023</p>
-      <div class="fig-grid status-table-grid">
-        <div>
-          <table>
-            <caption>Average Medicaid cost, by nativity &amp; age</caption>
-            <thead><tr><th>Age group</th><th>Population — US-born</th><th>Avg. cost — US-born</th><th>Population — Immigrant</th><th>Avg. cost — Immigrant</th></tr></thead>
-            <tbody>
-              <tr><td>0-17</td><td>427,513,264</td><td>$1,477</td><td>14,462,493</td><td>$795</td></tr>
-              <tr><td>18-34</td><td>182,425,394</td><td>$2,849</td><td>26,357,039</td><td>$1,936</td></tr>
-              <tr><td>35-49</td><td>86,912,195</td><td>$4,486</td><td>31,609,597</td><td>$2,250</td></tr>
-              <tr><td>50-64</td><td>81,995,895</td><td>$7,155</td><td>26,573,064</td><td>$4,484</td></tr>
-              <tr><td>65+</td><td>48,880,185</td><td>$3,771</td><td>29,213,831</td><td>$4,096</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 16px;">
-          <table>
-            <caption>Average Medicaid cost, by age</caption>
-            <thead><tr><th>Age group</th><th>n</th><th>Population</th><th>Avg. cost</th></tr></thead>
-            <tbody>
-              <tr><td>0-17</td><td>63,732</td><td>446,069,393</td><td>$1,459</td></tr>
-              <tr><td>18-34</td><td>24,451</td><td>209,175,583</td><td>$2,732</td></tr>
-              <tr><td>35-49</td><td>14,566</td><td>118,971,827</td><td>$3,880</td></tr>
-              <tr><td>50-64</td><td>13,899</td><td>108,832,441</td><td>$6,489</td></tr>
-              <tr><td>65+</td><td>10,888</td><td>78,187,681</td><td>$3,892</td></tr>
-            </tbody>
-          </table>
-          <table>
-            <caption>Average Medicaid cost, by nativity</caption>
-            <thead><tr><th>Nativity</th><th>n</th><th>Population</th><th>Avg. cost</th></tr></thead>
-            <tbody>
-              <tr><td>Immigrant</td><td>19,370</td><td>129,441,245</td><td>$2,968</td></tr>
-              <tr><td>US-born</td><td>107,482</td><td>832,253,567</td><td>$2,811</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <p style="font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-family: 'IBM Plex Mono', monospace; margin: 26px 0 10px;">2023 only</p>
       <div class="fig-grid status-table-grid">
         <div>
           <table>
@@ -759,6 +721,17 @@ acs = acs <span class="tok-op">%&gt;%</span>
           </table>
         </div>
       </div>
+
+      <h3 id="meps-kids-immigrant-parents">Kids of Immigrant Parents</h3>
+      <p style="font-size: 13.5px; color: var(--muted); margin: 0 0 20px;">US-born Medicaid-enrolled children under 18, by co-resident parents' nativity, 2023</p>
+      <table style="max-width: 600px;">
+        <caption>Average Medicaid cost, US-born children by parental nativity (2023)</caption>
+        <thead><tr><th>Parent nativity</th><th>n</th><th>Population</th><th>Avg. cost</th></tr></thead>
+        <tbody>
+          <tr><td>All resident parent(s) US-born</td><td>1,104</td><td>18,748,955</td><td>$2,125</td></tr>
+          <tr><td>Has immigrant parent</td><td>591</td><td>9,706,689</td><td>$1,369</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <section id="cps-overview">

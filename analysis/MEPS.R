@@ -3,7 +3,7 @@ pacman::p_load(tidyverse, ggthemes, readxl, data.table, gdata, ipumsr)
 
 setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Coverage 2010-2024")
 
-ddi_meps = read_ipums_ddi("data/input/meps_00002.xml")
+ddi_meps = read_ipums_ddi("data/input/meps_00003.xml")
 meps = read_ipums_micro(ddi_meps)
 
 meps = meps %>%
@@ -12,11 +12,11 @@ meps = meps %>%
 meps <- meps %>%
   select(
     # identifiers / design
-    year, mepsid, panel, psuann, stratann, perweight,
+    year, mepsid, panel, psuann, stratann, perweight, momloc, momloc2, poploc, poploc2,
     # demographics
     age, sex, racea,
     # nativity
-    usborn, yrsinusc, yrsinusg,
+    usborn, yrsinusc, yrsinusg, usborn_mom, usborn_pop,
     # income
     inctot, ftotinccps, cpi2009,
     # health status / access barriers
@@ -105,77 +105,6 @@ ggplot(meps_medicaid_nativity, aes(x = as.numeric(year), y = medicaid_rate, colo
 
 ggsave("results/MEPS_medicaid_nativity.png", width = 10, height = 6)
 
-# average medicaid expenditures by nativity
-meps_medicaid_cost_nativity = meps %>%
-  mutate(
-    himachip = as.numeric(as.character(himachip)),
-    usborn = as.numeric(as.character(usborn))) %>%
-  filter(usborn %in% c(10, 20),
-         himachip == 2) %>%
-  mutate(
-    nativity = case_when(
-      usborn %in% c(20) ~ "US-born",
-      usborn %in% c(10) ~ "Immigrant")) %>%
-  group_by(nativity) %>%
-  summarise(
-    n = n(),
-    population = sum(perweight, na.rm = TRUE),
-    avg_medicaid_cost = weighted.mean(expmapay, w = perweight, na.rm = TRUE),
-    .groups = "drop")
-
-meps_medicaid_cost_nativity
-
-# average medicaid expenditures by age
-meps_medicaid_cost_age = meps %>%
-  mutate(himachip = as.numeric(as.character(himachip))) %>%
-  filter(himachip == 2,
-         !is.na(age), age < 996) %>%
-  mutate(
-    age_group = case_when(
-      age < 18              ~ "0-17",
-      age >= 18 & age < 35  ~ "18-34",
-      age >= 35 & age < 50  ~ "35-49",
-      age >= 50 & age < 65  ~ "50-64",
-      age >= 65             ~ "65+"
-    ),
-    age_group = factor(age_group, levels = c("0-17", "18-34", "35-49", "50-64", "65+"))) %>%
-  group_by(age_group) %>%
-  summarise(
-    n = n(),
-    population = sum(perweight, na.rm = TRUE),
-    avg_medicaid_cost = weighted.mean(expmapay, w = perweight, na.rm = TRUE),
-    .groups = "drop")
-
-meps_medicaid_cost_age
-
-# average medicaid expenditures by nativity & age
-meps_medicaid_cost_nativity_age = meps %>%
-  mutate(
-    himachip = as.numeric(as.character(himachip)),
-    usborn = as.numeric(as.character(usborn))) %>%
-  filter(usborn %in% c(10, 20),
-         himachip == 2,
-         !is.na(age), age < 996) %>%
-  mutate(
-    nativity = case_when(
-      usborn == 20 ~ "US-born",
-      usborn == 10 ~ "Immigrant"),
-    age_group = case_when(
-      age < 18              ~ "0-17",
-      age >= 18 & age < 35  ~ "18-34",
-      age >= 35 & age < 50  ~ "35-49",
-      age >= 50 & age < 65  ~ "50-64",
-      age >= 65             ~ "65+"),
-    age_group = factor(age_group, levels = c("0-17", "18-34", "35-49", "50-64", "65+"))) %>%
-  group_by(nativity, age_group) %>%
-  summarise(
-    n = n(),
-    population = sum(perweight, na.rm = TRUE),
-    avg_medicaid_cost = weighted.mean(expmapay, w = perweight, na.rm = TRUE),
-    .groups = "drop")
-
-meps_medicaid_cost_nativity_age
-
 # average medicaid expenditures by nativity (2023 only) 
 meps_medicaid_cost_nativity_2023 = meps %>%
   mutate(
@@ -249,3 +178,38 @@ meps_medicaid_cost_nativity_age_2023 = meps %>%
     .groups = "drop")
 
 meps_medicaid_cost_nativity_age_2023
+
+# children of immigrant parents
+meps_kids_immigrant_parents_2023 = meps %>%
+  mutate(
+    usborn = as.numeric(as.character(usborn)),
+    usborn_mom = as.numeric(as.character(usborn_mom)),
+    usborn_pop = as.numeric(as.character(usborn_pop)),
+    himachip = as.numeric(as.character(himachip))) %>%
+  mutate(
+    usborn_mom = ifelse(usborn_mom %in% c(10, 20), usborn_mom, NA_real_),
+    usborn_pop = ifelse(usborn_pop %in% c(10, 20), usborn_pop, NA_real_)) %>%
+  filter(
+    year == 2023,
+    usborn == 20,
+    age < 18, age >= 0,
+    himachip == 2) %>%
+  mutate(
+    has_mom = !is.na(usborn_mom),
+    has_pop = !is.na(usborn_pop),
+    parent_immigrant = case_when(
+      (has_mom & usborn_mom == 10) | (has_pop & usborn_pop == 10) ~ "Has immigrant parent",
+      (has_mom | has_pop) &
+        (!has_mom | usborn_mom == 20) &
+        (!has_pop | usborn_pop == 20) ~ "All resident parent(s) US-born",
+      TRUE ~ NA_character_
+    )) %>%
+  filter(!is.na(parent_immigrant)) %>%
+  group_by(parent_immigrant) %>%
+  summarise(
+    n = n(),
+    population = sum(perweight, na.rm = TRUE),
+    avg_medicaid_cost = weighted.mean(expmapay, w = perweight, na.rm = TRUE),
+    .groups = "drop")
+
+meps_kids_immigrant_parents_2023
