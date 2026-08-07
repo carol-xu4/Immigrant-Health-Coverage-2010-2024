@@ -3,7 +3,7 @@ pacman::p_load(tidyverse, ggthemes, readxl, data.table, gdata, ipumsr, matrixSta
 
 setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Coverage 2010-2024")
 
-ddi_acs = read_ipums_ddi("data/input/usa_00010.xml")
+ddi_acs = read_ipums_ddi("data/input/usa_00019.xml")
 acs = read_ipums_micro(ddi_acs)
 
 acs = acs %>%
@@ -20,7 +20,7 @@ acs = acs %>%
     hcovpub, hinscaid, hinscare, hinsva, hinstri,
     momloc, momloc2, poploc, poploc2,
     inctot, ftotinc, poverty, cpi99,
-    occ2010, educ)
+    occ2010, vetdisab, diffrem, diffphys, diffmob, diffcare, diffsens, diffeye, diffhear)
 
 # original code + naturalized citizens + new state medicaid carveouts ------------------------------------------
 acs = acs %>%

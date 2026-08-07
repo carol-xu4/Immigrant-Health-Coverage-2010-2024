@@ -3,8 +3,13 @@ pacman::p_load(tidyverse, ggthemes, readxl, data.table, gdata, ipumsr)
 
 setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Coverage 2010-2024")
 
-acs3 = fread("data/output/acsdata3.csv")
+acs3 = fread("data/output/acsdata3.csv") %>% select(-good, -slegal, -good1, -hlegal)
 
+colors = c(
+  "Native-born citizens"= "#3043B4",
+  "Legal immigrants"    = "#7C756D",
+  "Illegal immigrants"  = "#C97703")
+  
 # immig status by year
 immig_counts3 = acs3 %>%
   group_by(year, immig_status) %>%
@@ -371,3 +376,187 @@ ggplot(poverty_rate_immig, aes(x = year, y = pct_below_poverty, color = immig_st
   guides(color = guide_legend(nrow = 1, byrow = TRUE))
 
 ggsave("results/3poverty_rate.png", width = 15, height = 10)
+
+# disability rates, age 15+, non GQ
+disab_nogq = acs3 %>%
+  filter(gq %in% c(1, 2, 5)) %>%
+  filter(age >= 15) %>%
+  mutate(
+    diffany = case_when(
+  diffhear == 2 | diffeye == 2 | diffrem == 2 | 
+    diffphys == 2 | diffcare == 2 | diffmob == 2 ~ 2,
+  diffhear == 1 | diffeye == 1 | diffrem == 1 | 
+    diffphys == 1 | diffcare == 1 | diffmob == 1 ~ 1,
+  TRUE ~ NA_real_))
+
+disabled_nogq = disab_nogq %>%
+  mutate(disabled = diffany == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100, 
+    .groups = "drop")
+
+print(disabled_nogq, n = Inf)
+
+ggplot(disabled_nogq, aes(x = as.numeric(year), y = pct, color = immig_status)) +
+  geom_line(linewidth = 1.8) +
+  geom_point(size = 3) +
+  scale_color_manual(values = colors) +
+  scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    expand = c(0.02, 0), limits = c(0, 20)) +
+  labs(
+    title = "Non-GQ Disability Rate by Immigration Status (2010-2024)",
+    subtitle = "ACS; age 15+; \n Any difficulty: cognitive, ambulatory, independent living, self-care, vision, hearing",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/acs_disabled_nogq.png", width = 15, height = 10)
+  
+# disability rates, age 15+, GQ
+disab_gq = acs3 %>%
+  filter(gq %in% c(3, 4)) %>%
+  filter(age >= 15) %>%
+  mutate(
+    diffany = case_when(
+  diffhear == 2 | diffeye == 2 | diffrem == 2 | 
+    diffphys == 2 | diffcare == 2 | diffmob == 2 ~ 2,
+  diffhear == 1 | diffeye == 1 | diffrem == 1 | 
+    diffphys == 1 | diffcare == 1 | diffmob == 1 ~ 1,
+  TRUE ~ NA_real_))
+
+disabled_gq = disab_gq %>%
+  mutate(disabled = diffany == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100, 
+    .groups = "drop")
+
+print(disabled_gq, n = Inf)
+
+ggplot(disabled_gq, aes(x = as.numeric(year), y = pct, color = immig_status)) +
+  geom_line(linewidth = 1.8) +
+  geom_point(size = 3) +
+  scale_color_manual(values = colors) +
+  scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    expand = c(0.02, 0), limits = c(0, 50)) +
+  labs(
+    title = "GQ Disability Rate by Immigration Status (2010-2024)",
+    subtitle = "ACS; age 15+; \n Any difficulty: cognitive, ambulatory, independent living, self-care, vision, hearing",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/acs_disabled_gq.png", width = 15, height = 10)
+
+# non gq, age, 2024
+disab_nogq_2024 = acs3 %>%
+  filter(gq %in% c(1, 2, 5), age >=15, year == 2024) %>%
+  mutate(
+    diffany = case_when(
+      diffhear == 2 | diffeye == 2 | diffrem == 2 | 
+        diffphys == 2 | diffcare == 2 | diffmob == 2 ~ 2,
+      diffhear == 1 | diffeye == 1 | diffrem == 1 | 
+        diffphys == 1 | diffcare == 1 | diffmob == 1 ~ 1,
+      TRUE ~ NA_real_))
+
+disabled_by_age_2024 = disab_nogq_2024 %>%
+  mutate(disabled = diffany == 2) %>%
+  group_by(age, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100, 
+    .groups = "drop")
+
+print(disabled_by_age_2024, n = Inf)
+
+ggplot(disabled_by_age_2024, aes(x = age, y = pct, color = immig_status)) +
+  geom_smooth(method = "loess", se = FALSE, linewidth = 1.8, span = 0.3) +
+  scale_color_manual(values = colors) +
+  scale_x_continuous(breaks = seq(15, 100, by = 10), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    expand = c(0.02, 0)) +
+  labs(
+    title = "Non-GQ Disability Rate by Age and Immigration Status (2024)",
+    subtitle = "ACS; age 15+; \n Any difficulty: cognitive, ambulatory, independent living, self-care, vision, hearing",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/acs_disabled_by_age_2024.png", width = 15, height = 10)

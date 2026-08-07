@@ -213,3 +213,96 @@ meps_kids_immigrant_parents_2023 = meps %>%
     .groups = "drop")
 
 meps_kids_immigrant_parents_2023
+
+# CMS smell check
+meps_medicaid_2020 = meps %>%
+  mutate(himachip = as.numeric(as.character(himachip))) %>%
+  filter(year == 2020, himachip == 2, !is.na(age), age < 996) %>%
+  mutate(
+    age_group = case_when(
+      age <= 18              ~ "0-18",
+      age >= 19 & age <= 44  ~ "19-44",
+      age >= 45 & age <= 64  ~ "45-64",
+      age >= 65 & age <= 84  ~ "65-84",
+      age >= 85              ~ "85+"
+    ),
+    age_group = factor(age_group, levels = c("0-18", "19-44", "45-64", "65-84", "85+"))
+  ) %>%
+  group_by(age_group) %>%
+  summarise(
+    n = n(),
+    population = sum(perweight, na.rm = TRUE),
+    total_medicaid_millions = sum(expmapay * perweight, na.rm = TRUE) / 1e6,
+    per_capita = weighted.mean(expmapay, w = perweight, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+meps_medicaid_2020
+
+# per capita
+meps_medicaid_cost_percapita_nativity_2023 = meps %>%
+  mutate(
+    himachip = as.numeric(as.character(himachip)),
+    usborn = as.numeric(as.character(usborn))) %>%
+  filter(year == 2023,
+         usborn %in% c(10, 20)) %>%
+  mutate(
+    nativity = case_when(
+      usborn %in% c(20) ~ "US-born",
+      usborn %in% c(10) ~ "Immigrant"),
+    medicaid_spend = ifelse(himachip == 2, expmapay, 0)) %>%
+  group_by(nativity) %>%
+  summarise(
+    n = n(),
+    population = sum(perweight, na.rm = TRUE),
+    avg_medicaid_cost_percapita = weighted.mean(medicaid_spend, w = perweight, na.rm = TRUE),
+    .groups = "drop")
+
+meps_medicaid_cost_percapita_nativity_2023
+
+meps_medicaid_cost_percapita_nativity_age_2023 = meps %>%
+  mutate(
+    himachip = as.numeric(as.character(himachip)),
+    usborn = as.numeric(as.character(usborn))) %>%
+  filter(year == 2023,
+         usborn %in% c(10, 20),
+         !is.na(age), age < 996) %>%
+  mutate(
+    nativity = case_when(
+      usborn == 20 ~ "US-born",
+      usborn == 10 ~ "Immigrant"),
+    age_group = case_when(
+      age < 18              ~ "0-17",
+      age >= 18 & age < 35  ~ "18-34",
+      age >= 35 & age < 50  ~ "35-49",
+      age >= 50 & age < 65  ~ "50-64",
+      age >= 65             ~ "65+"),
+    age_group = factor(age_group, levels = c("0-17", "18-34", "35-49", "50-64", "65+")),
+    medicaid_spend = ifelse(himachip == 2, expmapay, 0)) %>%
+  group_by(nativity, age_group) %>%
+  summarise(
+    n = n(),
+    population = sum(perweight, na.rm = TRUE),
+    avg_medicaid_cost_percapita = weighted.mean(medicaid_spend, w = perweight, na.rm = TRUE),
+    .groups = "drop")
+
+meps_medicaid_cost_percapita_nativity_age_2023
+
+# enrolled but not using?
+meps %>%
+  mutate(himachip = as.numeric(as.character(himachip))) %>%
+  filter(himachip == 2) %>%
+  summarise(
+    n_enrolled = n(),
+    n_zero_dollars = sum(expmapay == 0, na.rm = TRUE),
+    n_na = sum(is.na(expmapay)),
+    pct_zero = mean(expmapay == 0, na.rm = TRUE) * 100)
+
+# missing money in meps
+meps_total_medicaid_spending_2023 = meps %>%
+  filter(year == 2023) %>%
+  mutate(medicaid_spend = ifelse(is.na(expmapay), 0, expmapay)) %>%
+  summarise(
+    total_medicaid_billions = sum(medicaid_spend * perweight, na.rm = TRUE))
+
+meps_total_medicaid_spending_2023
