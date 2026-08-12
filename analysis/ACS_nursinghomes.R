@@ -114,7 +114,11 @@ tabulate_group = function(df, group_label, predetermined, status_col) {
     group_by(year, status = .data[[status_col]], .drop = FALSE) %>%
     summarise(n = n(), workers = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
     group_by(year) %>%
-    mutate(share = workers / sum(workers)) %>%
+    # workers = weighted count for this status; group_total = weighted
+    # denominator the share is taken over. Both kept so a row can be read
+    # without re-summing the table.
+    mutate(group_total = sum(workers),
+           share = workers / group_total) %>%
     ungroup() %>%
     mutate(worker_group = group_label,
            status_predetermined = predetermined,
@@ -261,7 +265,10 @@ table4_nh_composition = nh_workers %>%
   group_by(year, nh_occ_group, .drop = FALSE) %>%
   summarise(n = n(), workers = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
   group_by(year) %>%
-  mutate(share = workers / sum(workers)) %>%
+  # group_total here is total nursing home employment that year, so the
+  # occupation shares are readable against an absolute headcount.
+  mutate(group_total = sum(workers),
+         share = workers / group_total) %>%
   ungroup()
 
 write_csv(table4_nh_composition, "results/nh_table4_composition.csv")
@@ -283,7 +290,10 @@ tabulate_nh = function(status_col) {
 
   bind_rows(by_occ, overall) %>%
     group_by(year, nh_occ_group) %>%
-    mutate(share = workers / sum(workers)) %>%
+    # group_total = weighted employment in that occupation and year, which is
+    # the denominator behind share.
+    mutate(group_total = sum(workers),
+           share = workers / group_total) %>%
     ungroup() %>%
     mutate(nh_occ_group = factor(nh_occ_group,
                                  levels = c("All nursing home workers", nh_occ_levels)))
