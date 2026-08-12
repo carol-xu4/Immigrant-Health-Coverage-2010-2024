@@ -20,7 +20,8 @@ acs = acs %>%
     hcovpub, hinscaid, hinscare, hinsva, hinstri,
     momloc, momloc2, poploc, poploc2,
     inctot, ftotinc, poverty, cpi99,
-    occ2010, vetdisab, diffrem, diffphys, diffmob, diffcare, diffsens, diffeye, diffhear)
+    occ2010, vetdisab, diffrem, diffphys, diffmob, diffcare, diffsens, diffeye, diffhear,
+    ind1990, indnaic)
 
 # original code + naturalized citizens + new state medicaid carveouts ------------------------------------------
 acs = acs %>%
@@ -143,7 +144,7 @@ acs = acs %>%
       3310, 3500,                                                     # health care professionals
       2040, 2050, 2060,                                               # religious workers
       2600, 2630, 2700, 2710, 2720, 2740, 2750, 2760,                 # athletes/artists/entertainers
-      9800, 9810, 9820, 9830                                          # current miligary
+      9800, 9810, 9820, 9830                                          # current military
     ) ~ 2,
     # inferred from Pew's named visa categories (visiting scholars, high-tech workers) --
     immigrant == 1 & occ2010 %in% c(
