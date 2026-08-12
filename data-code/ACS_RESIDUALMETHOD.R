@@ -298,4 +298,4 @@ acs = acs %>%
                                           "Legal immigrants",
                                           "Illegal immigrants")))
 
-fwrite(acs, "data/output/acsdata3.csv")
+fwrite(acs, "data/output/acs_nursinghomes.csv")

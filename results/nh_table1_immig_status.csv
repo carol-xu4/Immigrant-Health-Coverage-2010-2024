@@ -1,0 +1,232 @@
+worker_group,status_predetermined,year,status,n,workers,share
+Registered nurses,TRUE,2014,Native-born citizens,30585,2943897,0.8518849047021698
+Registered nurses,TRUE,2014,Legal immigrants,4822,511848,0.14811509529783012
+Registered nurses,TRUE,2014,Illegal immigrants,0,0,0
+Registered nurses,TRUE,2015,Native-born citizens,31130,2984094,0.846567820315399
+Registered nurses,TRUE,2015,Legal immigrants,4861,540838,0.15343217968460102
+Registered nurses,TRUE,2015,Illegal immigrants,0,0,0
+Registered nurses,TRUE,2016,Native-born citizens,31831,3089604,0.8515866348259233
+Registered nurses,TRUE,2016,Legal immigrants,4965,538452,0.1484133651740767
+Registered nurses,TRUE,2016,Illegal immigrants,0,0,0
+Registered nurses,TRUE,2017,Native-born citizens,32913,3154685,0.851926816095058
+Registered nurses,TRUE,2017,Legal immigrants,5102,548315,0.14807318390494195
+Registered nurses,TRUE,2017,Illegal immigrants,0,0,0
+Registered nurses,TRUE,2018,Native-born citizens,33870,3232760,0.8502130555922294
+Registered nurses,TRUE,2018,Legal immigrants,5210,569534,0.14978694440777068
+Registered nurses,TRUE,2018,Illegal immigrants,0,0,0
+Registered nurses,TRUE,2019,Native-born citizens,34286,3261391,0.8495130407149536
+Registered nurses,TRUE,2019,Legal immigrants,5318,577739,0.15048695928504635
+Registered nurses,TRUE,2019,Illegal immigrants,0,0,0
+Registered nurses,TRUE,2020,Native-born citizens,26374,3180982,0.8457539243629557
+Registered nurses,TRUE,2020,Legal immigrants,4121,580138,0.1542460756370443
+Registered nurses,TRUE,2020,Illegal immigrants,0,0,0
+Registered nurses,TRUE,2021,Native-born citizens,33437,3362838,0.8448142411944033
+Registered nurses,TRUE,2021,Legal immigrants,5699,617727,0.15518575880559668
+Registered nurses,TRUE,2021,Illegal immigrants,0,0,0
+Registered nurses,TRUE,2022,Native-born citizens,36169,3494645,0.8453144744149684
+Registered nurses,TRUE,2022,Legal immigrants,6130,639491,0.15468552558503154
+Registered nurses,TRUE,2022,Illegal immigrants,0,0,0
+Registered nurses,TRUE,2023,Native-born citizens,37108,3601977,0.8416496812949992
+Registered nurses,TRUE,2023,Legal immigrants,6321,677686,0.15835031870500083
+Registered nurses,TRUE,2023,Illegal immigrants,0,0,0
+Registered nurses,TRUE,2024,Native-born citizens,37044,3589124,0.8348428914385854
+Registered nurses,TRUE,2024,Legal immigrants,6500,710037,0.16515710856141466
+Registered nurses,TRUE,2024,Illegal immigrants,0,0,0
+Nurse anesthetists,TRUE,2014,Native-born citizens,285,26574,0.8972549549245366
+Nurse anesthetists,TRUE,2014,Legal immigrants,31,3043,0.10274504507546342
+Nurse anesthetists,TRUE,2014,Illegal immigrants,0,0,0
+Nurse anesthetists,TRUE,2015,Native-born citizens,296,28416,0.9322528788425577
+Nurse anesthetists,TRUE,2015,Legal immigrants,20,2065,0.06774712115744234
+Nurse anesthetists,TRUE,2015,Illegal immigrants,0,0,0
+Nurse anesthetists,TRUE,2016,Native-born citizens,352,35064,0.9278154106689246
+Nurse anesthetists,TRUE,2016,Legal immigrants,28,2728,0.07218458933107536
+Nurse anesthetists,TRUE,2016,Illegal immigrants,0,0,0
+Nurse anesthetists,TRUE,2017,Native-born citizens,368,32276,0.9042669430980864
+Nurse anesthetists,TRUE,2017,Legal immigrants,32,3417,0.09573305690191354
+Nurse anesthetists,TRUE,2017,Illegal immigrants,0,0,0
+Nurse anesthetists,TRUE,2018,Native-born citizens,358,31072,0.9224557653485335
+Nurse anesthetists,TRUE,2018,Legal immigrants,25,2612,0.07754423465146656
+Nurse anesthetists,TRUE,2018,Illegal immigrants,0,0,0
+Nurse anesthetists,TRUE,2019,Native-born citizens,489,45211,0.9325508962273881
+Nurse anesthetists,TRUE,2019,Legal immigrants,33,3270,0.06744910377261196
+Nurse anesthetists,TRUE,2019,Illegal immigrants,0,0,0
+Nurse anesthetists,TRUE,2020,Native-born citizens,355,44483,0.9241492500103876
+Nurse anesthetists,TRUE,2020,Legal immigrants,23,3651,0.07585074998961233
+Nurse anesthetists,TRUE,2020,Illegal immigrants,0,0,0
+Nurse anesthetists,TRUE,2021,Native-born citizens,489,46121,0.8933503786778236
+Nurse anesthetists,TRUE,2021,Legal immigrants,51,5506,0.10664962132217638
+Nurse anesthetists,TRUE,2021,Illegal immigrants,0,0,0
+Nurse anesthetists,TRUE,2022,Native-born citizens,540,48287,0.9294720024638602
+Nurse anesthetists,TRUE,2022,Legal immigrants,37,3664,0.07052799753613982
+Nurse anesthetists,TRUE,2022,Illegal immigrants,0,0,0
+Nurse anesthetists,TRUE,2023,Native-born citizens,558,51073,0.8924633477204816
+Nurse anesthetists,TRUE,2023,Legal immigrants,48,6154,0.1075366522795184
+Nurse anesthetists,TRUE,2023,Illegal immigrants,0,0,0
+Nurse anesthetists,TRUE,2024,Native-born citizens,616,51977,0.9123253528048866
+Nurse anesthetists,TRUE,2024,Legal immigrants,49,4995,0.08767464719511339
+Nurse anesthetists,TRUE,2024,Illegal immigrants,0,0,0
+Nurse practitioners & midwives,TRUE,2014,Native-born citizens,1343,121277,0.9022713576811767
+Nurse practitioners & midwives,TRUE,2014,Legal immigrants,127,13136,0.09772864231882333
+Nurse practitioners & midwives,TRUE,2014,Illegal immigrants,0,0,0
+Nurse practitioners & midwives,TRUE,2015,Native-born citizens,1385,129799,0.9079646884356025
+Nurse practitioners & midwives,TRUE,2015,Legal immigrants,129,13157,0.09203531156439744
+Nurse practitioners & midwives,TRUE,2015,Illegal immigrants,0,0,0
+Nurse practitioners & midwives,TRUE,2016,Native-born citizens,1699,157140,0.8995002776235425
+Nurse practitioners & midwives,TRUE,2016,Legal immigrants,176,17557,0.10049972237645752
+Nurse practitioners & midwives,TRUE,2016,Illegal immigrants,0,0,0
+Nurse practitioners & midwives,TRUE,2017,Native-born citizens,1984,186194,0.9049262232936099
+Nurse practitioners & midwives,TRUE,2017,Legal immigrants,200,19562,0.0950737767063901
+Nurse practitioners & midwives,TRUE,2017,Illegal immigrants,0,0,0
+Nurse practitioners & midwives,TRUE,2018,Native-born citizens,2055,191309,0.8830447686790032
+Nurse practitioners & midwives,TRUE,2018,Legal immigrants,235,25338,0.11695523132099683
+Nurse practitioners & midwives,TRUE,2018,Illegal immigrants,0,0,0
+Nurse practitioners & midwives,TRUE,2019,Native-born citizens,2325,207072,0.8806777584974992
+Nurse practitioners & midwives,TRUE,2019,Legal immigrants,275,28056,0.11932224150250076
+Nurse practitioners & midwives,TRUE,2019,Illegal immigrants,0,0,0
+Nurse practitioners & midwives,TRUE,2020,Native-born citizens,2072,243921,0.8954318186824078
+Nurse practitioners & midwives,TRUE,2020,Legal immigrants,213,28485,0.10456818131759213
+Nurse practitioners & midwives,TRUE,2020,Illegal immigrants,0,0,0
+Nurse practitioners & midwives,TRUE,2021,Native-born citizens,2801,278560,0.883361186778757
+Nurse practitioners & midwives,TRUE,2021,Legal immigrants,311,36781,0.11663881322124303
+Nurse practitioners & midwives,TRUE,2021,Illegal immigrants,0,0,0
+Nurse practitioners & midwives,TRUE,2022,Native-born citizens,2990,276539,0.8721069213133056
+Nurse practitioners & midwives,TRUE,2022,Legal immigrants,412,40554,0.12789307868669444
+Nurse practitioners & midwives,TRUE,2022,Illegal immigrants,0,0,0
+Nurse practitioners & midwives,TRUE,2023,Native-born citizens,3160,297412,0.8804250973194595
+Nurse practitioners & midwives,TRUE,2023,Legal immigrants,391,40393,0.11957490268054055
+Nurse practitioners & midwives,TRUE,2023,Illegal immigrants,0,0,0
+Nurse practitioners & midwives,TRUE,2024,Native-born citizens,3399,318044,0.8657297391465304
+Nurse practitioners & midwives,TRUE,2024,Legal immigrants,450,49327,0.13427026085346966
+Nurse practitioners & midwives,TRUE,2024,Illegal immigrants,0,0,0
+LPNs/LVNs,TRUE,2014,Native-born citizens,9403,917515,0.8698655072441784
+LPNs/LVNs,TRUE,2014,Legal immigrants,1248,137263,0.13013449275582162
+LPNs/LVNs,TRUE,2014,Illegal immigrants,0,0,0
+LPNs/LVNs,TRUE,2015,Native-born citizens,8876,868850,0.8677184950824125
+LPNs/LVNs,TRUE,2015,Legal immigrants,1168,132454,0.13228150491758747
+LPNs/LVNs,TRUE,2015,Illegal immigrants,0,0,0
+LPNs/LVNs,TRUE,2016,Native-born citizens,8948,890211,0.861413932245048
+LPNs/LVNs,TRUE,2016,Legal immigrants,1219,143219,0.13858606775495197
+LPNs/LVNs,TRUE,2016,Illegal immigrants,0,0,0
+LPNs/LVNs,TRUE,2017,Native-born citizens,8776,883150,0.8604865063945796
+LPNs/LVNs,TRUE,2017,Legal immigrants,1217,143188,0.13951349360542042
+LPNs/LVNs,TRUE,2017,Illegal immigrants,0,0,0
+LPNs/LVNs,TRUE,2018,Native-born citizens,9191,922702,0.8560324785087793
+LPNs/LVNs,TRUE,2018,Legal immigrants,1336,155180,0.14396752149122075
+LPNs/LVNs,TRUE,2018,Illegal immigrants,0,0,0
+LPNs/LVNs,TRUE,2019,Native-born citizens,6933,715514,0.850534679263764
+LPNs/LVNs,TRUE,2019,Legal immigrants,962,125738,0.149465320736236
+LPNs/LVNs,TRUE,2019,Illegal immigrants,0,0,0
+LPNs/LVNs,TRUE,2020,Native-born citizens,4894,602887,0.8576637299574218
+LPNs/LVNs,TRUE,2020,Legal immigrants,660,100054,0.14233627004257826
+LPNs/LVNs,TRUE,2020,Illegal immigrants,0,0,0
+LPNs/LVNs,TRUE,2021,Native-born citizens,6077,634400,0.8526732731820547
+LPNs/LVNs,TRUE,2021,Legal immigrants,904,109613,0.1473267268179454
+LPNs/LVNs,TRUE,2021,Illegal immigrants,0,0,0
+LPNs/LVNs,TRUE,2022,Native-born citizens,6271,636281,0.8515116355319664
+LPNs/LVNs,TRUE,2022,Legal immigrants,902,110956,0.14848836446803357
+LPNs/LVNs,TRUE,2022,Illegal immigrants,0,0,0
+LPNs/LVNs,TRUE,2023,Native-born citizens,5942,566331,0.8475369944687882
+LPNs/LVNs,TRUE,2023,Legal immigrants,884,101877,0.15246300553121184
+LPNs/LVNs,TRUE,2023,Illegal immigrants,0,0,0
+LPNs/LVNs,TRUE,2024,Native-born citizens,6074,610982,0.8468641539979819
+LPNs/LVNs,TRUE,2024,Legal immigrants,911,110482,0.15313584600201813
+LPNs/LVNs,TRUE,2024,Illegal immigrants,0,0,0
+Nursing/psych/home health aides,FALSE,2014,Native-born citizens,18999,2056027,0.7812100749240851
+Nursing/psych/home health aides,FALSE,2014,Legal immigrants,3964,471906,0.1793058756607405
+Nursing/psych/home health aides,FALSE,2014,Illegal immigrants,701,103916.05827001363,0.03948404941517448
+Nursing/psych/home health aides,FALSE,2015,Native-born citizens,18265,2013305,0.774978962346747
+Nursing/psych/home health aides,FALSE,2015,Legal immigrants,3978,486354,0.18721163373318486
+Nursing/psych/home health aides,FALSE,2015,Illegal immigrants,643,98224.42370407691,0.03780940392006812
+Nursing/psych/home health aides,FALSE,2016,Native-born citizens,17894,1978080,0.7748050627389941
+Nursing/psych/home health aides,FALSE,2016,Legal immigrants,3970,485031,0.1899844669504555
+Nursing/psych/home health aides,FALSE,2016,Illegal immigrants,599,89892.45225847959,0.03521047031055029
+Nursing/psych/home health aides,FALSE,2017,Native-born citizens,17437,1921922,0.7656316446913639
+Nursing/psych/home health aides,FALSE,2017,Legal immigrants,3915,497307,0.19811104525913545
+Nursing/psych/home health aides,FALSE,2017,Illegal immigrants,589,91014.6835336809,0.03625731004950051
+Nursing/psych/home health aides,FALSE,2018,Native-born citizens,16892,1865344,0.7544683156029746
+Nursing/psych/home health aides,FALSE,2018,Legal immigrants,4010,516859,0.2090519170374139
+Nursing/psych/home health aides,FALSE,2018,Illegal immigrants,616,90192.40935421335,0.03647976735961159
+Nursing/psych/home health aides,FALSE,2019,Native-born citizens,16973,1910207,0.749267093009124
+Nursing/psych/home health aides,FALSE,2019,Legal immigrants,4144,545571,0.21399691091074463
+Nursing/psych/home health aides,FALSE,2019,Illegal immigrants,585,93655.99733256258,0.03673599608013133
+Nursing/psych/home health aides,FALSE,2020,Native-born citizens,13934,1873805,0.7511300115114943
+Nursing/psych/home health aides,FALSE,2020,Legal immigrants,3387,525095,0.21048861188577683
+Nursing/psych/home health aides,FALSE,2020,Illegal immigrants,535,95748.02535230057,0.03838137660272887
+Nursing/psych/home health aides,FALSE,2021,Native-born citizens,16548,1864356,0.7450114046810946
+Nursing/psych/home health aides,FALSE,2021,Legal immigrants,4402,546715,0.21847163852302062
+Nursing/psych/home health aides,FALSE,2021,Illegal immigrants,619,91381.96687511214,0.03651695679588477
+Nursing/psych/home health aides,FALSE,2022,Native-born citizens,16445,1808569,0.7400667249482376
+Nursing/psych/home health aides,FALSE,2022,Legal immigrants,4392,548547,0.22446552040324746
+Nursing/psych/home health aides,FALSE,2022,Illegal immigrants,637,86675.80826768938,0.035467754648515065
+Nursing/psych/home health aides,FALSE,2023,Native-born citizens,15844,1718619,0.726132610804106
+Nursing/psych/home health aides,FALSE,2023,Legal immigrants,4464,559265,0.23629469625400296
+Nursing/psych/home health aides,FALSE,2023,Illegal immigrants,606,88927.48102800798,0.03757269294189115
+Nursing/psych/home health aides,FALSE,2024,Native-born citizens,17077,1874539,0.7341800706961923
+Nursing/psych/home health aides,FALSE,2024,Legal immigrants,4616,585498,0.22931556133666953
+Nursing/psych/home health aides,FALSE,2024,Illegal immigrants,616,93204.46598320632,0.03650436796713819
+Nursing home employees (all occupations),FALSE,2014,Native-born citizens,20022,1977848,0.8393725298703781
+Nursing home employees (all occupations),FALSE,2014,Legal immigrants,2838,324631,0.13776910245092178
+Nursing home employees (all occupations),FALSE,2014,Illegal immigrants,396,53862.111503176595,0.02285836767870015
+Nursing home employees (all occupations),FALSE,2015,Native-born citizens,19595,1964051,0.8314203334135261
+Nursing home employees (all occupations),FALSE,2015,Legal immigrants,2944,349112,0.14778578328091424
+Nursing home employees (all occupations),FALSE,2015,Illegal immigrants,339,49121.05905864945,0.020793883305559698
+Nursing home employees (all occupations),FALSE,2016,Native-born citizens,18778,1881291,0.8367435558191009
+Nursing home employees (all occupations),FALSE,2016,Legal immigrants,2772,327010,0.1454445432356845
+Nursing home employees (all occupations),FALSE,2016,Illegal immigrants,290,40047.35824743936,0.017811900945214645
+Nursing home employees (all occupations),FALSE,2017,Native-born citizens,18231,1825658,0.8282783097416982
+Nursing home employees (all occupations),FALSE,2017,Legal immigrants,2697,325322,0.1475945419579071
+Nursing home employees (all occupations),FALSE,2017,Illegal immigrants,346,53180.09755143582,0.024127148300394648
+Nursing home employees (all occupations),FALSE,2018,Native-born citizens,18262,1830769,0.8331022563207998
+Nursing home employees (all occupations),FALSE,2018,Legal immigrants,2682,323790,0.14734255363408041
+Nursing home employees (all occupations),FALSE,2018,Illegal immigrants,276,42973.15899949761,0.019555190045119807
+Nursing home employees (all occupations),FALSE,2019,Native-born citizens,17292,1730301,0.8270854296310699
+Nursing home employees (all occupations),FALSE,2019,Legal immigrants,2563,317341,0.1516892825725428
+Nursing home employees (all occupations),FALSE,2019,Illegal immigrants,303,44404.2844712652,0.021225287796387233
+Nursing home employees (all occupations),FALSE,2020,Native-born citizens,14193,1703094,0.8332040976098115
+Nursing home employees (all occupations),FALSE,2020,Legal immigrants,2033,299399,0.1464748708058862
+Nursing home employees (all occupations),FALSE,2020,Illegal immigrants,237,41536.7940031938,0.020321031584302287
+Nursing home employees (all occupations),FALSE,2021,Native-born citizens,15739,1587797,0.8275787059351826
+Nursing home employees (all occupations),FALSE,2021,Legal immigrants,2515,295068,0.1537929556504279
+Nursing home employees (all occupations),FALSE,2021,Illegal immigrants,265,35740.431257143755,0.018628338414389482
+Nursing home employees (all occupations),FALSE,2022,Native-born citizens,15383,1485296,0.8248167893484161
+Nursing home employees (all occupations),FALSE,2022,Legal immigrants,2360,281097,0.1560992051654833
+Nursing home employees (all occupations),FALSE,2022,Illegal immigrants,275,34365.68869418333,0.01908400548610072
+Nursing home employees (all occupations),FALSE,2023,Native-born citizens,15220,1479761,0.8266875763392585
+Nursing home employees (all occupations),FALSE,2023,Legal immigrants,2350,274037,0.15309430601109325
+Nursing home employees (all occupations),FALSE,2023,Illegal immigrants,241,36190.191854393386,0.020218117649648315
+Nursing home employees (all occupations),FALSE,2024,Native-born citizens,15444,1523066,0.8214753508794087
+Nursing home employees (all occupations),FALSE,2024,Legal immigrants,2416,286905,0.15474403968315015
+Nursing home employees (all occupations),FALSE,2024,Illegal immigrants,328,44090.717578649,0.023780609437441057
+"Residential care, no nursing (all occupations)",FALSE,2014,Native-born citizens,11124,1142504,0.8627267207649071
+"Residential care, no nursing (all occupations)",FALSE,2014,Legal immigrants,1298,146453,0.11058947402913508
+"Residential care, no nursing (all occupations)",FALSE,2014,Illegal immigrants,278,35337.208700337804,0.02668380520595777
+"Residential care, no nursing (all occupations)",FALSE,2015,Native-born citizens,10435,1076804,0.8503984080864367
+"Residential care, no nursing (all occupations)",FALSE,2015,Legal immigrants,1322,151841,0.119915364989592
+"Residential care, no nursing (all occupations)",FALSE,2015,Illegal immigrants,289,37589.73158071917,0.029686226923971343
+"Residential care, no nursing (all occupations)",FALSE,2016,Native-born citizens,10776,1123654,0.8495725112069308
+"Residential care, no nursing (all occupations)",FALSE,2016,Legal immigrants,1447,164103,0.12407502470207997
+"Residential care, no nursing (all occupations)",FALSE,2016,Illegal immigrants,257,34854.06047758073,0.026352464090989305
+"Residential care, no nursing (all occupations)",FALSE,2017,Native-born citizens,10869,1119926,0.8524240587773219
+"Residential care, no nursing (all occupations)",FALSE,2017,Legal immigrants,1364,163875,0.12473234180841737
+"Residential care, no nursing (all occupations)",FALSE,2017,Illegal immigrants,234,30012.22297070144,0.02284359941426067
+"Residential care, no nursing (all occupations)",FALSE,2018,Native-born citizens,10783,1136901,0.8490114009962504
+"Residential care, no nursing (all occupations)",FALSE,2018,Legal immigrants,1364,165913,0.12389999531488748
+"Residential care, no nursing (all occupations)",FALSE,2018,Illegal immigrants,244,36274.02480853974,0.02708860368886215
+"Residential care, no nursing (all occupations)",FALSE,2019,Native-born citizens,11015,1168410,0.8408481998136406
+"Residential care, no nursing (all occupations)",FALSE,2019,Legal immigrants,1490,184253,0.1325979779018176
+"Residential care, no nursing (all occupations)",FALSE,2019,Illegal immigrants,243,36898.160098764456,0.026553822284541895
+"Residential care, no nursing (all occupations)",FALSE,2020,Native-born citizens,9027,1084889,0.8266658409650768
+"Residential care, no nursing (all occupations)",FALSE,2020,Legal immigrants,1277,192725,0.14685297223955115
+"Residential care, no nursing (all occupations)",FALSE,2020,Illegal immigrants,233,34753.03664138948,0.026481186795372025
+"Residential care, no nursing (all occupations)",FALSE,2021,Native-born citizens,10333,1072571,0.8275241650749189
+"Residential care, no nursing (all occupations)",FALSE,2021,Legal immigrants,1575,184944,0.14269044117882712
+"Residential care, no nursing (all occupations)",FALSE,2021,Illegal immigrants,292,38605.458189757024,0.029785393746253972
+"Residential care, no nursing (all occupations)",FALSE,2022,Native-born citizens,10083,1038619,0.8329278988708695
+"Residential care, no nursing (all occupations)",FALSE,2022,Legal immigrants,1549,170615,0.13682591351193596
+"Residential care, no nursing (all occupations)",FALSE,2022,Illegal immigrants,274,37715.46754451206,0.03024618761719447
+"Residential care, no nursing (all occupations)",FALSE,2023,Native-born citizens,9601,972509,0.824822724244242
+"Residential care, no nursing (all occupations)",FALSE,2023,Legal immigrants,1434,170397,0.144520326025822
+"Residential care, no nursing (all occupations)",FALSE,2023,Illegal immigrants,262,36146.14225405606,0.0306569497299361
+"Residential care, no nursing (all occupations)",FALSE,2024,Native-born citizens,9852,1014199,0.8297490724505938
+"Residential care, no nursing (all occupations)",FALSE,2024,Legal immigrants,1450,171910,0.14064514266429132
+"Residential care, no nursing (all occupations)",FALSE,2024,Illegal immigrants,266,36187.03343170828,0.029605784885114828

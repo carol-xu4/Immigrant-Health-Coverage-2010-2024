@@ -1,0 +1,155 @@
+worker_group,status_predetermined,year,status,n,workers,share
+Registered nurses,TRUE,2014,Native-born,30584,2944007,0.8519167357545189
+Registered nurses,TRUE,2014,Foreign-born,4823,511738,0.14808326424548107
+Registered nurses,TRUE,2015,Native-born,31128,2984038,0.846551933484107
+Registered nurses,TRUE,2015,Foreign-born,4863,540894,0.15344806651589307
+Registered nurses,TRUE,2016,Native-born,31832,3089730,0.8516213641685796
+Registered nurses,TRUE,2016,Foreign-born,4964,538326,0.14837863583142047
+Registered nurses,TRUE,2017,Native-born,32913,3154835,0.8519673237915204
+Registered nurses,TRUE,2017,Foreign-born,5102,548165,0.14803267620847962
+Registered nurses,TRUE,2018,Native-born,33872,3233022,0.8502819613633243
+Registered nurses,TRUE,2018,Foreign-born,5208,569272,0.14971803863667565
+Registered nurses,TRUE,2019,Native-born,34285,3261299,0.8494890769523303
+Registered nurses,TRUE,2019,Foreign-born,5319,577831,0.15051092304766966
+Registered nurses,TRUE,2020,Native-born,26375,3181017,0.8457632301016719
+Registered nurses,TRUE,2020,Foreign-born,4120,580103,0.15423676989832816
+Registered nurses,TRUE,2021,Native-born,33438,3362875,0.8448235363572759
+Registered nurses,TRUE,2021,Foreign-born,5698,617690,0.15517646364272408
+Registered nurses,TRUE,2022,Native-born,36171,3494764,0.8453432591477397
+Registered nurses,TRUE,2022,Foreign-born,6128,639372,0.1546567408522603
+Registered nurses,TRUE,2023,Native-born,37108,3601983,0.8416510832745475
+Registered nurses,TRUE,2023,Foreign-born,6321,677680,0.15834891672545245
+Registered nurses,TRUE,2024,Native-born,37042,3588692,0.8347424067161011
+Registered nurses,TRUE,2024,Foreign-born,6502,710469,0.16525759328389888
+Nurse anesthetists,TRUE,2014,Native-born,285,26574,0.8972549549245366
+Nurse anesthetists,TRUE,2014,Foreign-born,31,3043,0.10274504507546342
+Nurse anesthetists,TRUE,2015,Native-born,296,28416,0.9322528788425577
+Nurse anesthetists,TRUE,2015,Foreign-born,20,2065,0.06774712115744234
+Nurse anesthetists,TRUE,2016,Native-born,352,35064,0.9278154106689246
+Nurse anesthetists,TRUE,2016,Foreign-born,28,2728,0.07218458933107536
+Nurse anesthetists,TRUE,2017,Native-born,368,32276,0.9042669430980864
+Nurse anesthetists,TRUE,2017,Foreign-born,32,3417,0.09573305690191354
+Nurse anesthetists,TRUE,2018,Native-born,358,31072,0.9224557653485335
+Nurse anesthetists,TRUE,2018,Foreign-born,25,2612,0.07754423465146656
+Nurse anesthetists,TRUE,2019,Native-born,489,45211,0.9325508962273881
+Nurse anesthetists,TRUE,2019,Foreign-born,33,3270,0.06744910377261196
+Nurse anesthetists,TRUE,2020,Native-born,355,44483,0.9241492500103876
+Nurse anesthetists,TRUE,2020,Foreign-born,23,3651,0.07585074998961233
+Nurse anesthetists,TRUE,2021,Native-born,489,46121,0.8933503786778236
+Nurse anesthetists,TRUE,2021,Foreign-born,51,5506,0.10664962132217638
+Nurse anesthetists,TRUE,2022,Native-born,540,48287,0.9294720024638602
+Nurse anesthetists,TRUE,2022,Foreign-born,37,3664,0.07052799753613982
+Nurse anesthetists,TRUE,2023,Native-born,558,51073,0.8924633477204816
+Nurse anesthetists,TRUE,2023,Foreign-born,48,6154,0.1075366522795184
+Nurse anesthetists,TRUE,2024,Native-born,616,51977,0.9123253528048866
+Nurse anesthetists,TRUE,2024,Foreign-born,49,4995,0.08767464719511339
+Nurse practitioners & midwives,TRUE,2014,Native-born,1343,121277,0.9022713576811767
+Nurse practitioners & midwives,TRUE,2014,Foreign-born,127,13136,0.09772864231882333
+Nurse practitioners & midwives,TRUE,2015,Native-born,1385,129799,0.9079646884356025
+Nurse practitioners & midwives,TRUE,2015,Foreign-born,129,13157,0.09203531156439744
+Nurse practitioners & midwives,TRUE,2016,Native-born,1699,157140,0.8995002776235425
+Nurse practitioners & midwives,TRUE,2016,Foreign-born,176,17557,0.10049972237645752
+Nurse practitioners & midwives,TRUE,2017,Native-born,1984,186194,0.9049262232936099
+Nurse practitioners & midwives,TRUE,2017,Foreign-born,200,19562,0.0950737767063901
+Nurse practitioners & midwives,TRUE,2018,Native-born,2055,191309,0.8830447686790032
+Nurse practitioners & midwives,TRUE,2018,Foreign-born,235,25338,0.11695523132099683
+Nurse practitioners & midwives,TRUE,2019,Native-born,2325,207072,0.8806777584974992
+Nurse practitioners & midwives,TRUE,2019,Foreign-born,275,28056,0.11932224150250076
+Nurse practitioners & midwives,TRUE,2020,Native-born,2072,243921,0.8954318186824078
+Nurse practitioners & midwives,TRUE,2020,Foreign-born,213,28485,0.10456818131759213
+Nurse practitioners & midwives,TRUE,2021,Native-born,2801,278560,0.883361186778757
+Nurse practitioners & midwives,TRUE,2021,Foreign-born,311,36781,0.11663881322124303
+Nurse practitioners & midwives,TRUE,2022,Native-born,2990,276539,0.8721069213133056
+Nurse practitioners & midwives,TRUE,2022,Foreign-born,412,40554,0.12789307868669444
+Nurse practitioners & midwives,TRUE,2023,Native-born,3158,297281,0.8800372996255236
+Nurse practitioners & midwives,TRUE,2023,Foreign-born,393,40524,0.1199627003744764
+Nurse practitioners & midwives,TRUE,2024,Native-born,3398,317909,0.8653622632162038
+Nurse practitioners & midwives,TRUE,2024,Foreign-born,451,49462,0.13463773678379623
+LPNs/LVNs,TRUE,2014,Native-born,9403,917515,0.8698655072441784
+LPNs/LVNs,TRUE,2014,Foreign-born,1248,137263,0.13013449275582162
+LPNs/LVNs,TRUE,2015,Native-born,8876,868850,0.8677184950824125
+LPNs/LVNs,TRUE,2015,Foreign-born,1168,132454,0.13228150491758747
+LPNs/LVNs,TRUE,2016,Native-born,8948,890211,0.861413932245048
+LPNs/LVNs,TRUE,2016,Foreign-born,1219,143219,0.13858606775495197
+LPNs/LVNs,TRUE,2017,Native-born,8776,883193,0.8605284029237932
+LPNs/LVNs,TRUE,2017,Foreign-born,1217,143145,0.13947159707620688
+LPNs/LVNs,TRUE,2018,Native-born,9192,922867,0.8561855564894859
+LPNs/LVNs,TRUE,2018,Foreign-born,1335,155015,0.14381444351051414
+LPNs/LVNs,TRUE,2019,Native-born,6932,715270,0.8502446353767955
+LPNs/LVNs,TRUE,2019,Foreign-born,963,125982,0.14975536462320446
+LPNs/LVNs,TRUE,2020,Native-born,4894,602887,0.8576637299574218
+LPNs/LVNs,TRUE,2020,Foreign-born,660,100054,0.14233627004257826
+LPNs/LVNs,TRUE,2021,Native-born,6077,634400,0.8526732731820547
+LPNs/LVNs,TRUE,2021,Foreign-born,904,109613,0.1473267268179454
+LPNs/LVNs,TRUE,2022,Native-born,6271,636281,0.8515116355319664
+LPNs/LVNs,TRUE,2022,Foreign-born,902,110956,0.14848836446803357
+LPNs/LVNs,TRUE,2023,Native-born,5942,566331,0.8475369944687882
+LPNs/LVNs,TRUE,2023,Foreign-born,884,101877,0.15246300553121184
+LPNs/LVNs,TRUE,2024,Native-born,6074,610982,0.8468641539979819
+LPNs/LVNs,TRUE,2024,Foreign-born,911,110482,0.15313584600201813
+Nursing/psych/home health aides,FALSE,2014,Native-born,18997,2055896,0.7811603000330865
+Nursing/psych/home health aides,FALSE,2014,Foreign-born,4667,575953.0582700137,0.2188396999669135
+Nursing/psych/home health aides,FALSE,2015,Native-born,18264,2012859,0.7748072841274972
+Nursing/psych/home health aides,FALSE,2015,Foreign-born,4622,585024.4237040769,0.22519271587250275
+Nursing/psych/home health aides,FALSE,2016,Native-born,17893,1978232,0.7748646004571533
+Nursing/psych/home health aides,FALSE,2016,Foreign-born,4570,574771.4522584795,0.22513539954284661
+Nursing/psych/home health aides,FALSE,2017,Native-born,17435,1921675,0.7655332478697248
+Nursing/psych/home health aides,FALSE,2017,Foreign-born,4506,588568.6835336809,0.23446675213027535
+Nursing/psych/home health aides,FALSE,2018,Native-born,16893,1865286,0.7544448565721978
+Nursing/psych/home health aides,FALSE,2018,Foreign-born,4625,607109.4093542134,0.2455551434278021
+Nursing/psych/home health aides,FALSE,2019,Native-born,16976,1910792,0.74949655570579
+Nursing/psych/home health aides,FALSE,2019,Foreign-born,4726,638641.9973325626,0.25050344429420995
+Nursing/psych/home health aides,FALSE,2020,Native-born,13933,1873809,0.7511316149441065
+Nursing/psych/home health aides,FALSE,2020,Foreign-born,3923,620839.0253523006,0.24886838505589345
+Nursing/psych/home health aides,FALSE,2021,Native-born,16556,1864987,0.7452635572723131
+Nursing/psych/home health aides,FALSE,2021,Foreign-born,5013,637465.9668751121,0.2547364427276869
+Nursing/psych/home health aides,FALSE,2022,Native-born,16446,1808941,0.7402189474079174
+Nursing/psych/home health aides,FALSE,2022,Foreign-born,5028,634850.8082676894,0.2597810525920827
+Nursing/psych/home health aides,FALSE,2023,Native-born,15844,1718633,0.7261385259351216
+Nursing/psych/home health aides,FALSE,2023,Foreign-born,5070,648178.481028008,0.27386147406487826
+Nursing/psych/home health aides,FALSE,2024,Native-born,17080,1874886,0.7343159763692839
+Nursing/psych/home health aides,FALSE,2024,Foreign-born,5229,678355.4659832063,0.265684023630716
+Nursing home employees (all occupations),FALSE,2014,Native-born,20021,1977770,0.8393394277020974
+Nursing home employees (all occupations),FALSE,2014,Foreign-born,3235,378571.1115031766,0.16066057229790276
+Nursing home employees (all occupations),FALSE,2015,Native-born,19594,1963800,0.8313140803153698
+Nursing home employees (all occupations),FALSE,2015,Foreign-born,3284,398484.05905864947,0.16868591968463015
+Nursing home employees (all occupations),FALSE,2016,Native-born,18777,1881195,0.8367008578094051
+Nursing home employees (all occupations),FALSE,2016,Foreign-born,3063,367153.3582474394,0.16329914219059496
+Nursing home employees (all occupations),FALSE,2017,Native-born,18230,1825571,0.8282388389246299
+Nursing home employees (all occupations),FALSE,2017,Foreign-born,3044,378589.0975514358,0.17176116107537018
+Nursing home employees (all occupations),FALSE,2018,Native-born,18263,1830855,0.8331413911292019
+Nursing home employees (all occupations),FALSE,2018,Foreign-born,2957,366677.1589994976,0.16685860887079806
+Nursing home employees (all occupations),FALSE,2019,Native-born,17292,1730577,0.8272173578785703
+Nursing home employees (all occupations),FALSE,2019,Foreign-born,2866,361469.2844712652,0.17278264212142963
+Nursing home employees (all occupations),FALSE,2020,Native-born,14195,1703332,0.8333205342687576
+Nursing home employees (all occupations),FALSE,2020,Foreign-born,2268,340697.7940031938,0.1666794657312424
+Nursing home employees (all occupations),FALSE,2021,Native-born,15745,1588255,0.8278174209896376
+Nursing home employees (all occupations),FALSE,2021,Foreign-born,2774,330350.43125714373,0.1721825790103625
+Nursing home employees (all occupations),FALSE,2022,Native-born,15384,1485668,0.825023368943081
+Nursing home employees (all occupations),FALSE,2022,Foreign-born,2634,315090.6886941833,0.17497663105691896
+Nursing home employees (all occupations),FALSE,2023,Native-born,15220,1479761,0.8266875763392585
+Nursing home employees (all occupations),FALSE,2023,Foreign-born,2591,310227.1918543934,0.1733124236607416
+Nursing home employees (all occupations),FALSE,2024,Native-born,15446,1523113,0.8215007006288558
+Nursing home employees (all occupations),FALSE,2024,Foreign-born,2742,330948.717578649,0.17849929937114414
+"Residential care, no nursing (all occupations)",FALSE,2014,Native-born,11124,1142504,0.8627267207649071
+"Residential care, no nursing (all occupations)",FALSE,2014,Foreign-born,1576,181790.2087003378,0.13727327923509283
+"Residential care, no nursing (all occupations)",FALSE,2015,Native-born,10436,1076840,0.8504268388339925
+"Residential care, no nursing (all occupations)",FALSE,2015,Foreign-born,1610,189394.73158071918,0.14957316116600752
+"Residential care, no nursing (all occupations)",FALSE,2016,Native-born,10775,1123788,0.8496738259501718
+"Residential care, no nursing (all occupations)",FALSE,2016,Foreign-born,1705,198823.06047758073,0.15032617404982826
+"Residential care, no nursing (all occupations)",FALSE,2017,Native-born,10869,1119926,0.8524240587773219
+"Residential care, no nursing (all occupations)",FALSE,2017,Foreign-born,1598,193887.22297070143,0.14757594122267803
+"Residential care, no nursing (all occupations)",FALSE,2018,Native-born,10784,1136973,0.8490651689328356
+"Residential care, no nursing (all occupations)",FALSE,2018,Foreign-born,1607,202115.02480853975,0.15093483106716435
+"Residential care, no nursing (all occupations)",FALSE,2019,Native-born,11017,1168639,0.841013000044516
+"Residential care, no nursing (all occupations)",FALSE,2019,Foreign-born,1731,220922.16009876446,0.1589869999554839
+"Residential care, no nursing (all occupations)",FALSE,2020,Native-born,9031,1084915,0.8266856524959016
+"Residential care, no nursing (all occupations)",FALSE,2020,Foreign-born,1506,227452.03664138948,0.17331434750409827
+"Residential care, no nursing (all occupations)",FALSE,2021,Native-born,10335,1072984,0.8278428082977694
+"Residential care, no nursing (all occupations)",FALSE,2021,Foreign-born,1865,223136.45818975702,0.17215719170223065
+"Residential care, no nursing (all occupations)",FALSE,2022,Native-born,10081,1038514,0.8328436933735877
+"Residential care, no nursing (all occupations)",FALSE,2022,Foreign-born,1825,208435.46754451207,0.16715630662641234
+"Residential care, no nursing (all occupations)",FALSE,2023,Native-born,9600,972456,0.8247777728819565
+"Residential care, no nursing (all occupations)",FALSE,2023,Foreign-born,1697,206596.14225405606,0.1752222271180436
+"Residential care, no nursing (all occupations)",FALSE,2024,Native-born,9851,1014135,0.829696711976331
+"Residential care, no nursing (all occupations)",FALSE,2024,Foreign-born,1717,208161.0334317083,0.17030328802366893

@@ -148,6 +148,9 @@
       <li class="sub" style="padding-left: 32px;"><a href="#children-mixed-households">Mixed Households</a></li>
       <li class="sub"><a href="#income">Income</a></li>
       <li class="sub"><a href="#three-groups">3 Groups</a></li>
+      <li class="sub"><a href="#nursing-homes">Nursing Homes</a></li>
+      <li class="sub" style="padding-left: 32px;"><a href="#nh-who-works">Who Works There</a></li>
+      <li class="sub" style="padding-left: 32px;"><a href="#nh-nurse-occupations">Nurse Occupations</a></li>
       <li><strong>MEPS data</strong></li>
       <li class="sub"><a href="#meps-vs-acs">Comparing MEPS to ACS</a></li>
       <li class="sub"><a href="#meps-expenditures">Medicaid Expenditures</a></li>
@@ -668,6 +671,42 @@ acs = acs <span class="tok-op">%&gt;%</span>
       </figure>
     </section>
 
+    <section id="nursing-homes">
+      <h2>Nursing Homes</h2>
+      <h3 id="nh-who-works">Who Works There</h3>
+      <figure class="fig-single">
+        <img src="results/nh_table4_composition.png" alt="Occupational composition of the nursing home workforce, 2010-2024">
+        <figcaption><span class="fig-num">Fig. 51</span> Occupational composition of the nursing home workforce</figcaption>
+      </figure>
+      <figure class="fig-single">
+        <img src="results/nh_table5_immig_status.png" alt="Nursing home workers by immigration status and occupation, 2010-2024">
+        <figcaption><span class="fig-num">Fig. 52</span> Nursing home workers by immigration status, within occupation</figcaption>
+      </figure>
+      <figure class="fig-single">
+        <img src="results/nh_table6_citizenship.png" alt="Nursing home workers by citizenship and occupation, 2010-2024">
+        <figcaption><span class="fig-num">Fig. 53</span> Nursing home workers by citizenship, within occupation</figcaption>
+      </figure>
+      <figure class="fig-single">
+        <img src="results/nh_table7_nativity.png" alt="Nursing home workers by nativity and occupation, 2010-2024">
+        <figcaption><span class="fig-num">Fig. 54</span> Nursing home workers by nativity, within occupation</figcaption>
+      </figure>
+
+      <h3 id="nh-nurse-occupations">Nurse Occupations</h3>
+      <p style="font-size: 13.5px; color: var(--muted); margin: 0 0 20px;">Nurse occupations across all settings, not only nursing homes, alongside nursing homes and residential care as whole industries. These groups overlap — a registered nurse employed in a nursing home appears in both — so the panels do not sum to a total.</p>
+      <figure class="fig-single">
+        <img src="results/nh_table1_immig_status.png" alt="Nursing workforce by immigration status, 2010-2024">
+        <figcaption><span class="fig-num">Fig. 55</span> Nursing workforce by immigration status</figcaption>
+      </figure>
+      <figure class="fig-single">
+        <img src="results/nh_table2_citizenship.png" alt="Nursing workforce by citizenship, 2010-2024">
+        <figcaption><span class="fig-num">Fig. 56</span> Nursing workforce by citizenship</figcaption>
+      </figure>
+      <figure class="fig-single">
+        <img src="results/nh_table3_nativity.png" alt="Nursing workforce by nativity, 2010-2024">
+        <figcaption><span class="fig-num">Fig. 57</span> Nursing workforce by nativity</figcaption>
+      </figure>
+    </section>
+
     <section id="meps-data">
       <h2>MEPS Data</h2>
 
@@ -675,7 +714,7 @@ acs = acs <span class="tok-op">%&gt;%</span>
       <div class="fig-grid">
         <figure>
           <img src="results/MEPS_medicaid_nativity.png" alt="Medicaid rate, US-born vs immigrants, MEPS">
-          <figcaption><span class="fig-num">Fig. 51</span> Medicaid rate: US-born vs. immigrants (MEPS)</figcaption>
+          <figcaption><span class="fig-num">Fig. 58</span> Medicaid rate: US-born vs. immigrants (MEPS)</figcaption>
         </figure>
         <figure>
           <img src="results/ACS_medicaid2.png" alt="Medicaid, all immigrants vs native born, ACS">

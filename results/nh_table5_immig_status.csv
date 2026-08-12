@@ -1,0 +1,397 @@
+year,nh_occ_group,status,n,workers,share
+2014,Nursing/psych/home health aides,Native-born citizens,6325,661208,0.8171911843974591
+2014,Nursing/psych/home health aides,Legal immigrants,1030,120196,0.1485510030124212
+2014,Nursing/psych/home health aides,Illegal immigrants,198,27718.776437596578,0.03425781259011979
+2014,Registered nurses,Native-born citizens,2480,234256,0.8092946448004367
+2014,Registered nurses,Legal immigrants,493,55201,0.19070535519956333
+2014,Registered nurses,Illegal immigrants,0,0,0
+2014,LPNs/LVNs,Native-born citizens,2415,232212,0.8507024710127672
+2014,LPNs/LVNs,Legal immigrants,364,40753,0.1492975289872328
+2014,LPNs/LVNs,Illegal immigrants,0,0,0
+2014,Personal care aides,Native-born citizens,592,62768,0.7528988680397283
+2014,Personal care aides,Legal immigrants,115,14230,0.17068810368667686
+2014,Personal care aides,Illegal immigrants,53,6370.434546096196,0.07641302827359492
+2014,Other healthcare practitioners,Native-born citizens,828,84213,0.8452487185045737
+2014,Other healthcare practitioners,Legal immigrants,132,15170,0.1522618011436997
+2014,Other healthcare practitioners,Illegal immigrants,5,248.0294903384871,0.00248948035172656
+2014,Other healthcare support,Native-born citizens,754,74929,0.8830899179287144
+2014,Other healthcare support,Legal immigrants,73,8739,0.10299513930225994
+2014,Other healthcare support,Illegal immigrants,10,1180.6643078723127,0.013914942769025652
+2014,Food preparation & serving,Native-born citizens,1366,137544,0.8640853935620975
+2014,Food preparation & serving,Legal immigrants,128,15751,0.09895167389342026
+2014,Food preparation & serving,Illegal immigrants,39,5883.711993949944,0.036962932544482276
+2014,Building cleaning & maintenance,Native-born citizens,1251,123732,0.8152744510998072
+2014,Building cleaning & maintenance,Legal immigrants,176,21209,0.13974683859774198
+2014,Building cleaning & maintenance,Illegal immigrants,46,6826.297298578679,0.044978710302450695
+2014,Office & administrative support,Native-born citizens,986,92463,0.9005193118407699
+2014,Office & administrative support,Legal immigrants,90,9314,0.0907112777055139
+2014,Office & administrative support,Illegal immigrants,11,900.4204442040094,0.008769410453716134
+2014,Management,Native-born citizens,1030,94607,0.9275125958286488
+2014,Management,Legal immigrants,69,6406,0.06280344677326544
+2014,Management,Illegal immigrants,7,987.7711221184999,0.009683957398085839
+2014,All other occupations,Native-born citizens,1995,179916,0.8936639186632745
+2014,All other occupations,Legal immigrants,168,17662,0.08772922992635872
+2014,All other occupations,Illegal immigrants,27,3746.00586242189,0.01860685141036676
+2015,Nursing/psych/home health aides,Native-born citizens,6030,654191,0.8159185953554026
+2015,Nursing/psych/home health aides,Legal immigrants,1027,124618,0.15542577552427284
+2015,Nursing/psych/home health aides,Illegal immigrants,156,22975.643374923544,0.028655629120324613
+2015,Registered nurses,Native-born citizens,2500,244437,0.7920682034697965
+2015,Registered nurses,Legal immigrants,527,64169,0.20793179653020355
+2015,Registered nurses,Illegal immigrants,0,0,0
+2015,LPNs/LVNs,Native-born citizens,2368,223612,0.8302497670153083
+2015,LPNs/LVNs,Legal immigrants,385,45719,0.1697502329846917
+2015,LPNs/LVNs,Illegal immigrants,0,0,0
+2015,Personal care aides,Native-born citizens,611,71314,0.7447225988424336
+2015,Personal care aides,Legal immigrants,146,18849,0.19683759522086872
+2015,Personal care aides,Illegal immigrants,42,5596.145903249832,0.058439805936697606
+2015,Other healthcare practitioners,Native-born citizens,855,86286,0.8331633482932442
+2015,Other healthcare practitioners,Legal immigrants,161,16961,0.16377261143640587
+2015,Other healthcare practitioners,Illegal immigrants,4,317.32526317798863,0.003064040270349859
+2015,Other healthcare support,Native-born citizens,709,70265,0.8942094866014744
+2015,Other healthcare support,Legal immigrants,62,7087,0.09019088638076779
+2015,Other healthcare support,Illegal immigrants,8,1225.784124219716,0.015599627017757776
+2015,Food preparation & serving,Native-born citizens,1303,130472,0.8476542682811814
+2015,Food preparation & serving,Legal immigrants,135,16669,0.1082956419613328
+2015,Food preparation & serving,Illegal immigrants,38,6780.244642066965,0.0440500897574857
+2015,Building cleaning & maintenance,Native-born citizens,1244,114354,0.8057450345356189
+2015,Building cleaning & maintenance,Legal immigrants,163,20491,0.14438079562297224
+2015,Building cleaning & maintenance,Illegal immigrants,53,7078.307123954565,0.04987416984140903
+2015,Office & administrative support,Native-born citizens,1001,94226,0.9124133635755124
+2015,Office & administrative support,Legal immigrants,77,8010,0.07756278566679954
+2015,Office & administrative support,Illegal immigrants,6,1035.1748442094733,0.010023850757688139
+2015,Management,Native-born citizens,1026,95787,0.8878560418385338
+2015,Management,Legal immigrants,107,10869,0.10074548027125835
+2015,Management,Illegal immigrants,11,1229.7331439097193,0.01139847789020785
+2015,All other occupations,Native-born citizens,1948,179107,0.906138172935779
+2015,All other occupations,Legal immigrants,154,15670,0.07927766737147994
+2015,All other occupations,Illegal immigrants,21,2882.7006389376465,0.014584159692740998
+2016,Nursing/psych/home health aides,Native-born citizens,5609,609036,0.8164944609936856
+2016,Nursing/psych/home health aides,Legal immigrants,955,114952,0.15410857696449168
+2016,Nursing/psych/home health aides,Illegal immigrants,156,21927.65417209852,0.02939696204182269
+2016,Registered nurses,Native-born citizens,2355,219738,0.8060555594276051
+2016,Registered nurses,Legal immigrants,478,52871,0.1939444405723949
+2016,Registered nurses,Illegal immigrants,0,0,0
+2016,LPNs/LVNs,Native-born citizens,2246,222703,0.8441603238620857
+2016,LPNs/LVNs,Legal immigrants,348,41113,0.1558396761379143
+2016,LPNs/LVNs,Illegal immigrants,0,0,0
+2016,Personal care aides,Native-born citizens,578,62710,0.7602106786655832
+2016,Personal care aides,Legal immigrants,128,16633,0.20163585103244533
+2016,Personal care aides,Illegal immigrants,27,3147.2908626282697,0.03815347030197139
+2016,Other healthcare practitioners,Native-born citizens,842,83342,0.8630653143220468
+2016,Other healthcare practitioners,Legal immigrants,123,12737,0.13190063723596637
+2016,Other healthcare practitioners,Illegal immigrants,5,486.1134589583559,0.005034048441986883
+2016,Other healthcare support,Native-born citizens,711,71057,0.8648234798333886
+2016,Other healthcare support,Legal immigrants,78,9799,0.11926207521971621
+2016,Other healthcare support,Illegal immigrants,8,1307.587896213678,0.015914444946895208
+2016,Food preparation & serving,Native-born citizens,1334,133809,0.8601258144373227
+2016,Food preparation & serving,Legal immigrants,145,17755,0.11412934731845141
+2016,Food preparation & serving,Illegal immigrants,23,4005.101350056796,0.025744838244225892
+2016,Building cleaning & maintenance,Native-born citizens,1115,113594,0.8277026954052564
+2016,Building cleaning & maintenance,Legal immigrants,168,19910,0.14507421752485744
+2016,Building cleaning & maintenance,Illegal immigrants,25,3736.0991691618847,0.027223087069886007
+2016,Office & administrative support,Native-born citizens,1045,99268,0.8983595155308611
+2016,Office & administrative support,Legal immigrants,88,10043,0.09088754295922591
+2016,Office & administrative support,Illegal immigrants,13,1188.1913413866075,0.01075294150991293
+2016,Management,Native-born citizens,969,89468,0.8945808470696165
+2016,Management,Legal immigrants,76,8874,0.08873016538757743
+2016,Management,Illegal immigrants,15,1669.0837305212078,0.016688987542806115
+2016,All other occupations,Native-born citizens,1974,176566,0.8763918664312446
+2016,All other occupations,Legal immigrants,185,22323,0.11080103550142538
+2016,All other occupations,Illegal immigrants,18,2580.236266414045,0.012807098067330012
+2017,Nursing/psych/home health aides,Native-born citizens,5314,577525,0.8081749833075194
+2017,Nursing/psych/home health aides,Legal immigrants,904,113170,0.15836745225039947
+2017,Nursing/psych/home health aides,Illegal immigrants,146,23908.9062437119,0.03345756444208114
+2017,Registered nurses,Native-born citizens,2313,212012,0.8014909912975102
+2017,Registered nurses,Legal immigrants,449,52510,0.19850900870248978
+2017,Registered nurses,Illegal immigrants,0,0,0
+2017,LPNs/LVNs,Native-born citizens,2169,215425,0.8392190013907447
+2017,LPNs/LVNs,Legal immigrants,334,41272,0.16078099860925527
+2017,LPNs/LVNs,Illegal immigrants,0,0,0
+2017,Personal care aides,Native-born citizens,596,66849,0.7340382631161959
+2017,Personal care aides,Legal immigrants,159,19414,0.21317624557043227
+2017,Personal care aides,Illegal immigrants,37,4807.1844290888475,0.052785491313371916
+2017,Other healthcare practitioners,Native-born citizens,843,83020,0.8209489065317621
+2017,Other healthcare practitioners,Legal immigrants,151,16249,0.16067933970410267
+2017,Other healthcare practitioners,Illegal immigrants,8,1857.8781034523465,0.018371753764135242
+2017,Other healthcare support,Native-born citizens,677,68906,0.8526206863280973
+2017,Other healthcare support,Legal immigrants,85,10117,0.12518450473951995
+2017,Other healthcare support,Illegal immigrants,14,1793.7114696115307,0.022194808932382716
+2017,Food preparation & serving,Native-born citizens,1291,129488,0.8610060771506637
+2017,Food preparation & serving,Legal immigrants,125,14807,0.09845635876969198
+2017,Food preparation & serving,Illegal immigrants,38,6096.5052824202785,0.04053756407964431
+2017,Building cleaning & maintenance,Native-born citizens,1087,108397,0.8025718368318455
+2017,Building cleaning & maintenance,Legal immigrants,154,19022,0.14083896676305954
+2017,Building cleaning & maintenance,Illegal immigrants,51,7643.053046737151,0.05658919640509487
+2017,Office & administrative support,Native-born citizens,1012,95132,0.8814199484799183
+2017,Office & administrative support,Legal immigrants,85,11037,0.10226035373347411
+2017,Office & administrative support,Illegal immigrants,10,1761.391369134547,0.016319697786607506
+2017,Management,Native-born citizens,1039,96572,0.9202020598715421
+2017,Management,Legal immigrants,79,7234,0.06893034938813254
+2017,Management,Illegal immigrants,12,1140.5157831544257,0.010867590740325431
+2017,All other occupations,Native-born citizens,1890,172332,0.8748130245485023
+2017,All other occupations,Legal immigrants,172,20490,0.10401387364505031
+2017,All other occupations,Illegal immigrants,30,4170.951824124793,0.021173101806447457
+2018,Nursing/psych/home health aides,Native-born citizens,5078,547159,0.8076296270903951
+2018,Nursing/psych/home health aides,Legal immigrants,830,108321,0.15988633804078647
+2018,Nursing/psych/home health aides,Illegal immigrants,139,22007.528498949483,0.032484034868818415
+2018,Registered nurses,Native-born citizens,2365,218706,0.7982961389369484
+2018,Registered nurses,Legal immigrants,488,55260,0.20170386106305163
+2018,Registered nurses,Illegal immigrants,0,0,0
+2018,LPNs/LVNs,Native-born citizens,2152,212407,0.8482199548749076
+2018,LPNs/LVNs,Legal immigrants,324,38008,0.15178004512509236
+2018,LPNs/LVNs,Illegal immigrants,0,0,0
+2018,Personal care aides,Native-born citizens,717,81488,0.7722883613498871
+2018,Personal care aides,Legal immigrants,171,19334,0.1832346256913744
+2018,Personal care aides,Illegal immigrants,37,4692.991651002848,0.04447701295873859
+2018,Other healthcare practitioners,Native-born citizens,1053,109964,0.8534605495681346
+2018,Other healthcare practitioners,Legal immigrants,164,18353,0.14244263091760917
+2018,Other healthcare practitioners,Illegal immigrants,3,527.8541126401619,0.004096819514256235
+2018,Other healthcare support,Native-born citizens,588,58887,0.908758076568886
+2018,Other healthcare support,Legal immigrants,49,5096,0.07864267424380667
+2018,Other healthcare support,Illegal immigrants,6,816.4240913205545,0.012599249187307343
+2018,Food preparation & serving,Native-born citizens,1269,126523,0.8483425062761816
+2018,Food preparation & serving,Legal immigrants,133,17171,0.1151323409598912
+2018,Food preparation & serving,Illegal immigrants,27,5447.41288920621,0.03652515276392728
+2018,Building cleaning & maintenance,Native-born citizens,1111,109437,0.8085272962854351
+2018,Building cleaning & maintenance,Legal immigrants,161,21074,0.15569600995933056
+2018,Building cleaning & maintenance,Illegal immigrants,30,4842.500744847303,0.03577669375523448
+2018,Office & administrative support,Native-born citizens,1026,92373,0.9122167111456567
+2018,Office & administrative support,Legal immigrants,82,7409,0.0731665488062331
+2018,Office & administrative support,Illegal immigrants,11,1480.122115684944,0.014616740048110064
+2018,Management,Native-born citizens,1034,100406,0.8746358269815595
+2018,Management,Legal immigrants,116,13396,0.11669244405956786
+2018,Management,Illegal immigrants,7,995.4927422186778,0.008671728958872714
+2018,All other occupations,Native-born citizens,1869,173419,0.8850173439497364
+2018,All other occupations,Legal immigrants,164,20368,0.10394497293588495
+2018,All other occupations,Illegal immigrants,16,2162.8321536274275,0.011037683114378668
+2019,Nursing/psych/home health aides,Native-born citizens,4823,523403,0.8038633976622602
+2019,Nursing/psych/home health aides,Legal immigrants,816,105663,0.16228148900023004
+2019,Nursing/psych/home health aides,Illegal immigrants,143,22043.381920018077,0.03385511333750966
+2019,Registered nurses,Native-born citizens,2385,215936,0.8054428264502268
+2019,Registered nurses,Legal immigrants,464,52160,0.19455717354977323
+2019,Registered nurses,Illegal immigrants,0,0,0
+2019,LPNs/LVNs,Native-born citizens,1765,175025,0.8231241329038023
+2019,LPNs/LVNs,Legal immigrants,294,37610,0.1768758670961977
+2019,LPNs/LVNs,Illegal immigrants,0,0,0
+2019,Personal care aides,Native-born citizens,695,79676,0.7470723699727195
+2019,Personal care aides,Legal immigrants,150,21031,0.19719462589608244
+2019,Personal care aides,Illegal immigrants,40,5943.979479952516,0.05573300413119809
+2019,Other healthcare practitioners,Native-born citizens,998,99296,0.8434320840768909
+2019,Other healthcare practitioners,Legal immigrants,169,17734,0.150634714178009
+2019,Other healthcare practitioners,Illegal immigrants,6,698.5069830800452,0.005933201745100146
+2019,Other healthcare support,Native-born citizens,619,62207,0.8987648168457556
+2019,Other healthcare support,Legal immigrants,48,5656,0.08171771350619053
+2019,Other healthcare support,Illegal immigrants,9,1350.8797981851292,0.0195174696480539
+2019,Food preparation & serving,Native-born citizens,1114,115841,0.8549939371741557
+2019,Food preparation & serving,Legal immigrants,121,15266,0.11267459228512065
+2019,Food preparation & serving,Illegal immigrants,31,4380.510452842039,0.032331470540723564
+2019,Building cleaning & maintenance,Native-born citizens,1050,103782,0.8058419727762887
+2019,Building cleaning & maintenance,Legal immigrants,156,20481,0.15902998057882067
+2019,Building cleaning & maintenance,Illegal immigrants,36,4524.037044558516,0.035128046644890686
+2019,Office & administrative support,Native-born citizens,906,82962,0.8717317536431781
+2019,Office & administrative support,Legal immigrants,94,11497,0.12080591079814396
+2019,Office & administrative support,Illegal immigrants,9,710.1843887545784,0.007462335558677915
+2019,Management,Native-born citizens,1082,105185,0.8922195624586571
+2019,Management,Legal immigrants,92,10952,0.09289906971571243
+2019,Management,Illegal immigrants,11,1754.3850646196588,0.0148813678256306
+2019,All other occupations,Native-born citizens,1855,166988,0.8822394165291116
+2019,All other occupations,Legal immigrants,159,19291,0.10191918332013733
+2019,All other occupations,Illegal immigrants,18,2998.4193392546445,0.015841400150751084
+2020,Nursing/psych/home health aides,Native-born citizens,3940,503663,0.8022086545739264
+2020,Nursing/psych/home health aides,Legal immigrants,666,104750,0.16684044006928997
+2020,Nursing/psych/home health aides,Illegal immigrants,113,19432.383028818505,0.030950905356783593
+2020,Registered nurses,Native-born citizens,1949,222378,0.7997425034704491
+2020,Registered nurses,Legal immigrants,387,55684,0.20025749652955097
+2020,Registered nurses,Illegal immigrants,0,0,0
+2020,LPNs/LVNs,Native-born citizens,1247,146148,0.836263968917906
+2020,LPNs/LVNs,Legal immigrants,197,28615,0.16373603108209403
+2020,LPNs/LVNs,Illegal immigrants,0,0,0
+2020,Personal care aides,Native-born citizens,637,80463,0.7836118134548882
+2020,Personal care aides,Legal immigrants,104,16460,0.16030039209906988
+2020,Personal care aides,Illegal immigrants,27,5759.2192039760275,0.056087794446041936
+2020,Other healthcare practitioners,Native-born citizens,856,103145,0.8410872396272585
+2020,Other healthcare practitioners,Legal immigrants,118,18684,0.1523571087808008
+2020,Other healthcare practitioners,Illegal immigrants,6,803.9388206036556,0.00655565159194069
+2020,Other healthcare support,Native-born citizens,436,52473,0.8768277566026655
+2020,Other healthcare support,Legal immigrants,49,5858,0.09788761835950707
+2020,Other healthcare support,Illegal immigrants,6,1513.1365534669515,0.02528462503782738
+2020,Food preparation & serving,Native-born citizens,1035,128081,0.8823339602942065
+2020,Food preparation & serving,Legal immigrants,92,13141,0.0905267024166439
+2020,Food preparation & serving,Illegal immigrants,18,3939.589334374609,0.027139337289149565
+2020,Building cleaning & maintenance,Native-born citizens,899,106623,0.8136559543233599
+2020,Building cleaning & maintenance,Legal immigrants,119,19616,0.1496926104124535
+2020,Building cleaning & maintenance,Illegal immigrants,31,4802.872714700626,0.036651435264186565
+2020,Office & administrative support,Native-born citizens,785,83683,0.919132818260637
+2020,Office & administrative support,Legal immigrants,66,6361,0.06986608817747825
+2020,Office & administrative support,Illegal immigrants,6,1001.6011769456221,0.011001093561884738
+2020,Management,Native-born citizens,845,96112,0.894616077628815
+2020,Management,Legal immigrants,82,9679,0.09009269410031319
+2020,Management,Illegal immigrants,15,1642.794678433895,0.015291228270871707
+2020,All other occupations,Native-born citizens,1564,180325,0.8860427923226966
+2020,All other occupations,Legal immigrants,153,20551,0.10097915111617212
+2020,All other occupations,Illegal immigrants,15,2641.2584918739076,0.012978056561131244
+2021,Nursing/psych/home health aides,Native-born citizens,4321,458962,0.8044321935536985
+2021,Nursing/psych/home health aides,Legal immigrants,762,94642,0.1658809915903912
+2021,Nursing/psych/home health aides,Illegal immigrants,104,16937.56171008937,0.029686814855910345
+2021,Registered nurses,Native-born citizens,2233,211669,0.8008846209145876
+2021,Registered nurses,Legal immigrants,462,52625,0.19911537908541246
+2021,Registered nurses,Illegal immigrants,0,0,0
+2021,LPNs/LVNs,Native-born citizens,1431,142672,0.824369611944438
+2021,LPNs/LVNs,Legal immigrants,256,30396,0.17563038805556197
+2021,LPNs/LVNs,Illegal immigrants,0,0,0
+2021,Personal care aides,Native-born citizens,655,76524,0.711048015836173
+2021,Personal care aides,Legal immigrants,183,25860,0.24028672951653643
+2021,Personal care aides,Illegal immigrants,50,5237.424004692379,0.04866525464729051
+2021,Other healthcare practitioners,Native-born citizens,986,100742,0.8565204818246964
+2021,Other healthcare practitioners,Legal immigrants,140,16138,0.13720719794809466
+2021,Other healthcare practitioners,Illegal immigrants,8,737.7361052514918,0.006272320227208937
+2021,Other healthcare support,Native-born citizens,495,51264,0.8844001209599973
+2021,Other healthcare support,Legal immigrants,54,5149,0.08882990447142294
+2021,Other healthcare support,Illegal immigrants,9,1551.713917445005,0.02676997456857978
+2021,Food preparation & serving,Native-born citizens,1057,106296,0.8484196584273965
+2021,Food preparation & serving,Legal immigrants,143,16586,0.1323839886230601
+2021,Food preparation & serving,Illegal immigrants,26,2405.054518546699,0.019196352949543322
+2021,Building cleaning & maintenance,Native-born citizens,925,93736,0.8053921071225699
+2021,Building cleaning & maintenance,Legal immigrants,166,18253,0.15683218967427956
+2021,Building cleaning & maintenance,Illegal immigrants,34,4396.545836662429,0.037775703203150504
+2021,Office & administrative support,Native-born citizens,935,88354,0.9022279682238716
+2021,Office & administrative support,Legal immigrants,84,8315,0.08490872575980139
+2021,Office & administrative support,Illegal immigrants,9,1259.6866643404128,0.012863306016327012
+2021,Management,Native-born citizens,997,101048,0.8980781623275836
+2021,Management,Legal immigrants,105,10995,0.09771959261728863
+2021,Management,Illegal immigrants,3,472.81904420214835,0.00420224505512776
+2021,All other occupations,Native-born citizens,1704,156530,0.8925145749095289
+2021,All other occupations,Legal immigrants,160,16109,0.09185151272738516
+2021,All other occupations,Illegal immigrants,22,2741.8894559138253,0.01563391236308597
+2022,Nursing/psych/home health aides,Native-born citizens,3960,408303,0.7933090397460636
+2022,Nursing/psych/home health aides,Legal immigrants,720,92909,0.180516796530437
+2022,Nursing/psych/home health aides,Illegal immigrants,117,13471.407781029216,0.026174163723499306
+2022,Registered nurses,Native-born citizens,2360,207147,0.7927584874033196
+2022,Registered nurses,Legal immigrants,460,54152,0.20724151259668044
+2022,Registered nurses,Illegal immigrants,0,0,0
+2022,LPNs/LVNs,Native-born citizens,1445,142565,0.8233327173184873
+2022,LPNs/LVNs,Legal immigrants,252,30591,0.17666728268151263
+2022,LPNs/LVNs,Illegal immigrants,0,0,0
+2022,Personal care aides,Native-born citizens,631,69993,0.7390630360058347
+2022,Personal care aides,Legal immigrants,140,20079,0.21201615447203512
+2022,Personal care aides,Illegal immigrants,30,4633.0475941370605,0.04892080952213027
+2022,Other healthcare practitioners,Native-born citizens,1029,99053,0.8359611720936084
+2022,Other healthcare practitioners,Legal immigrants,156,17021,0.14364931006840084
+2022,Other healthcare practitioners,Illegal immigrants,13,2415.9530105309104,0.02038951783799079
+2022,Other healthcare support,Native-born citizens,464,44503,0.8530562005763185
+2022,Other healthcare support,Legal immigrants,59,6304,0.12083828704656117
+2022,Other healthcare support,Illegal immigrants,6,1361.8957538015686,0.02610551237712036
+2022,Food preparation & serving,Native-born citizens,1020,98763,0.8672981386165497
+2022,Food preparation & serving,Legal immigrants,104,12559,0.11028823874209215
+2022,Food preparation & serving,Illegal immigrants,24,2552.336404710244,0.022413622641358114
+2022,Building cleaning & maintenance,Native-born citizens,871,77182,0.7983223868998216
+2022,Building cleaning & maintenance,Legal immigrants,124,14287,0.1477758018921219
+2022,Building cleaning & maintenance,Illegal immigrants,41,5211.240046538084,0.05390181120805655
+2022,Office & administrative support,Native-born citizens,860,77434,0.9150809312175482
+2022,Office & administrative support,Legal immigrants,78,6562,0.07754682788761463
+2022,Office & administrative support,Illegal immigrants,6,623.8378289571225,0.007372240894837115
+2022,Management,Native-born citizens,1034,100354,0.8980805941402707
+2022,Management,Legal immigrants,98,10089,0.09028773256951583
+2022,Management,Illegal immigrants,9,1299.7552212822472,0.01163167329021344
+2022,All other occupations,Native-born citizens,1709,159999,0.8921584716010937
+2022,All other occupations,Legal immigrants,169,16544,0.09224976252456887
+2022,All other occupations,Illegal immigrants,29,2796.215053196875,0.01559176587433731
+2023,Nursing/psych/home health aides,Native-born citizens,3842,406882,0.7955785580885499
+2023,Nursing/psych/home health aides,Legal immigrants,715,89395,0.17479452322866562
+2023,Nursing/psych/home health aides,Illegal immigrants,108,15152.067391623941,0.02962691868278447
+2023,Registered nurses,Native-born citizens,2327,214104,0.8078481681319096
+2023,Registered nurses,Legal immigrants,450,50926,0.1921518318680904
+2023,Registered nurses,Illegal immigrants,0,0,0
+2023,LPNs/LVNs,Native-born citizens,1364,124541,0.8347028229806172
+2023,LPNs/LVNs,Legal immigrants,229,24663,0.16529717701938285
+2023,LPNs/LVNs,Illegal immigrants,0,0,0
+2023,Personal care aides,Native-born citizens,659,73297,0.7256766682136954
+2023,Personal care aides,Legal immigrants,189,21942,0.2172366870942181
+2023,Personal care aides,Illegal immigrants,32,5766.038759790601,0.0570866446920866
+2023,Other healthcare practitioners,Native-born citizens,994,96588,0.8648029895847751
+2023,Other healthcare practitioners,Legal immigrants,140,14039,0.1256985253942587
+2023,Other healthcare practitioners,Illegal immigrants,10,1060.8655176430177,0.009498485020966183
+2023,Other healthcare support,Native-born citizens,432,46382,0.8857324026483693
+2023,Other healthcare support,Legal immigrants,44,4764,0.09097557600398498
+2023,Other healthcare support,Illegal immigrants,8,1219.703073881322,0.023292021347645745
+2023,Food preparation & serving,Native-born citizens,1072,106174,0.8456154534995586
+2023,Food preparation & serving,Legal immigrants,127,15624,0.12443626354358979
+2023,Food preparation & serving,Illegal immigrants,28,3760.254122014372,0.029948282956851653
+2023,Building cleaning & maintenance,Native-born citizens,971,93299,0.8134338871329996
+2023,Building cleaning & maintenance,Legal immigrants,131,15662,0.13655024748686523
+2023,Building cleaning & maintenance,Illegal immigrants,30,5736.704971252629,0.05001586538013514
+2023,Office & administrative support,Native-born citizens,863,79032,0.8915320696652544
+2023,Office & administrative support,Legal immigrants,80,9150,0.10321791726689289
+2023,Office & administrative support,Illegal immigrants,4,465.4000084756561,0.005250013067852625
+2023,Management,Native-born citizens,1013,95210,0.8714441085562653
+2023,Management,Legal immigrants,123,14008,0.1282133081888054
+2023,Management,Illegal immigrants,1,37.4290805130983,3.425832549292892e-4
+2023,All other occupations,Native-born citizens,1683,144252,0.8953760378770763
+2023,All other occupations,Legal immigrants,122,13864,0.08605422031672202
+2023,All other occupations,Illegal immigrants,20,2991.728929198749,0.018569741806201676
+2024,Nursing/psych/home health aides,Native-born citizens,4030,436662,0.7926033582401201
+2024,Nursing/psych/home health aides,Legal immigrants,766,95474,0.1732988284408014
+2024,Nursing/psych/home health aides,Illegal immigrants,126,18785.20852169387,0.03409781331907856
+2024,Registered nurses,Native-born citizens,2299,214024,0.8002841812029091
+2024,Registered nurses,Legal immigrants,470,53411,0.19971581879709088
+2024,Registered nurses,Illegal immigrants,0,0,0
+2024,LPNs/LVNs,Native-born citizens,1417,141542,0.8232919579809449
+2024,LPNs/LVNs,Legal immigrants,234,30380,0.17670804201905516
+2024,LPNs/LVNs,Illegal immigrants,0,0,0
+2024,Personal care aides,Native-born citizens,619,66459,0.7063865537137226
+2024,Personal care aides,Legal immigrants,139,20335,0.21613883100510914
+2024,Personal care aides,Illegal immigrants,68,7289.047943936168,0.07747461528116831
+2024,Other healthcare practitioners,Native-born citizens,1127,106196,0.8352273181962335
+2024,Other healthcare practitioners,Legal immigrants,181,19688,0.15484533730693667
+2024,Other healthcare practitioners,Illegal immigrants,10,1262.2243708001474,0.009927344496829782
+2024,Other healthcare support,Native-born citizens,322,28310,0.8420973144238357
+2024,Other healthcare support,Legal immigrants,37,5156,0.1533682003945354
+2024,Other healthcare support,Illegal immigrants,2,152.4423285683395,0.004534485181628918
+2024,Food preparation & serving,Native-born citizens,1167,110984,0.8617086467641147
+2024,Food preparation & serving,Legal immigrants,114,14286,0.11092022028105082
+2024,Food preparation & serving,Illegal immigrants,29,3525.272528326968,0.0273711329548344
+2024,Building cleaning & maintenance,Native-born citizens,912,86779,0.8141708968974223
+2024,Building cleaning & maintenance,Legal immigrants,115,13091,0.12282131865179544
+2024,Building cleaning & maintenance,Illegal immigrants,48,6715.730748532661,0.06300778445078226
+2024,Office & administrative support,Native-born citizens,869,80686,0.8822970261928047
+2024,Office & administrative support,Legal immigrants,99,8770,0.09589947351102915
+2024,Office & administrative support,Illegal immigrants,14,1993.9285440955596,0.021803500296166137
+2024,Management,Native-born citizens,1023,101684,0.8975219644714095
+2024,Management,Legal immigrants,112,9180,0.0810280047386761
+2024,Management,Illegal immigrants,11,2430.163290907558,0.02145003078991441
+2024,All other occupations,Native-born citizens,1659,149740,0.8870290841714097
+2024,All other occupations,Legal immigrants,149,17134,0.10149830591821112
+2024,All other occupations,Illegal immigrants,20,1936.6993017877262,0.01147260991037916
+2014,All nursing home workers,Native-born citizens,20022,1977848,0.8393725298703781
+2014,All nursing home workers,Legal immigrants,2838,324631,0.13776910245092178
+2014,All nursing home workers,Illegal immigrants,396,53862.111503176595,0.02285836767870015
+2015,All nursing home workers,Native-born citizens,19595,1964051,0.8314203334135261
+2015,All nursing home workers,Legal immigrants,2944,349112,0.14778578328091424
+2015,All nursing home workers,Illegal immigrants,339,49121.05905864945,0.020793883305559698
+2016,All nursing home workers,Native-born citizens,18778,1881291,0.8367435558191009
+2016,All nursing home workers,Legal immigrants,2772,327010,0.1454445432356845
+2016,All nursing home workers,Illegal immigrants,290,40047.35824743936,0.017811900945214645
+2017,All nursing home workers,Native-born citizens,18231,1825658,0.8282783097416982
+2017,All nursing home workers,Legal immigrants,2697,325322,0.1475945419579071
+2017,All nursing home workers,Illegal immigrants,346,53180.09755143582,0.024127148300394648
+2018,All nursing home workers,Native-born citizens,18262,1830769,0.8331022563207998
+2018,All nursing home workers,Legal immigrants,2682,323790,0.14734255363408041
+2018,All nursing home workers,Illegal immigrants,276,42973.15899949761,0.019555190045119807
+2019,All nursing home workers,Native-born citizens,17292,1730301,0.8270854296310699
+2019,All nursing home workers,Legal immigrants,2563,317341,0.1516892825725428
+2019,All nursing home workers,Illegal immigrants,303,44404.2844712652,0.021225287796387233
+2020,All nursing home workers,Native-born citizens,14193,1703094,0.8332040976098115
+2020,All nursing home workers,Legal immigrants,2033,299399,0.1464748708058862
+2020,All nursing home workers,Illegal immigrants,237,41536.7940031938,0.020321031584302287
+2021,All nursing home workers,Native-born citizens,15739,1587797,0.8275787059351826
+2021,All nursing home workers,Legal immigrants,2515,295068,0.1537929556504279
+2021,All nursing home workers,Illegal immigrants,265,35740.431257143755,0.018628338414389482
+2022,All nursing home workers,Native-born citizens,15383,1485296,0.8248167893484161
+2022,All nursing home workers,Legal immigrants,2360,281097,0.1560992051654833
+2022,All nursing home workers,Illegal immigrants,275,34365.68869418333,0.01908400548610072
+2023,All nursing home workers,Native-born citizens,15220,1479761,0.8266875763392585
+2023,All nursing home workers,Legal immigrants,2350,274037,0.15309430601109325
+2023,All nursing home workers,Illegal immigrants,241,36190.191854393386,0.020218117649648315
+2024,All nursing home workers,Native-born citizens,15444,1523066,0.8214753508794087
+2024,All nursing home workers,Legal immigrants,2416,286905,0.15474403968315015
+2024,All nursing home workers,Illegal immigrants,328,44090.717578649,0.023780609437441057

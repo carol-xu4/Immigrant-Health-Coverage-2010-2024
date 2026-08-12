@@ -5,11 +5,25 @@ pacman::p_load(tidyverse, ggthemes, readxl, data.table, gdata, ipumsr, matrixSta
 # Set working directory
 setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Coverage 2010-2024")
 
+################################################################
+# acs_nursinghomes.csv is produced by running the residual method
+# in "data-code/ACS_RESIDUALMETHOD.R" over IPUMS extract usa_00022. 
+
+# ddi_acs = read_ipums_ddi("data/input/usa_00022.xml")
+# acs = read_ipums_micro(ddi_acs)
+# acs = acs %>% rename_with(tolower)
+################################################################
+
+acs = fread("data/output/acs_nursinghomes.csv",
+            select = c("year", "age", "statefip", "occ2010", "ind1990", "classwkr",
+                       "citizen", "bpl", "perwt", "immig_status",
+                       "hcovany", "hcovpub", "hinscaid", "hinscare", "hinsva"))
+
 ## READ ME BEFORE INTERPRETING ----------------------------------------------
 # Three tables, each by year:
 #   1. immig_status  (3 categories from the residual method)
-#   2. citizen vs noncitizen  (raw CITIZEN variable, untouched by the method)
-#   3. native-born vs foreign-born  (raw BPL variable, untouched by the method)
+#   2. citizen vs noncitizen  (raw CITIZEN variable, untouched by the residual method)
+#   3. native-born vs foreign-born  (raw BPL variable, untouched by the residual method)
 #
 # WHY 2 AND 3 EXIST: the occupational licensing carveout in the residual method
 # presumes legal status for occ2010 codes 3255 (RNs), 3256 (nurse anesthetists),
@@ -29,34 +43,19 @@ setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Cover
 # built by binding separate filtered frames, not by a mutually exclusive
 # case_when, so this is deliberate. Never sum the worker_group rows.
 
-# acs_nursinghomes.csv is ~5.8 GB across 43 columns. Only fifteen are used
-# here, so read those directly rather than pulling the whole file into memory.
-acs = fread("data/output/acs_nursinghomes.csv",
-            select = c("year", "age", "statefip", "occ2010", "ind1990", "classwkr",
-                       "citizen", "bpl", "perwt", "immig_status",
-                       "hcovany", "hcovpub", "hinscaid", "hinscare", "hinsva"))
-
 ## Industry definition -------------------------------------------------------
 # VERIFIED against the DDI of extract usa_00022 (data/input/usa_00022.xml):
 #   832 = "Nursing and personal care facilities"      <- nursing homes
 #   870 = "Residential care facilities, without nursing"  <- assisted living
 #   831 = "Hospitals"
-# IND1990 keeps assisted living separate from nursing facilities, which is why
-# it is the right primary variable here. INDNAICS is a character variable with
-# no enumerated codes in the DDI and re-bases four times across 2010-2024
-# (2007/2012/2017/2022 NAICS), so it is not used.
+
 NURSING_HOME_IND1990 = c(832)
 
 # Contrast group in tables 1-3: assisted living without nursing.
 RESIDENTIAL_CARE_IND1990 = c(870)
 
 ## Employment universe -------------------------------------------------------
-# NOTE: usa_00022 has no EMPSTAT, LABFORCE, UHRSWORK or WKSWORK, so "currently
-# employed" cannot be defined. The IPUMS documentation for INDNAICS is explicit:
-# for people out of the labor force, industry and occupation "refer to their
-# most recent job, if it was within the previous five years." So retired nurses
-# and former nursing home staff sit in these denominators. CLASSWKR is the only
-# available proxy. Adding EMPSTAT to the next pull would fix this.
+
 work = acs %>%
   filter(
     age >= 16,
@@ -343,7 +342,7 @@ plot_nh_shares = function(tbl, palette, plot_title, plot_subtitle, plot_caption)
     facet_wrap(~ nh_occ_group, ncol = 4) +
     scale_color_manual(values = palette) +
     scale_x_continuous(breaks = seq(2010, 2024, by = 6), expand = c(0.02, 0)) +
-    scale_y_continuous(labels = scales::percent, expand = c(0.02, 0)) +
+    scale_y_continuous(labels = scales::percent, expand = c(0.02, 0), limits = c(0, 1)) +
     labs(
       title = plot_title,
       subtitle = plot_subtitle,
@@ -377,124 +376,3 @@ nh_plot7 = plot_nh_shares(
   "Source: ACS PUMS via IPUMS. Industry IND1990 == 832. Native-born includes those born abroad to American parents.")
 
 ggsave("results/nh_table7_nativity.png", nh_plot7, width = 20, height = 12)
-
-## ===========================================================================
-## COVERAGE OF NURSING HOME WORKERS -- are the people paid to deliver care
-## insured themselves?
-## ===========================================================================
-# WHAT THIS EXTRACT CANNOT DO: usa_00022 dropped HINSEMP, HINSPUR, HINSTRI and
-# HCOVPRIV, so the mutually exclusive coverage-TYPE breakdown used in
-# ACS_analysis.R is impossible here. Only HCOVANY, HCOVPUB, HINSCAID, HINSCARE
-# and HINSVA survived. What follows is therefore independent coverage RATES,
-# which overlap (a worker can hold Medicaid and Medicare), not a 100% stack.
-# Restoring the type breakdown needs another pull with HINSEMP and HINSPUR.
-
-summarise_coverage = function(df, ...) {
-  df %>%
-    group_by(..., .drop = FALSE) %>%
-    summarise(
-      n          = n(),
-      workers    = sum(perwt, na.rm = TRUE),
-      uninsured  = weighted.mean(hcovany == 1,  w = perwt, na.rm = TRUE),
-      medicaid   = weighted.mean(hinscaid == 2, w = perwt, na.rm = TRUE),
-      medicare   = weighted.mean(hinscare == 2, w = perwt, na.rm = TRUE),
-      any_public = weighted.mean(hcovpub == 2,  w = perwt, na.rm = TRUE),
-      va         = weighted.mean(hinsva == 2,   w = perwt, na.rm = TRUE),
-      .groups    = "drop")
-}
-
-tabulate_nh_coverage = function(status_col) {
-  by_occ = nh_workers %>%
-    filter(!is.na(.data[[status_col]])) %>%
-    summarise_coverage(year, nh_occ_group, status = .data[[status_col]])
-
-  overall = nh_workers %>%
-    filter(!is.na(.data[[status_col]])) %>%
-    summarise_coverage(year, status = .data[[status_col]]) %>%
-    mutate(nh_occ_group = "All nursing home workers")
-
-  bind_rows(by_occ, overall) %>%
-    mutate(nh_occ_group = factor(nh_occ_group,
-                                 levels = c("All nursing home workers", nh_occ_levels)))
-}
-
-table8_nh_coverage_immig    = tabulate_nh_coverage("immig_status")
-table9_nh_coverage_citizen  = tabulate_nh_coverage("citizen_status")
-table10_nh_coverage_nativity = tabulate_nh_coverage("nativity")
-
-write_csv(table8_nh_coverage_immig,     "results/nh_table8_coverage_immig_status.csv")
-write_csv(table9_nh_coverage_citizen,   "results/nh_table9_coverage_citizenship.csv")
-write_csv(table10_nh_coverage_nativity, "results/nh_table10_coverage_nativity.csv")
-
-plot_nh_rate = function(tbl, rate_col, palette, plot_title, plot_subtitle, plot_caption) {
-  ggplot(tbl, aes(x = as.numeric(year), y = .data[[rate_col]], color = status)) +
-    geom_line(linewidth = 1.6) +
-    facet_wrap(~ nh_occ_group, ncol = 4) +
-    scale_color_manual(values = palette) +
-    scale_x_continuous(breaks = seq(2010, 2024, by = 6), expand = c(0.02, 0)) +
-    scale_y_continuous(labels = scales::percent, expand = c(0.02, 0)) +
-    labs(
-      title = plot_title,
-      subtitle = plot_subtitle,
-      x = NULL, y = NULL, color = NULL,
-      caption = plot_caption) +
-    house_theme +
-    theme(strip.text = element_text(size = 14, face = "bold", color = "black"))
-}
-
-nh_plot8 = plot_nh_rate(
-  table8_nh_coverage_immig, "uninsured", colors_immig,
-  "Uninsured Rate Among Nursing Home Workers (2010-2024)",
-  "Share with no health coverage, by immigration status; ACS, ages 16+",
-  "Source: ACS PUMS via IPUMS. Industry IND1990 == 832.")
-
-ggsave("results/nh_uninsured_immig_status.png", nh_plot8, width = 20, height = 12)
-
-nh_plot9 = plot_nh_rate(
-  table9_nh_coverage_citizen, "uninsured", colors_citizen,
-  "Uninsured Rate Among Nursing Home Workers (2010-2024)",
-  "Share with no health coverage, by citizenship; ACS, ages 16+",
-  "Source: ACS PUMS via IPUMS. Industry IND1990 == 832. Unaffected by the residual method's licensing carveout.")
-
-ggsave("results/nh_uninsured_citizenship.png", nh_plot9, width = 20, height = 12)
-
-nh_plot10 = plot_nh_rate(
-  table8_nh_coverage_immig, "medicaid", colors_immig,
-  "Medicaid Enrollment Among Nursing Home Workers (2010-2024)",
-  "Share enrolled in Medicaid, by immigration status; ACS, ages 16+",
-  "Source: ACS PUMS via IPUMS. Industry IND1990 == 832.")
-
-ggsave("results/nh_medicaid_immig_status.png", nh_plot10, width = 20, height = 12)
-
-## ===========================================================================
-## 2024 PROFILE AND GEOGRAPHY
-## ===========================================================================
-# NOTE: SEX, INCTOT, FTOTINC and POVERTY were all dropped from usa_00022, so
-# the share-female, median-income and poverty columns from the earlier draft
-# cannot be rebuilt on this extract. Age and coverage are what remain.
-
-table11_nh_profile_2024 = nh_workers %>%
-  filter(year == 2024) %>%
-  summarise_coverage(nh_occ_group, immig_status) %>%
-  left_join(
-    nh_workers %>%
-      filter(year == 2024) %>%
-      group_by(nh_occ_group, immig_status, .drop = FALSE) %>%
-      summarise(median_age = weightedMedian(age, w = perwt, na.rm = TRUE),
-                .groups = "drop"),
-    by = c("nh_occ_group", "immig_status"))
-
-write_csv(table11_nh_profile_2024, "results/nh_table11_profile_2024.csv")
-print(table11_nh_profile_2024, n = Inf)
-
-# state geography, 2024. Cells get thin fast -- n is carried so sparse states
-# can be filtered or suppressed before anything is mapped or quoted.
-table12_nh_states_2024 = nh_workers %>%
-  filter(year == 2024) %>%
-  group_by(statefip, immig_status, .drop = FALSE) %>%
-  summarise(n = n(), workers = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
-  group_by(statefip) %>%
-  mutate(share = workers / sum(workers)) %>%
-  ungroup()
-
-write_csv(table12_nh_states_2024, "results/nh_table12_states_2024.csv")

@@ -1,0 +1,155 @@
+worker_group,status_predetermined,year,status,n,workers,share
+Registered nurses,TRUE,2014,Citizen,34382,3343604,0.9675493996229467
+Registered nurses,TRUE,2014,Noncitizen,1025,112141,0.03245060037705328
+Registered nurses,TRUE,2015,Citizen,34981,3406921,0.9665210562927171
+Registered nurses,TRUE,2015,Noncitizen,1010,118011,0.03347894370728286
+Registered nurses,TRUE,2016,Citizen,35774,3508547,0.9670597697499708
+Registered nurses,TRUE,2016,Noncitizen,1022,119509,0.032940230250029214
+Registered nurses,TRUE,2017,Citizen,36969,3584222,0.9679238455306508
+Registered nurses,TRUE,2017,Noncitizen,1046,118778,0.03207615446934917
+Registered nurses,TRUE,2018,Citizen,38030,3681042,0.968110829935823
+Registered nurses,TRUE,2018,Noncitizen,1050,121252,0.03188917006417705
+Registered nurses,TRUE,2019,Citizen,38512,3711339,0.9667135522891905
+Registered nurses,TRUE,2019,Noncitizen,1092,127791,0.03328644771080948
+Registered nurses,TRUE,2020,Citizen,29666,3635973,0.9667261347683669
+Registered nurses,TRUE,2020,Noncitizen,829,125147,0.03327386523163313
+Registered nurses,TRUE,2021,Citizen,38025,3854327,0.968286411602373
+Registered nurses,TRUE,2021,Noncitizen,1111,126238,0.03171358839762697
+Registered nurses,TRUE,2022,Citizen,41009,3997076,0.9668467607258203
+Registered nurses,TRUE,2022,Noncitizen,1290,137060,0.03315323927417966
+Registered nurses,TRUE,2023,Citizen,42090,4126807,0.9642831690252246
+Registered nurses,TRUE,2023,Noncitizen,1339,152856,0.03571683097477535
+Registered nurses,TRUE,2024,Citizen,42146,4134608,0.9617243922709571
+Registered nurses,TRUE,2024,Noncitizen,1398,164553,0.03827560772904295
+Nurse anesthetists,TRUE,2014,Citizen,310,29009,0.9794712496201506
+Nurse anesthetists,TRUE,2014,Noncitizen,6,608,0.02052875037984941
+Nurse anesthetists,TRUE,2015,Citizen,314,30148,0.9890751615760638
+Nurse anesthetists,TRUE,2015,Noncitizen,2,333,0.010924838423936222
+Nurse anesthetists,TRUE,2016,Citizen,375,37181,0.9838325571549534
+Nurse anesthetists,TRUE,2016,Noncitizen,5,611,0.01616744284504657
+Nurse anesthetists,TRUE,2017,Citizen,394,34887,0.9774185414507046
+Nurse anesthetists,TRUE,2017,Noncitizen,6,806,0.02258145854929538
+Nurse anesthetists,TRUE,2018,Citizen,379,33236,0.9866999168744804
+Nurse anesthetists,TRUE,2018,Noncitizen,4,448,0.013300083125519535
+Nurse anesthetists,TRUE,2019,Citizen,519,48317,0.9966172314927497
+Nurse anesthetists,TRUE,2019,Noncitizen,3,164,0.003382768507250263
+Nurse anesthetists,TRUE,2020,Citizen,373,46847,0.9732621431836124
+Nurse anesthetists,TRUE,2020,Noncitizen,5,1287,0.026737856816387583
+Nurse anesthetists,TRUE,2021,Citizen,529,50470,0.9775892459372034
+Nurse anesthetists,TRUE,2021,Noncitizen,11,1157,0.0224107540627966
+Nurse anesthetists,TRUE,2022,Citizen,572,51568,0.9926276683798194
+Nurse anesthetists,TRUE,2022,Noncitizen,5,383,0.007372331620180555
+Nurse anesthetists,TRUE,2023,Citizen,601,56446,0.9863525958026805
+Nurse anesthetists,TRUE,2023,Noncitizen,5,781,0.013647404197319447
+Nurse anesthetists,TRUE,2024,Citizen,660,56330,0.9887313066067542
+Nurse anesthetists,TRUE,2024,Noncitizen,5,642,0.011268693393245805
+Nurse practitioners & midwives,TRUE,2014,Citizen,1443,131882,0.9811699761183814
+Nurse practitioners & midwives,TRUE,2014,Noncitizen,27,2531,0.018830023881618592
+Nurse practitioners & midwives,TRUE,2015,Citizen,1490,140727,0.9844077898094519
+Nurse practitioners & midwives,TRUE,2015,Noncitizen,24,2229,0.01559221019054814
+Nurse practitioners & midwives,TRUE,2016,Citizen,1848,172382,0.9867484845189098
+Nurse practitioners & midwives,TRUE,2016,Noncitizen,27,2315,0.013251515481090116
+Nurse practitioners & midwives,TRUE,2017,Citizen,2153,202408,0.9837282995392601
+Nurse practitioners & midwives,TRUE,2017,Noncitizen,31,3348,0.016271700460739905
+Nurse practitioners & midwives,TRUE,2018,Citizen,2255,212449,0.9806228565362086
+Nurse practitioners & midwives,TRUE,2018,Noncitizen,35,4198,0.019377143463791328
+Nurse practitioners & midwives,TRUE,2019,Citizen,2557,230086,0.9785563607907183
+Nurse practitioners & midwives,TRUE,2019,Noncitizen,43,5042,0.021443639209281752
+Nurse practitioners & midwives,TRUE,2020,Citizen,2250,267343,0.9814137720901889
+Nurse practitioners & midwives,TRUE,2020,Noncitizen,35,5063,0.01858622790981109
+Nurse practitioners & midwives,TRUE,2021,Citizen,3054,307800,0.9760862050922652
+Nurse practitioners & midwives,TRUE,2021,Noncitizen,58,7541,0.023913794907734803
+Nurse practitioners & midwives,TRUE,2022,Citizen,3359,313563,0.9888676192788867
+Nurse practitioners & midwives,TRUE,2022,Noncitizen,43,3530,0.011132380721113364
+Nurse practitioners & midwives,TRUE,2023,Citizen,3511,333997,0.9887272242862006
+Nurse practitioners & midwives,TRUE,2023,Noncitizen,40,3808,0.011272775713799381
+Nurse practitioners & midwives,TRUE,2024,Citizen,3802,362283,0.986150240492581
+Nurse practitioners & midwives,TRUE,2024,Noncitizen,47,5088,0.013849759507418931
+LPNs/LVNs,TRUE,2014,Citizen,10322,1015110,0.9623920862968321
+LPNs/LVNs,TRUE,2014,Noncitizen,329,39668,0.03760791370316787
+LPNs/LVNs,TRUE,2015,Citizen,9723,961857,0.9606043718990437
+LPNs/LVNs,TRUE,2015,Noncitizen,321,39447,0.039395628100956356
+LPNs/LVNs,TRUE,2016,Citizen,9837,991964,0.9598753664979728
+LPNs/LVNs,TRUE,2016,Noncitizen,330,41466,0.04012463350202723
+LPNs/LVNs,TRUE,2017,Citizen,9677,987417,0.9620777950343844
+LPNs/LVNs,TRUE,2017,Noncitizen,316,38921,0.037922204965615616
+LPNs/LVNs,TRUE,2018,Citizen,10175,1033112,0.9584648412349404
+LPNs/LVNs,TRUE,2018,Noncitizen,352,44770,0.04153515876505963
+LPNs/LVNs,TRUE,2019,Citizen,7645,807182,0.9595008392253451
+LPNs/LVNs,TRUE,2019,Noncitizen,250,34070,0.040499160774654916
+LPNs/LVNs,TRUE,2020,Citizen,5402,675430,0.9608630027271137
+LPNs/LVNs,TRUE,2020,Noncitizen,152,27511,0.039136997272886345
+LPNs/LVNs,TRUE,2021,Citizen,6748,713661,0.9592050138908863
+LPNs/LVNs,TRUE,2021,Noncitizen,233,30352,0.04079498610911368
+LPNs/LVNs,TRUE,2022,Citizen,6983,721620,0.9657177040216156
+LPNs/LVNs,TRUE,2022,Noncitizen,190,25617,0.03428229597838437
+LPNs/LVNs,TRUE,2023,Citizen,6610,642574,0.9616376936522759
+LPNs/LVNs,TRUE,2023,Noncitizen,216,25634,0.038362306347724064
+LPNs/LVNs,TRUE,2024,Citizen,6779,693961,0.9618789017885855
+LPNs/LVNs,TRUE,2024,Noncitizen,206,27503,0.038121098211414566
+Nursing/psych/home health aides,FALSE,2014,Citizen,21900,2398071,0.911173455204273
+Nursing/psych/home health aides,FALSE,2014,Noncitizen,1764,233778.05827001363,0.08882654479572714
+Nursing/psych/home health aides,FALSE,2015,Citizen,21169,2359038,0.9080615313509603
+Nursing/psych/home health aides,FALSE,2015,Noncitizen,1717,238845.4237040769,0.09193846864903958
+Nursing/psych/home health aides,FALSE,2016,Citizen,20812,2325870,0.9110328456244157
+Nursing/psych/home health aides,FALSE,2016,Noncitizen,1651,227133.45225847958,0.0889671543755842
+Nursing/psych/home health aides,FALSE,2017,Citizen,20297,2278283,0.9075943562550274
+Nursing/psych/home health aides,FALSE,2017,Noncitizen,1644,231960.6835336809,0.09240564374497252
+Nursing/psych/home health aides,FALSE,2018,Citizen,19795,2228880,0.901506284782409
+Nursing/psych/home health aides,FALSE,2018,Noncitizen,1723,243515.40935421336,0.09849371521759107
+Nursing/psych/home health aides,FALSE,2019,Citizen,20016,2307583,0.9051354153174359
+Nursing/psych/home health aides,FALSE,2019,Noncitizen,1686,241850.99733256258,0.09486458468256402
+Nursing/psych/home health aides,FALSE,2020,Citizen,16394,2257315,0.904863121794994
+Nursing/psych/home health aides,FALSE,2020,Noncitizen,1462,237333.02535230058,0.09513687820500602
+Nursing/psych/home health aides,FALSE,2021,Citizen,19804,2262506,0.9041152940529623
+Nursing/psych/home health aides,FALSE,2021,Noncitizen,1765,239946.96687511212,0.09588470594703767
+Nursing/psych/home health aides,FALSE,2022,Citizen,19714,2213611,0.9058099763290165
+Nursing/psych/home health aides,FALSE,2022,Noncitizen,1760,230180.80826768937,0.09419002367098356
+Nursing/psych/home health aides,FALSE,2023,Citizen,19166,2125550,0.8980647664750986
+Nursing/psych/home health aides,FALSE,2023,Noncitizen,1748,241261.48102800798,0.10193523352490151
+Nursing/psych/home health aides,FALSE,2024,Citizen,20507,2299114,0.9004686907333511
+Nursing/psych/home health aides,FALSE,2024,Noncitizen,1802,254127.46598320632,0.09953130926664881
+Nursing home employees (all occupations),FALSE,2014,Citizen,22133,2214574,0.9398359130555851
+Nursing home employees (all occupations),FALSE,2014,Noncitizen,1123,141767.1115031766,0.060164086944415
+Nursing home employees (all occupations),FALSE,2015,Citizen,21746,2213713,0.9371070305923099
+Nursing home employees (all occupations),FALSE,2015,Noncitizen,1132,148571.05905864944,0.06289296940769001
+Nursing home employees (all occupations),FALSE,2016,Citizen,20854,2121636,0.9436420260309616
+Nursing home employees (all occupations),FALSE,2016,Noncitizen,986,126712.35824743936,0.056357973969038376
+Nursing home employees (all occupations),FALSE,2017,Citizen,20237,2061518,0.9352850558768874
+Nursing home employees (all occupations),FALSE,2017,Noncitizen,1037,142642.0975514358,0.06471494412311271
+Nursing home employees (all occupations),FALSE,2018,Citizen,20215,2062108,0.9383744358666615
+Nursing home employees (all occupations),FALSE,2018,Noncitizen,1005,135424.15899949762,0.061625564133338626
+Nursing home employees (all occupations),FALSE,2019,Citizen,19223,1966873,0.9401670577747753
+Nursing home employees (all occupations),FALSE,2019,Noncitizen,935,125173.2844712652,0.05983294222522469
+Nursing home employees (all occupations),FALSE,2020,Citizen,15753,1927097,0.9427930090127585
+Nursing home employees (all occupations),FALSE,2020,Noncitizen,710,116932.7940031938,0.0572069909872415
+Nursing home employees (all occupations),FALSE,2021,Citizen,17669,1814239,0.9456029730986641
+Nursing home employees (all occupations),FALSE,2021,Noncitizen,850,104366.43125714376,0.054397026901335764
+Nursing home employees (all occupations),FALSE,2022,Citizen,17216,1699359,0.9436905736838549
+Nursing home employees (all occupations),FALSE,2022,Noncitizen,802,101399.68869418334,0.05630942631614518
+Nursing home employees (all occupations),FALSE,2023,Citizen,17048,1690931,0.9446604216133001
+Nursing home employees (all occupations),FALSE,2023,Noncitizen,763,99057.19185439339,0.05533957838669988
+Nursing home employees (all occupations),FALSE,2024,Citizen,17361,1747139,0.9423305510464414
+Nursing home employees (all occupations),FALSE,2024,Noncitizen,827,106922.717578649,0.05766944895355856
+"Residential care, no nursing (all occupations)",FALSE,2014,Citizen,12027,1246171,0.9410076641677623
+"Residential care, no nursing (all occupations)",FALSE,2014,Noncitizen,673,78123.20870033781,0.058992335832237695
+"Residential care, no nursing (all occupations)",FALSE,2015,Citizen,11371,1181351,0.9329636682175401
+"Residential care, no nursing (all occupations)",FALSE,2015,Noncitizen,675,84883.73158071916,0.06703633178245992
+"Residential care, no nursing (all occupations)",FALSE,2016,Citizen,11809,1238259,0.9362230794840608
+"Residential care, no nursing (all occupations)",FALSE,2016,Noncitizen,671,84352.06047758073,0.06377692051593921
+"Residential care, no nursing (all occupations)",FALSE,2017,Citizen,11850,1236528,0.941174878118558
+"Residential care, no nursing (all occupations)",FALSE,2017,Noncitizen,617,77285.22297070143,0.05882512188144184
+"Residential care, no nursing (all occupations)",FALSE,2018,Citizen,11755,1252969,0.9356883018792936
+"Residential care, no nursing (all occupations)",FALSE,2018,Noncitizen,636,86119.02480853975,0.06431169812070635
+"Residential care, no nursing (all occupations)",FALSE,2019,Citizen,12090,1300120,0.9356335203753051
+"Residential care, no nursing (all occupations)",FALSE,2019,Noncitizen,658,89441.16009876446,0.06436647962469484
+"Residential care, no nursing (all occupations)",FALSE,2020,Citizen,9949,1223640,0.9323915991760507
+"Residential care, no nursing (all occupations)",FALSE,2020,Noncitizen,588,88727.03664138948,0.06760840082394919
+"Residential care, no nursing (all occupations)",FALSE,2021,Citizen,11495,1205327,0.9299498301905018
+"Residential care, no nursing (all occupations)",FALSE,2021,Noncitizen,705,90793.45818975703,0.07005016980949814
+"Residential care, no nursing (all occupations)",FALSE,2022,Citizen,11248,1167800,0.9365255211982464
+"Residential care, no nursing (all occupations)",FALSE,2022,Noncitizen,658,79149.46754451205,0.06347447880175358
+"Residential care, no nursing (all occupations)",FALSE,2023,Citizen,10657,1095228,0.9289054832691241
+"Residential care, no nursing (all occupations)",FALSE,2023,Noncitizen,640,83824.14225405606,0.07109451673087591
+"Residential care, no nursing (all occupations)",FALSE,2024,Citizen,10974,1145990,0.9375715609438148
+"Residential care, no nursing (all occupations)",FALSE,2024,Noncitizen,594,76306.03343170829,0.062428439056185184
