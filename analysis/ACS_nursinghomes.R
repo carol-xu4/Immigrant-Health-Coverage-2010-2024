@@ -202,8 +202,7 @@ nh_plot1 = plot_shares(
   table1_immig_status, colors_immig,
   "Nursing Workforce by Immigration Status (2010-2024)",
   "Share of workers, ages 16+; ACS",
-  paste0("Source: ACS PUMS via IPUMS. RNs, nurse anesthetists, NPs/midwives and LPNs are presumed legal by the residual method's licensing\n",
-         "carveout, so their illegal-immigrant share is zero by construction. Only aides vary freely. Groups overlap; do not sum."))
+  paste0("Source: ACS PUMS via IPUMS."))
 
 ggsave("results/nh_table1_immig_status.png", nh_plot1, width = 18, height = 11)
 
@@ -212,7 +211,7 @@ nh_plot2 = plot_shares(
   table2_citizenship, colors_citizen,
   "Nursing Workforce by Citizenship (2010-2024)",
   "Share of workers, ages 16+; ACS. Citizenship from the raw CITIZEN variable",
-  "Source: ACS PUMS via IPUMS. Unaffected by the residual method's licensing carveout. Groups overlap; do not sum.")
+  "Source: ACS PUMS via IPUMS.")
 
 ggsave("results/nh_table2_citizenship.png", nh_plot2, width = 18, height = 11)
 
@@ -221,7 +220,7 @@ nh_plot3 = plot_shares(
   table3_nativity, colors_nativity,
   "Nursing Workforce by Nativity (2010-2024)",
   "Share of workers, ages 16+; ACS. Nativity from the raw BPL variable",
-  "Source: ACS PUMS via IPUMS. Native-born includes those born abroad to American parents. Groups overlap; do not sum.")
+  "Source: ACS PUMS via IPUMS.")
 
 ggsave("results/nh_table3_nativity.png", nh_plot3, width = 18, height = 11)
 
@@ -339,7 +338,7 @@ nh_plot4 = ggplot(table4_nh_composition,
     title = "Who Works in Nursing Homes (2010-2024)",
     subtitle = "Occupational composition of nursing and personal care facilities; ACS, ages 16+",
     x = NULL, y = NULL, fill = NULL,
-    caption = "Source: ACS PUMS via IPUMS. Industry IND1990 == 832. Occupations are mutually exclusive and sum to 100%.") +
+    caption = "Source: ACS PUMS via IPUMS. Industry IND1990 == 832.") +
   house_theme +
   theme(legend.text = element_text(size = 15))
 
@@ -366,8 +365,7 @@ nh_plot5 = plot_nh_shares(
   table5_nh_immig_status, colors_immig,
   "Nursing Home Workers by Immigration Status (2010-2024)",
   "Share of workers within each occupation; ACS, ages 16+",
-  paste0("Source: ACS PUMS via IPUMS. Industry IND1990 == 832. RNs and LPNs are presumed legal by the residual method's licensing carveout,\n",
-         "so their illegal-immigrant share is zero by construction and the 'All nursing home workers' line is biased downward."))
+  paste0("Source: ACS PUMS via IPUMS. Industry IND1990 == 832."))
 
 ggsave("results/nh_table5_immig_status.png", nh_plot5, width = 20, height = 12)
 
@@ -375,7 +373,7 @@ nh_plot6 = plot_nh_shares(
   table6_nh_citizenship, colors_citizen,
   "Nursing Home Workers by Citizenship (2010-2024)",
   "Share of workers within each occupation; ACS, ages 16+. Citizenship from the raw CITIZEN variable",
-  "Source: ACS PUMS via IPUMS. Industry IND1990 == 832. Unaffected by the residual method's licensing carveout.")
+  "Source: ACS PUMS via IPUMS. Industry IND1990 == 832.")
 
 ggsave("results/nh_table6_citizenship.png", nh_plot6, width = 20, height = 12)
 
@@ -383,6 +381,6 @@ nh_plot7 = plot_nh_shares(
   table7_nh_nativity, colors_nativity,
   "Nursing Home Workers by Nativity (2010-2024)",
   "Share of workers within each occupation; ACS, ages 16+. Nativity from the raw BPL variable",
-  "Source: ACS PUMS via IPUMS. Industry IND1990 == 832. Native-born includes those born abroad to American parents.")
+  "Source: ACS PUMS via IPUMS. Industry IND1990 == 832. ")
 
 ggsave("results/nh_table7_nativity.png", nh_plot7, width = 20, height = 12)
