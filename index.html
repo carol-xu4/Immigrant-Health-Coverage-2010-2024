@@ -155,6 +155,11 @@
       <li class="sub"><a href="#meps-vs-acs">Comparing MEPS to ACS</a></li>
       <li class="sub"><a href="#meps-expenditures">Medicaid Expenditures</a></li>
       <li class="sub"><a href="#meps-kids-immigrant-parents">Kids of Immigrant Parents</a></li>
+      <li><strong>ACS &amp; CPS-ASEC</strong></li>
+      <li class="sub"><a href="#disability-rates">Disability Rates</a></li>
+      <li class="sub" style="padding-left: 32px;"><a href="#disability-by-age">By Age</a></li>
+      <li class="sub" style="padding-left: 32px;"><a href="#disability-gq">Group Quarters</a></li>
+      <li class="sub" style="padding-left: 32px;"><a href="#disability-income">Disability Income</a></li>
       <li><strong>CPS-ASEC data</strong></li>
       <li class="sub"><a href="#cps-overview">Overview</a></li>
       <li class="sub"><a href="#cps-coverage">Health Coverage</a></li>
@@ -771,6 +776,60 @@ acs = acs <span class="tok-op">%&gt;%</span>
           <tr><td>Has immigrant parent</td><td>591</td><td>9,706,689</td><td>$1,369</td></tr>
         </tbody>
       </table>
+    </section>
+
+    <section id="disability-rates">
+      <h2>Disability Rates</h2>
+
+      <div class="fig-grid">
+        <figure>
+          <img src="results/acs_disabled_nogq.png" alt="ACS disability rate by immigration status over time, household population">
+          <figcaption><span class="fig-num">Fig. 59</span> <strong>ACS</strong> &mdash; Disability rate by immigration status, household population</figcaption>
+        </figure>
+        <figure>
+          <img src="results/disabled_pop.png" alt="CPS-ASEC disability rate by immigration status over time">
+          <figcaption><span class="fig-num">Fig. 60</span> <strong>CPS-ASEC</strong> &mdash; Disability rate by immigration status, civilians 15+</figcaption>
+        </figure>
+      </div>
+
+      <h3 id="disability-by-age">By Age</h3>
+      <div class="fig-grid">
+        <figure>
+          <img src="results/acs_disabled_by_age_2024.png" alt="ACS disability rate by age and immigration status, 2024, household population">
+          <figcaption><span class="fig-num">Fig. 61</span> <strong>ACS</strong> &mdash; Disability rate by age and immigration status, 2024</figcaption>
+        </figure>
+        <figure>
+          <img src="results/cps_disabled_by_age_2024.png" alt="CPS-ASEC disability rate by age and immigration status, 2024, LOESS smoothed">
+          <figcaption><span class="fig-num">Fig. 62</span> <strong>CPS-ASEC</strong> &mdash; Disability rate by age and immigration status, 2024 (LOESS)</figcaption>
+        </figure>
+      </div>
+
+      <h3 id="disability-gq">Group Quarters</h3>
+      <figure class="fig-single">
+        <img src="results/acs_disabled_gq.png" alt="ACS disability rate among group quarters residents by immigration status">
+        <figcaption><span class="fig-num">Fig. 63</span> <strong>ACS</strong> &mdash; Disability rate among group quarters residents</figcaption>
+      </figure>
+
+      <h3 id="disability-income">Disability Income</h3>
+      <div class="table-scroll" style="max-width: 720px;">
+        <table>
+          <caption>Disability income receipt by immigration status, 2025 (CPS-ASEC)</caption>
+          <thead>
+            <tr>
+              <th>Immigration Status</th>
+              <th>Disability Insurance (%)</th>
+              <th>Social Security (%)</th>
+              <th>SSI (%)</th>
+              <th>Any Disability Income (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Illegal immigrants</td><td>0.39</td><td>0.0</td><td>0.0</td><td>0.39</td></tr>
+            <tr><td>Legal immigrants</td><td>2.29</td><td>9.92</td><td>7.35</td><td>17.2</td></tr>
+            <tr><td>Native-born citizens</td><td>3.65</td><td>12.3</td><td>8.87</td><td>21.3</td></tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section id="cps-overview">

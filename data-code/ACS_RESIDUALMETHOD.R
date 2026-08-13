@@ -207,7 +207,7 @@ print(immig_counts, n = Inf)
 # rewrite final ACS dataset
 fwrite(acs, "data/output/acsdata.csv")
 
-# 3 groups (native-born, LPR, unauthorized) ---------------------------------------------------------------
+# 3 groups (native-born, Legal immigrants, illegal immigrants) ---------------------------------------------------------------
 acs = acs %>%
   mutate(immigrant = ifelse(citizen == 2 |
                             citizen == 3, 1, 0)) %>%
