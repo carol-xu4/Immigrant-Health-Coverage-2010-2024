@@ -7,15 +7,16 @@ setwd("C:/Users/CarolXu/OneDrive - Cato Institute/Desktop/Immigrant Health Cover
 
 ################################################################
 # acs_nursinghomes.csv is produced by running the residual method
-# in "data-code/ACS_RESIDUALMETHOD.R" over IPUMS extract usa_00022. 
+# in "data-code/ACS_RESIDUALMETHOD.R" over IPUMS extract usa_00023. 
 
-# ddi_acs = read_ipums_ddi("data/input/usa_00022.xml")
-# acs = read_ipums_micro(ddi_acs)
-# acs = acs %>% rename_with(tolower)
+ddi_acs = read_ipums_ddi("data/input/usa_00023.xml")
+acs = read_ipums_micro(ddi_acs)
+
+acs = acs %>% rename_with(tolower)
 ################################################################
 
 acs = fread("data/output/acs_nursinghomes.csv",
-            select = c("year", "age", "statefip", "occ2010", "ind1990", "classwkr",
+            select = c("year", "age", "statefip", "occ2010", "ind1990", "classwkr", empstat, labforce,
                        "citizen", "bpl", "perwt", "immig_status",
                        "hcovany", "hcovpub", "hinscaid", "hinscare", "hinsva"))
 
@@ -384,3 +385,17 @@ nh_plot7 = plot_nh_shares(
   "Source: ACS PUMS via IPUMS. Industry IND1990 == 832. ")
 
 ggsave("results/nh_table7_nativity.png", nh_plot7, width = 20, height = 12)
+
+
+# ACS total workforce
+wf = acs %>%
+  filter(year == 2024) %>%
+  group_by(empstat) %>%
+  summarise(n = n(), workers = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  print(n = Inf)
+
+lf = acs %>%
+  filter(year == 2024) %>%
+  group_by(labforce) %>%
+  summarise(n = n(), workers = sum(perwt, na.rm = TRUE), .groups = "drop") %>%
+  print(n = Inf)
