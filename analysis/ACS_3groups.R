@@ -560,3 +560,314 @@ ggplot(disabled_by_age_2024, aes(x = age, y = pct, color = immig_status)) +
     panel.background = element_rect(fill = "white", color = NA))
 
 ggsave("results/acs_disabled_by_age_2024.png", width = 15, height = 10)
+
+# disability by age, 65+ pooled
+disabled_by_age_2024_65p = disab_nogq_2024 %>%
+  mutate(disabled = diffany == 2,
+         age_pooled = pmin(age, 65)) %>%
+  group_by(age_pooled, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop")
+
+print(disabled_by_age_2024_65p, n = Inf)
+
+ggplot(disabled_by_age_2024_65p, aes(x = age_pooled, y = pct, color = immig_status)) +
+  geom_line(linewidth = 1.8) +
+  scale_color_manual(values = colors) +
+  scale_x_continuous(breaks = seq(15, 100, by = 10), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    expand = c(0.02, 0)) +
+  labs(
+    title = "Non-GQ Disability Rate by Age and Immigration Status (2024)",
+    subtitle = "ACS; age 15+; \n Any difficulty: cognitive, ambulatory, independent living, self-care, vision, hearing",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/acs_disabled_by_age_2024_65plus.png", width = 15, height = 10)
+
+# smoothed
+ggplot(disabled_by_age_2024_65p, aes(x = age_pooled, y = pct, color = immig_status)) +
+  geom_smooth(method = "loess", se = FALSE, linewidth = 1.8, span = 0.3) +
+  scale_color_manual(values = colors) +
+  scale_x_continuous(breaks = seq(15, 100, by = 10), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    expand = c(0.02, 0), limits = c(0, 35)) +
+  labs(
+    title = "Non-GQ Disability Rate by Age and Immigration Status (2024)",
+    subtitle = "ACS; age 15+; \n Any difficulty: cognitive, ambulatory, independent living, self-care, vision, hearing",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/acs_disabled_by_age_2024_65plus_loess.png", width = 15, height = 10)
+
+# disability rates, all (no GQ filter), all ages (65+ pooled), 2024
+    # diffrem, diffphys, and diffcare universe is persons age 5+, diffmob (independent living difficulty) universe is age 16+
+
+disab_all_2024 = acs3 %>%
+  filter(year == 2024) %>%
+  mutate(
+    diffany = case_when(
+      diffhear == 2 | diffeye == 2 | diffrem == 2 | 
+        diffphys == 2 | diffcare == 2 | diffmob == 2 ~ 2,
+      diffhear == 1 | diffeye == 1 | diffrem == 1 | 
+        diffphys == 1 | diffcare == 1 | diffmob == 1 ~ 1,
+      TRUE ~ NA_real_))
+
+disabled_all_by_age_2024 = disab_all_2024 %>%
+  mutate(disabled = diffany == 2) %>%
+  group_by(age, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100, 
+    .groups = "drop")
+
+print(disabled_all_by_age_2024, n = Inf)
+
+disabled_all_by_age_2024_65p = disab_all_2024 %>%
+  mutate(disabled = diffany == 2,
+         age_pooled = pmin(age, 65)) %>%
+  group_by(age_pooled, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop")
+
+print(disabled_all_by_age_2024_65p, n = Inf)
+
+ggplot(disabled_all_by_age_2024_65p, aes(x = age_pooled, y = pct, color = immig_status)) +
+  geom_smooth(method = "loess", se = FALSE, linewidth = 1.8, span = 0.3) +
+  scale_color_manual(values = colors) +
+  scale_x_continuous(breaks = seq(0, 65, by = 10), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    expand = c(0.02, 0), limits = c(0, 35)) +
+  labs(
+    title = "Disability Rate by Age and Immigration Status, all persons (2024)",
+    subtitle = "ACS; Age 65+ pooled \n Any difficulty: cognitive, ambulatory, independent living, self-care, vision, hearing",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/acs_disabled_all_by_age_2024_65plus.png", width = 15, height = 10)
+
+
+# differences, all (2024)
+print(disabled_all_by_age_2024_65p, n = Inf)
+
+disab_rates_all_2024 = disab_all_2024 %>%
+  mutate(disabled = diffany == 2) %>%
+  group_by(immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100, 
+    .groups = "drop")
+
+print(disab_rates_all_2024)
+
+disab_rates_by_age_2024 = disab_all_2024 %>%
+  mutate(disabled = diffany == 2) %>%
+  group_by(age, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop"
+  ) %>%
+  select(age, immig_status, pct) %>%
+  pivot_wider(names_from = immig_status, values_from = pct) %>%
+  rename(
+    illegal = `Illegal immigrants`,
+    legal   = `Legal immigrants`,
+    native  = `Native-born citizens`
+  ) %>%
+  mutate(
+    diff_illegal_native = native - illegal,      # percentage-point gap
+    diff_legal_native   = native - legal,        # percentage-point gap
+    ratio_illegal_native = native / illegal,     
+    ratio_legal_native   = native / legal
+  )
+
+print(disab_rates_by_age_2024, n = Inf, width = Inf)
+
+# working age adults, 18-64
+disab_rates_workingage_2024_wide = disab_all_2024 %>%
+  filter(age >= 18, age <= 64) %>%
+  mutate(disabled = diffany == 2) %>%
+  group_by(immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop"
+  ) %>%
+  select(immig_status, pct) %>%
+  pivot_wider(names_from = immig_status, values_from = pct) %>%
+  rename(
+    illegal = `Illegal immigrants`,
+    legal   = `Legal immigrants`,
+    native  = `Native-born citizens`
+  ) %>%
+  mutate(
+    diff_illegal_native  = native - illegal,
+    diff_legal_native    = native - legal,
+    ratio_illegal_native = native / illegal,
+    ratio_legal_native   = native / legal
+  )
+
+print(disab_rates_workingage_2024_wide, width = Inf)
+
+# disabled rates over time, all
+disab_all = acs3 %>%
+  mutate(
+    diffany = case_when(
+  diffhear == 2 | diffeye == 2 | diffrem == 2 | 
+    diffphys == 2 | diffcare == 2 | diffmob == 2 ~ 2,
+  diffhear == 1 | diffeye == 1 | diffrem == 1 | 
+    diffphys == 1 | diffcare == 1 | diffmob == 1 ~ 1,
+  TRUE ~ NA_real_))
+
+disabled_rates_all = disab_all %>%
+  mutate(disabled = diffany == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100, 
+    .groups = "drop")
+
+print(disabled_rates_all, n = Inf)
+
+ggplot(disabled_rates_all, aes(x = as.numeric(year), y = pct, color = immig_status)) +
+  geom_line(linewidth = 1.8) +
+  geom_point(size = 3) +
+  scale_color_manual(values = colors) +
+  scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    expand = c(0.02, 0), limits = c(0, 15)) +
+  labs(
+    title = "Disability Rate by Immigration Status (2010-2024)",
+    subtitle = "ACS; \n Any difficulty: cognitive, ambulatory, independent living, self-care, vision, hearing",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    caption = "Source: ACS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/acs_disabled_rates_all.png", width = 15, height = 10)
+  
+
+# per capita $ social security and supplemental security consumption
+acs_ss_ssi_percapita = acs3 %>%
+  filter(year == 2024) %>%
+  mutate(
+    incss_clean   = ifelse(incss   > 0 & incss   < 99999, incss,   0),
+    incsupp_clean = ifelse(incsupp > 0 & incsupp < 99999, incsupp, 0)
+  ) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    population = sum(perwt, na.rm = TRUE),
+    percapita_ss  = sum(perwt * incss_clean, na.rm = TRUE)   / sum(perwt, na.rm = TRUE),
+    percapita_ssi = sum(perwt * incsupp_clean, na.rm = TRUE) / sum(perwt, na.rm = TRUE),
+    percapita_ss_ssi = percapita_ss + percapita_ssi,
+    .groups = "drop"
+  )
+
+print(acs_ss_ssi_percapita)
