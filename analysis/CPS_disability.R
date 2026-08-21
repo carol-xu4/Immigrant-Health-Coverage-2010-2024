@@ -90,6 +90,44 @@ disability_income = cps %>%
 
 print(disability_income, n = Inf)
 
+disability_income = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(incdisab >= 0, incdisab < 9999999) %>%
+  mutate(
+    disabled = diffany == 2,
+    receives_DI = incdisab > 0) %>%
+  filter(disabled) %>%
+  group_by(year, immig_status) %>%
+  summarise(
+    n = n(),
+    disab_population = sum(asecwt, na.rm = TRUE),
+    receives_DI = sum(asecwt[receives_DI], na.rm = TRUE),
+    pct_receiving = receives_DI / disab_population * 100,
+    .groups = "drop")
+
+disability_income_allimm = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(incdisab >= 0, incdisab < 9999999) %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(
+    disabled = diffany == 2,
+    receives_DI = incdisab > 0) %>%
+  filter(disabled) %>%
+  group_by(year) %>%
+  summarise(
+    immig_status = "All immigrants",
+    n = n(),
+    disab_population = sum(asecwt, na.rm = TRUE),
+    receives_DI = sum(asecwt[receives_DI], na.rm = TRUE),
+    pct_receiving = receives_DI / disab_population * 100,
+    .groups = "drop")
+
+disability_income = bind_rows(disability_income, disability_income_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(disability_income, n = Inf)
+
 # how many getting disability insurance, or social security income because of disability
 full_disability_income = cps %>%
   filter(diffany %in% c(1, 2)) %>%
@@ -415,6 +453,24 @@ full_disability_income_pooled = cps %>%
 print(full_disability_income_pooled)
 
 # per capita $ social security and supplemental security consumption
+cps_ss_ssi_percapita_2025 = cps %>%
+  filter(year == 2025) %>%
+  mutate(
+    incss_clean  = ifelse(incss  > 0 & incss  < 99999, incss,  0),
+    incssi_clean = ifelse(incssi > 0 & incssi < 99999, incssi, 0)
+  ) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE),
+    percapita_ss  = sum(asecwt * incss_clean, na.rm = TRUE)  / sum(asecwt, na.rm = TRUE),
+    percapita_ssi = sum(asecwt * incssi_clean, na.rm = TRUE) / sum(asecwt, na.rm = TRUE),
+    percapita_ss_ssi = percapita_ss + percapita_ssi,
+    .groups = "drop"
+  )
+
+print(cps_ss_ssi_percapita_2025)
+
 n_years <- 6
 cpi_to_2024 <- 1.883
 
@@ -439,3 +495,576 @@ cps_ss_ssi_percapita = cps %>%
 print(cps_ss_ssi_percapita)
 
 
+cps_disability_percapita_2025 = cps %>%
+  filter(year == 2025) %>%
+  filter(diffany %in% c(1, 2)) %>%
+  mutate(
+    disabled       = diffany == 2,
+    incss_clean    = ifelse(incss    > 0 & incss    < 99999,   incss,    0),
+    incssi_clean   = ifelse(incssi   > 0 & incssi   < 99999,   incssi,   0),
+    incdisab_clean = ifelse(incdisab > 0 & incdisab < 9999999, incdisab, 0)
+  ) %>%
+  filter(disabled) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    disab_population = sum(asecwt, na.rm = TRUE),
+    percapita_ss    = sum(asecwt * incss_clean, na.rm = TRUE)    / sum(asecwt, na.rm = TRUE),
+    percapita_ssi   = sum(asecwt * incssi_clean, na.rm = TRUE)   / sum(asecwt, na.rm = TRUE),
+    percapita_other = sum(asecwt * incdisab_clean, na.rm = TRUE) / sum(asecwt, na.rm = TRUE),
+    percapita_any   = percapita_ss + percapita_ssi + percapita_other,
+    .groups = "drop"
+  )
+
+print(cps_disability_percapita_2025)
+
+cps_disability_percapita_2025 = cps %>%
+  filter(year == 2025) %>%
+  filter(diffany %in% c(1, 2)) %>%
+  mutate(
+    disabled        = diffany == 2,
+    ss_disability   = (whyss1 == 2 | whyss2 == 2) & incss > 0 & incss < 99999,
+    ssi_disability  = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0 & incssi < 99999,
+    incss_clean     = ifelse(ss_disability,  incss,  0),
+    incssi_clean    = ifelse(ssi_disability, incssi, 0),
+    incdisab_clean  = ifelse(incdisab > 0 & incdisab < 9999999, incdisab, 0)
+  ) %>%
+  filter(disabled) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    disab_population = sum(asecwt, na.rm = TRUE),
+    percapita_ss    = sum(asecwt * incss_clean, na.rm = TRUE)    / sum(asecwt, na.rm = TRUE),
+    percapita_ssi   = sum(asecwt * incssi_clean, na.rm = TRUE)   / sum(asecwt, na.rm = TRUE),
+    percapita_other = sum(asecwt * incdisab_clean, na.rm = TRUE) / sum(asecwt, na.rm = TRUE),
+    percapita_any   = percapita_ss + percapita_ssi + percapita_other,
+    .groups = "drop"
+  )
+
+print(cps_disability_percapita_2025)
+
+cps_disability_percapita_2025 = cps %>%
+  filter(year == 2025) %>%
+  filter(diffany %in% c(1, 2)) %>%
+  mutate(
+    disabled        = diffany == 2,
+    ss_disability   = (whyss1 == 2 | whyss2 == 2) & incss > 0 & incss < 99999,
+    ssi_disability  = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0 & incssi < 99999,
+    incss_clean     = ifelse(ss_disability,  incss,  0),
+    incssi_clean    = ifelse(ssi_disability, incssi, 0),
+    incdisab_clean  = ifelse(incdisab > 0 & incdisab < 9999999, incdisab, 0)
+  ) %>%
+  filter(disabled) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    disab_population = sum(asecwt, na.rm = TRUE),
+    n_receives_ss    = sum(ss_disability, na.rm = TRUE),
+    n_receives_ssi   = sum(ssi_disability, na.rm = TRUE),
+    receives_ss_pop  = sum(asecwt[ss_disability], na.rm = TRUE),
+    receives_ssi_pop = sum(asecwt[ssi_disability], na.rm = TRUE),
+    percapita_ss     = sum(asecwt * incss_clean, na.rm = TRUE)    / sum(asecwt, na.rm = TRUE),
+    percapita_ssi    = sum(asecwt * incssi_clean, na.rm = TRUE)   / sum(asecwt, na.rm = TRUE),
+    percapita_other  = sum(asecwt * incdisab_clean, na.rm = TRUE) / sum(asecwt, na.rm = TRUE),
+    percapita_any    = percapita_ss + percapita_ssi + percapita_other,
+    .groups = "drop"
+  )
+
+print(cps_disability_percapita_2025, n == Inf, width = Inf)
+
+# table 2: number of people with disability, and receives income
+disability_income_pooled = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(incdisab >= 0, incdisab < 9999999) %>%
+  filter(year >= 2020, year <= 2025) %>%
+  mutate(disabled = diffany == 2, receives_DI = incdisab > 0) %>%
+  filter(disabled) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    pct_receiving = sum(asecwt[receives_DI], na.rm = TRUE) / sum(asecwt, na.rm = TRUE) * 100,
+    disab_population_avg = sum(asecwt, na.rm = TRUE) / n_years,
+    receives_DI_avg = sum(asecwt[receives_DI], na.rm = TRUE) / n_years,
+    .groups = "drop")
+
+disability_income_pooled_allimm = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(incdisab >= 0, incdisab < 9999999) %>%
+  filter(year >= 2020, year <= 2025) %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(disabled = diffany == 2, receives_DI = incdisab > 0) %>%
+  filter(disabled) %>%
+  summarise(
+    immig_status = "All immigrants",
+    n = n(),
+    pct_receiving = sum(asecwt[receives_DI], na.rm = TRUE) / sum(asecwt, na.rm = TRUE) * 100,
+    disab_population_avg = sum(asecwt, na.rm = TRUE) / n_years,
+    receives_DI_avg = sum(asecwt[receives_DI], na.rm = TRUE) / n_years)
+
+disability_income_pooled = bind_rows(disability_income_pooled, disability_income_pooled_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(disability_income_pooled)
+
+full_disability_income_pooled = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(incdisab >= 0, incdisab < 999999) %>%
+  filter(year >= 2020, year <= 2025) %>%
+  mutate(
+    disabled = diffany == 2,
+    ss_disability     = (whyss1 == 2 | whyss2 == 2) & incss > 0,
+    ssi_disability    = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0,
+    other_disability  = incdisab > 0,
+    any_disability_income = ss_disability | ssi_disability | other_disability
+  ) %>%
+  filter(disabled) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    pct_ss    = sum(asecwt[ss_disability], na.rm = TRUE) / sum(asecwt, na.rm = TRUE) * 100,
+    pct_ssi   = sum(asecwt[ssi_disability], na.rm = TRUE) / sum(asecwt, na.rm = TRUE) * 100,
+    pct_other = sum(asecwt[other_disability], na.rm = TRUE) / sum(asecwt, na.rm = TRUE) * 100,
+    pct_any   = sum(asecwt[any_disability_income], na.rm = TRUE) / sum(asecwt, na.rm = TRUE) * 100,
+    population_avg = sum(asecwt, na.rm = TRUE) / n_years,
+    .groups = "drop")
+
+full_disability_income_pooled_allimm = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(incdisab >= 0, incdisab < 999999) %>%
+  filter(year >= 2020, year <= 2025) %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(
+    disabled = diffany == 2,
+    ss_disability     = (whyss1 == 2 | whyss2 == 2) & incss > 0,
+    ssi_disability    = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0,
+    other_disability  = incdisab > 0,
+    any_disability_income = ss_disability | ssi_disability | other_disability
+  ) %>%
+  filter(disabled) %>%
+  summarise(
+    immig_status = "All immigrants",
+    n = n(),
+    pct_ss    = sum(asecwt[ss_disability], na.rm = TRUE) / sum(asecwt, na.rm = TRUE) * 100,
+    pct_ssi   = sum(asecwt[ssi_disability], na.rm = TRUE) / sum(asecwt, na.rm = TRUE) * 100,
+    pct_other = sum(asecwt[other_disability], na.rm = TRUE) / sum(asecwt, na.rm = TRUE) * 100,
+    pct_any   = sum(asecwt[any_disability_income], na.rm = TRUE) / sum(asecwt, na.rm = TRUE) * 100,
+    population_avg = sum(asecwt, na.rm = TRUE) / n_years)
+
+full_disability_income_pooled = bind_rows(full_disability_income_pooled, full_disability_income_pooled_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(full_disability_income_pooled)
+
+# table 4: per cap SS & SSI (all reasons)
+cps_ss_ssi_percapita_2025 = cps %>%
+  filter(year == 2025) %>%
+  mutate(
+    incss_clean  = ifelse(incss  > 0 & incss  < 99999, incss,  0),
+    incssi_clean = ifelse(incssi > 0 & incssi < 99999, incssi, 0)
+  ) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE),
+    percapita_ss  = sum(asecwt * incss_clean, na.rm = TRUE)  / sum(asecwt, na.rm = TRUE),
+    percapita_ssi = sum(asecwt * incssi_clean, na.rm = TRUE) / sum(asecwt, na.rm = TRUE),
+    percapita_ss_ssi = percapita_ss + percapita_ssi,
+    .groups = "drop"
+  )
+
+cps_ss_ssi_percapita_2025_allimm = cps %>%
+  filter(year == 2025) %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(
+    incss_clean  = ifelse(incss  > 0 & incss  < 99999, incss,  0),
+    incssi_clean = ifelse(incssi > 0 & incssi < 99999, incssi, 0)
+  ) %>%
+  summarise(
+    immig_status = "All immigrants",
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE),
+    percapita_ss  = sum(asecwt * incss_clean, na.rm = TRUE)  / sum(asecwt, na.rm = TRUE),
+    percapita_ssi = sum(asecwt * incssi_clean, na.rm = TRUE) / sum(asecwt, na.rm = TRUE),
+    percapita_ss_ssi = percapita_ss + percapita_ssi)
+
+cps_ss_ssi_percapita_2025 = bind_rows(cps_ss_ssi_percapita_2025, cps_ss_ssi_percapita_2025_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(cps_ss_ssi_percapita_2025)
+
+# table 5: per capita disability benefits 2025
+cps_disability_percapita_2025 = cps %>%
+  filter(year == 2025) %>%
+  filter(diffany %in% c(1, 2)) %>%
+  mutate(
+    disabled        = diffany == 2,
+    ss_disability   = (whyss1 == 2 | whyss2 == 2) & incss > 0 & incss < 99999,
+    ssi_disability  = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0 & incssi < 99999,
+    incss_clean     = ifelse(ss_disability,  incss,  0),
+    incssi_clean    = ifelse(ssi_disability, incssi, 0),
+    incdisab_clean  = ifelse(incdisab > 0 & incdisab < 9999999, incdisab, 0)
+  ) %>%
+  filter(disabled) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    disab_population = sum(asecwt, na.rm = TRUE),
+    receives_ss_pop  = sum(asecwt[ss_disability], na.rm = TRUE),
+    receives_ssi_pop = sum(asecwt[ssi_disability], na.rm = TRUE),
+    percapita_ss     = sum(asecwt * incss_clean, na.rm = TRUE)    / sum(asecwt, na.rm = TRUE),
+    percapita_ssi    = sum(asecwt * incssi_clean, na.rm = TRUE)   / sum(asecwt, na.rm = TRUE),
+    percapita_other  = sum(asecwt * incdisab_clean, na.rm = TRUE) / sum(asecwt, na.rm = TRUE),
+    percapita_any    = percapita_ss + percapita_ssi + percapita_other,
+    .groups = "drop"
+  )
+
+cps_disability_percapita_2025_allimm = cps %>%
+  filter(year == 2025) %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(
+    disabled        = diffany == 2,
+    ss_disability   = (whyss1 == 2 | whyss2 == 2) & incss > 0 & incss < 99999,
+    ssi_disability  = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0 & incssi < 99999,
+    incss_clean     = ifelse(ss_disability,  incss,  0),
+    incssi_clean    = ifelse(ssi_disability, incssi, 0),
+    incdisab_clean  = ifelse(incdisab > 0 & incdisab < 9999999, incdisab, 0)
+  ) %>%
+  filter(disabled) %>%
+  summarise(
+    immig_status = "All immigrants",
+    n = n(),
+    disab_population = sum(asecwt, na.rm = TRUE),
+    receives_ss_pop  = sum(asecwt[ss_disability], na.rm = TRUE),
+    receives_ssi_pop = sum(asecwt[ssi_disability], na.rm = TRUE),
+    percapita_ss     = sum(asecwt * incss_clean, na.rm = TRUE)    / sum(asecwt, na.rm = TRUE),
+    percapita_ssi    = sum(asecwt * incssi_clean, na.rm = TRUE)   / sum(asecwt, na.rm = TRUE),
+    percapita_other  = sum(asecwt * incdisab_clean, na.rm = TRUE) / sum(asecwt, na.rm = TRUE),
+    percapita_any    = percapita_ss + percapita_ssi + percapita_other)
+
+cps_disability_percapita_2025 = bind_rows(cps_disability_percapita_2025, cps_disability_percapita_2025_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(cps_disability_percapita_2025, width = Inf)
+
+# table 6: average $$ per recipient of disability-related income (2025)
+cps_disability_per_recipient_2025 = cps %>%
+  filter(year == 2025) %>%
+  filter(diffany %in% c(1, 2)) %>%
+  mutate(
+    disabled         = diffany == 2,
+    ss_disability    = (whyss1 == 2 | whyss2 == 2) & incss > 0 & incss < 99999,
+    ssi_disability   = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0 & incssi < 99999,
+    other_disability = incdisab > 0 & incdisab < 9999999,
+    any_disability_income = ss_disability | ssi_disability | other_disability,
+    incss_clean      = ifelse(ss_disability,    incss,    0),
+    incssi_clean     = ifelse(ssi_disability,   incssi,   0),
+    incdisab_clean   = ifelse(other_disability, incdisab, 0),
+    incany_clean     = incss_clean + incssi_clean + incdisab_clean
+  ) %>%
+  filter(disabled) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    disab_population = sum(asecwt, na.rm = TRUE),
+    ss_recipients     = sum(asecwt[ss_disability], na.rm = TRUE),
+    ssi_recipients    = sum(asecwt[ssi_disability], na.rm = TRUE),
+    other_recipients  = sum(asecwt[other_disability], na.rm = TRUE),
+    any_recipients    = sum(asecwt[any_disability_income], na.rm = TRUE),
+    per_recipient_ss    = sum(asecwt * incss_clean, na.rm = TRUE)    / ss_recipients,
+    per_recipient_ssi   = sum(asecwt * incssi_clean, na.rm = TRUE)   / ssi_recipients,
+    per_recipient_other = sum(asecwt * incdisab_clean, na.rm = TRUE) / other_recipients,
+    per_recipient_any   = sum(asecwt * incany_clean, na.rm = TRUE)   / any_recipients,
+    .groups = "drop")
+
+cps_disability_per_recipient_2025_allimm = cps %>%
+  filter(year == 2025) %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(
+    disabled         = diffany == 2,
+    ss_disability    = (whyss1 == 2 | whyss2 == 2) & incss > 0 & incss < 99999,
+    ssi_disability   = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0 & incssi < 99999,
+    other_disability = incdisab > 0 & incdisab < 9999999,
+    any_disability_income = ss_disability | ssi_disability | other_disability,
+    incss_clean      = ifelse(ss_disability,    incss,    0),
+    incssi_clean     = ifelse(ssi_disability,   incssi,   0),
+    incdisab_clean   = ifelse(other_disability, incdisab, 0),
+    incany_clean     = incss_clean + incssi_clean + incdisab_clean
+  ) %>%
+  filter(disabled) %>%
+  summarise(
+    immig_status = "All immigrants",
+    n = n(),
+    disab_population = sum(asecwt, na.rm = TRUE),
+    ss_recipients     = sum(asecwt[ss_disability], na.rm = TRUE),
+    ssi_recipients    = sum(asecwt[ssi_disability], na.rm = TRUE),
+    other_recipients  = sum(asecwt[other_disability], na.rm = TRUE),
+    any_recipients    = sum(asecwt[any_disability_income], na.rm = TRUE),
+    per_recipient_ss    = sum(asecwt * incss_clean, na.rm = TRUE)    / ss_recipients,
+    per_recipient_ssi   = sum(asecwt * incssi_clean, na.rm = TRUE)   / ssi_recipients,
+    per_recipient_other = sum(asecwt * incdisab_clean, na.rm = TRUE) / other_recipients,
+    per_recipient_any   = sum(asecwt * incany_clean, na.rm = TRUE)   / any_recipients)
+
+cps_disability_per_recipient_2025 = bind_rows(cps_disability_per_recipient_2025, cps_disability_per_recipient_2025_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(cps_disability_per_recipient_2025, width = Inf)
+
+
+# table 6 pooled
+n_years <- 6
+cpi_to_2024 <- 1.883
+
+cps_disability_per_recipient_pooled = cps %>%
+  filter(year >= 2020, year <= 2025) %>%
+  filter(diffany %in% c(1, 2)) %>%
+  mutate(
+    disabled         = diffany == 2,
+    ss_disability    = (whyss1 == 2 | whyss2 == 2) & incss > 0 & incss < 99999,
+    ssi_disability   = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0 & incssi < 99999,
+    other_disability = incdisab > 0 & incdisab < 9999999,
+    any_disability_income = ss_disability | ssi_disability | other_disability,
+    incss_clean      = ifelse(ss_disability,    incss    * cpi99 * cpi_to_2024, 0),
+    incssi_clean     = ifelse(ssi_disability,   incssi   * cpi99 * cpi_to_2024, 0),
+    incdisab_clean   = ifelse(other_disability, incdisab * cpi99 * cpi_to_2024, 0),
+    incany_clean     = incss_clean + incssi_clean + incdisab_clean
+  ) %>%
+  filter(disabled) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    disab_population_avg = sum(asecwt, na.rm = TRUE) / n_years,
+    ss_recipients_avg     = sum(asecwt[ss_disability], na.rm = TRUE) / n_years,
+    ssi_recipients_avg    = sum(asecwt[ssi_disability], na.rm = TRUE) / n_years,
+    other_recipients_avg  = sum(asecwt[other_disability], na.rm = TRUE) / n_years,
+    any_recipients_avg    = sum(asecwt[any_disability_income], na.rm = TRUE) / n_years,
+    per_recipient_ss    = sum(asecwt * incss_clean, na.rm = TRUE)    / sum(asecwt[ss_disability], na.rm = TRUE),
+    per_recipient_ssi   = sum(asecwt * incssi_clean, na.rm = TRUE)   / sum(asecwt[ssi_disability], na.rm = TRUE),
+    per_recipient_other = sum(asecwt * incdisab_clean, na.rm = TRUE) / sum(asecwt[other_disability], na.rm = TRUE),
+    per_recipient_any    = sum(asecwt * incany_clean, na.rm = TRUE)  / sum(asecwt[any_disability_income], na.rm = TRUE),
+    .groups = "drop")
+
+cps_disability_per_recipient_pooled_allimm = cps %>%
+  filter(year >= 2020, year <= 2025) %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(
+    disabled         = diffany == 2,
+    ss_disability    = (whyss1 == 2 | whyss2 == 2) & incss > 0 & incss < 99999,
+    ssi_disability   = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0 & incssi < 99999,
+    other_disability = incdisab > 0 & incdisab < 9999999,
+    any_disability_income = ss_disability | ssi_disability | other_disability,
+    incss_clean      = ifelse(ss_disability,    incss    * cpi99 * cpi_to_2024, 0),
+    incssi_clean     = ifelse(ssi_disability,   incssi   * cpi99 * cpi_to_2024, 0),
+    incdisab_clean   = ifelse(other_disability, incdisab * cpi99 * cpi_to_2024, 0),
+    incany_clean     = incss_clean + incssi_clean + incdisab_clean
+  ) %>%
+  filter(disabled) %>%
+  summarise(
+    immig_status = "All immigrants",
+    n = n(),
+    disab_population_avg = sum(asecwt, na.rm = TRUE) / n_years,
+    ss_recipients_avg     = sum(asecwt[ss_disability], na.rm = TRUE) / n_years,
+    ssi_recipients_avg    = sum(asecwt[ssi_disability], na.rm = TRUE) / n_years,
+    other_recipients_avg  = sum(asecwt[other_disability], na.rm = TRUE) / n_years,
+    any_recipients_avg    = sum(asecwt[any_disability_income], na.rm = TRUE) / n_years,
+    per_recipient_ss    = sum(asecwt * incss_clean, na.rm = TRUE)    / sum(asecwt[ss_disability], na.rm = TRUE),
+    per_recipient_ssi   = sum(asecwt * incssi_clean, na.rm = TRUE)   / sum(asecwt[ssi_disability], na.rm = TRUE),
+    per_recipient_other = sum(asecwt * incdisab_clean, na.rm = TRUE) / sum(asecwt[other_disability], na.rm = TRUE),
+    per_recipient_any    = sum(asecwt * incany_clean, na.rm = TRUE)  / sum(asecwt[any_disability_income], na.rm = TRUE))
+
+cps_disability_per_recipient_pooled = bind_rows(cps_disability_per_recipient_pooled, cps_disability_per_recipient_pooled_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(cps_disability_per_recipient_pooled, width = Inf)
+
+# tables 2 and 3, 2025 only
+disability_income_2025 = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(incdisab >= 0, incdisab < 9999999) %>%
+  filter(year == 2025) %>%
+  mutate(disabled = diffany == 2, receives_DI = incdisab > 0) %>%
+  filter(disabled) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    disab_population = sum(asecwt, na.rm = TRUE),
+    receives_DI = sum(asecwt[receives_DI], na.rm = TRUE),
+    pct_receiving = receives_DI / disab_population * 100,
+    .groups = "drop")
+
+disability_income_2025_allimm = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(incdisab >= 0, incdisab < 9999999) %>%
+  filter(year == 2025) %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(disabled = diffany == 2, receives_DI = incdisab > 0) %>%
+  filter(disabled) %>%
+  summarise(
+    immig_status = "All immigrants",
+    n = n(),
+    disab_population = sum(asecwt, na.rm = TRUE),
+    receives_DI = sum(asecwt[receives_DI], na.rm = TRUE),
+    pct_receiving = receives_DI / disab_population * 100)
+
+disability_income_2025 = bind_rows(disability_income_2025, disability_income_2025_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(disability_income_2025)
+
+
+full_disability_income_2025 = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(incdisab >= 0, incdisab < 999999) %>%
+  filter(year == 2025) %>%
+  mutate(
+    disabled = diffany == 2,
+    ss_disability     = (whyss1 == 2 | whyss2 == 2) & incss > 0,
+    ssi_disability    = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0,
+    other_disability  = incdisab > 0,
+    any_disability_income = ss_disability | ssi_disability | other_disability
+  ) %>%
+  filter(disabled) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE),
+    pct_ss    = sum(asecwt[ss_disability], na.rm = TRUE) / population * 100,
+    pct_ssi   = sum(asecwt[ssi_disability], na.rm = TRUE) / population * 100,
+    pct_other = sum(asecwt[other_disability], na.rm = TRUE) / population * 100,
+    pct_any   = sum(asecwt[any_disability_income], na.rm = TRUE) / population * 100,
+    .groups = "drop")
+
+full_disability_income_2025_allimm = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(incdisab >= 0, incdisab < 999999) %>%
+  filter(year == 2025) %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(
+    disabled = diffany == 2,
+    ss_disability     = (whyss1 == 2 | whyss2 == 2) & incss > 0,
+    ssi_disability    = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0,
+    other_disability  = incdisab > 0,
+    any_disability_income = ss_disability | ssi_disability | other_disability
+  ) %>%
+  filter(disabled) %>%
+  summarise(
+    immig_status = "All immigrants",
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE),
+    pct_ss    = sum(asecwt[ss_disability], na.rm = TRUE) / population * 100,
+    pct_ssi   = sum(asecwt[ssi_disability], na.rm = TRUE) / population * 100,
+    pct_other = sum(asecwt[other_disability], na.rm = TRUE) / population * 100,
+    pct_any   = sum(asecwt[any_disability_income], na.rm = TRUE) / population * 100)
+
+full_disability_income_2025 = bind_rows(full_disability_income_2025, full_disability_income_2025_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(full_disability_income_2025)
+
+# new table 2: Number of People who Receive Disability Income (2025)
+disability_benefit_pop_2025 = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(year == 2025) %>%
+  mutate(
+    ss_disability          = (whyss1 == 2 | whyss2 == 2) & incss > 0 & incss < 99999,
+    ssi_disability         = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0 & incssi < 99999,
+    other_disability       = incdisab > 0 & incdisab < 9999999,
+    any_disability_benefit = ss_disability | ssi_disability | other_disability
+  ) %>%
+  group_by(immig_status) %>%
+  summarise(
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE),
+    pct_ss    = sum(asecwt[ss_disability], na.rm = TRUE)          / population * 100,
+    pct_ssi   = sum(asecwt[ssi_disability], na.rm = TRUE)         / population * 100,
+    pct_other = sum(asecwt[other_disability], na.rm = TRUE)       / population * 100,
+    pct_any   = sum(asecwt[any_disability_benefit], na.rm = TRUE) / population * 100,
+    .groups = "drop")
+
+disability_benefit_pop_2025_allimm = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(year == 2025) %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(
+    ss_disability          = (whyss1 == 2 | whyss2 == 2) & incss > 0 & incss < 99999,
+    ssi_disability         = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0 & incssi < 99999,
+    other_disability       = incdisab > 0 & incdisab < 9999999,
+    any_disability_benefit = ss_disability | ssi_disability | other_disability
+  ) %>%
+  summarise(
+    immig_status = "All immigrants",
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE),
+    pct_ss    = sum(asecwt[ss_disability], na.rm = TRUE)          / population * 100,
+    pct_ssi   = sum(asecwt[ssi_disability], na.rm = TRUE)         / population * 100,
+    pct_other = sum(asecwt[other_disability], na.rm = TRUE)       / population * 100,
+    pct_any   = sum(asecwt[any_disability_benefit], na.rm = TRUE) / population * 100)
+
+disability_benefit_pop_2025 = bind_rows(disability_benefit_pop_2025, disability_benefit_pop_2025_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(disability_benefit_pop_2025)
+
+# new table 3: shares of those with disab who receive any disab benefits
+full_disability_income = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(incdisab >= 0, incdisab < 999999) %>%
+  mutate(
+    disabled = diffany == 2,
+    ss_disability     = (whyss1 == 2 | whyss2 == 2) & incss > 0,
+    ssi_disability    = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0,
+    other_disability  = incdisab > 0,
+    any_disability_income = ss_disability | ssi_disability | other_disability
+  ) %>%
+  filter(disabled) %>%
+  group_by(year, immig_status) %>%
+  summarise(
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE),
+    pct_ss    = sum(asecwt[ss_disability], na.rm = TRUE)    / population * 100,
+    pct_ssi   = sum(asecwt[ssi_disability], na.rm = TRUE)   / population * 100,
+    pct_other = sum(asecwt[other_disability], na.rm = TRUE) / population * 100,
+    pct_any   = sum(asecwt[any_disability_income], na.rm = TRUE) / population * 100,
+    .groups = "drop"
+  )
+
+full_disability_income_allimm = cps %>%
+  filter(diffany %in% c(1, 2)) %>%
+  filter(incdisab >= 0, incdisab < 999999) %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(
+    disabled = diffany == 2,
+    ss_disability     = (whyss1 == 2 | whyss2 == 2) & incss > 0,
+    ssi_disability    = (whyssi1 %in% c(1, 2) | whyssi2 %in% c(1, 2)) & incssi > 0,
+    other_disability  = incdisab > 0,
+    any_disability_income = ss_disability | ssi_disability | other_disability
+  ) %>%
+  filter(disabled) %>%
+  group_by(year) %>%
+  summarise(
+    immig_status = "All immigrants",
+    n = n(),
+    population = sum(asecwt, na.rm = TRUE),
+    pct_ss    = sum(asecwt[ss_disability], na.rm = TRUE)    / population * 100,
+    pct_ssi   = sum(asecwt[ssi_disability], na.rm = TRUE)   / population * 100,
+    pct_other = sum(asecwt[other_disability], na.rm = TRUE) / population * 100,
+    pct_any   = sum(asecwt[any_disability_income], na.rm = TRUE) / population * 100,
+    .groups = "drop"
+  )
+
+full_disability_income = bind_rows(full_disability_income, full_disability_income_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(full_disability_income, n = Inf)

@@ -740,6 +740,21 @@ disab_rates_all_2024 = disab_all_2024 %>%
 
 print(disab_rates_all_2024)
 
+disab_rates_all_2024_allimm = disab_all_2024 %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(disabled = diffany == 2) %>%
+  summarise(
+    immig_status = "All immigrants",
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100)
+
+disab_rates_all_2024 = bind_rows(disab_rates_all_2024, disab_rates_all_2024_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(disab_rates_all_2024)
+
 disab_rates_by_age_2024 = disab_all_2024 %>%
   mutate(disabled = diffany == 2) %>%
   group_by(age, immig_status) %>%
@@ -871,3 +886,300 @@ acs_ss_ssi_percapita = acs3 %>%
   )
 
 print(acs_ss_ssi_percapita)
+
+# adding all immigrants lines
+disabled_rates_all = disab_all %>%
+  mutate(disabled = diffany == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop")
+
+disabled_rates_all_allimm = disab_all %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(disabled = diffany == 2) %>%
+  group_by(year) %>%
+  summarise(
+    immig_status = "All immigrants",
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop")
+
+disabled_rates_all = bind_rows(disabled_rates_all, disabled_rates_all_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(disabled_rates_all, n = Inf)
+
+colors_4 = c(
+  "Native-born citizens" = "#3043B4",
+  "Legal immigrants"     = "#7C756D",
+  "Illegal immigrants"   = "#C97703",
+  "All immigrants"       = "#0D0E51")
+
+linetypes_4 = c(
+  "Native-born citizens" = "solid",
+  "Legal immigrants"     = "solid",
+  "Illegal immigrants"   = "solid",
+  "All immigrants"       = "dotted")
+
+
+ggplot(disabled_rates_all, aes(x = as.numeric(year), y = pct, color = immig_status, linetype = immig_status)) +
+  geom_line(linewidth = 1.8) +
+  geom_point(size = 3) +
+  scale_color_manual(values = colors_4) +
+  scale_linetype_manual(values = linetypes_4) +
+  scale_x_continuous(breaks = seq(2010, 2024, by = 2), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    expand = c(0.02, 0), limits = c(0, 15)) +
+  labs(
+    title = "Disability Rate by Immigration Status (2010-2024)",
+    subtitle = "ACS; \n Any difficulty: cognitive, ambulatory, independent living, self-care, vision, hearing",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    linetype = NULL,
+    caption = "Source: ACS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/acs_disabled_rates_all.png", width = 15, height = 10)
+
+disabled_all_by_age_2024_65p = disab_all_2024 %>%
+  mutate(disabled = diffany == 2,
+         age_pooled = pmin(age, 65)) %>%
+  group_by(age_pooled, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop")
+
+disabled_all_by_age_2024_65p_allimm = disab_all_2024 %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(disabled = diffany == 2,
+         age_pooled = pmin(age, 65)) %>%
+  group_by(age_pooled) %>%
+  summarise(
+    immig_status = "All immigrants",
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop")
+
+disabled_all_by_age_2024_65p = bind_rows(disabled_all_by_age_2024_65p, disabled_all_by_age_2024_65p_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(disabled_all_by_age_2024_65p, n = Inf)
+
+linetypes_4 = c(
+  "Native-born citizens" = "solid",
+  "Legal immigrants"     = "solid",
+  "Illegal immigrants"   = "solid",
+  "All immigrants"       = "dotted")
+
+ggplot(disabled_all_by_age_2024_65p, aes(x = age_pooled, y = pct, color = immig_status, linetype = immig_status)) +
+  geom_smooth(method = "loess", se = FALSE, linewidth = 1.8, span = 0.3) +
+  scale_color_manual(values = colors_4) +
+  scale_linetype_manual(values = linetypes_4) +
+  scale_x_continuous(breaks = seq(0, 65, by = 10), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    expand = c(0.02, 0), limits = c(0, 35)) +
+  labs(
+    title = "Disability Rate by Age and Immigration Status, all persons (2024)",
+    subtitle = "ACS; Age 65+ pooled \n Any difficulty: cognitive, ambulatory, independent living, self-care, vision, hearing",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    linetype = NULL,
+    caption = "Source: ACS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/acs_disabled_all_by_age_2024_65plus.png", width = 15, height = 10)
+
+# no veterans, disabled by age 
+disab_all_2024_novets = disab_all_2024 %>%
+  filter(age >= 18) %>%
+  filter(vetstat != 2)
+
+disabled_novets_by_age_2024_65p = disab_all_2024_novets %>%
+  mutate(disabled = diffany == 2,
+         age_pooled = pmin(age, 65)) %>%
+  group_by(age_pooled, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop")
+
+disabled_novets_by_age_2024_65p_allimm = disab_all_2024_novets %>%
+  filter(immig_status %in% c("Legal immigrants", "Illegal immigrants")) %>%
+  mutate(disabled = diffany == 2,
+         age_pooled = pmin(age, 65)) %>%
+  group_by(age_pooled) %>%
+  summarise(
+    immig_status = "All immigrants",
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop")
+
+disabled_novets_by_age_2024_65p = bind_rows(disabled_novets_by_age_2024_65p, disabled_novets_by_age_2024_65p_allimm) %>%
+  mutate(immig_status = factor(immig_status, levels = c(
+    "Native-born citizens", "Legal immigrants", "Illegal immigrants", "All immigrants")))
+
+print(disabled_novets_by_age_2024_65p, n = Inf)
+
+ggplot(disabled_novets_by_age_2024_65p, aes(x = age_pooled, y = pct, color = immig_status, linetype = immig_status)) +
+  geom_smooth(method = "loess", se = FALSE, linewidth = 1.8, span = 0.3) +
+  scale_color_manual(values = colors_4) +
+  scale_linetype_manual(values = linetypes_4) +
+  scale_x_continuous(breaks = seq(20, 65, by = 10), expand = c(0.02, 0)) +
+  scale_y_continuous(
+    labels = function(x) paste0(x, "%"),
+    expand = c(0.02, 0), limits = c(0, 35)) +
+  labs(
+    title = "Disability Rate by Age and Immigration Status, Non-Veterans (2024)",
+    subtitle = "ACS; age 18+, excluding veterans; Age 65+ pooled \n Any difficulty: cognitive, ambulatory, independent living, self-care, vision, hearing",
+    x = NULL,
+    y = NULL,
+    color = NULL,
+    linetype = NULL,
+    caption = "Source: ACS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 20, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    legend.key.width = unit(1.5, "cm"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/acs_disabled_novets_by_age_2024_65plus_loess.png", width = 15, height = 10)
+
+# number of vets
+# vets by immig status (vetstat universe is persons age 17+)
+acs_vets = disab_all %>%
+  filter(vetstat == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(n = n(),
+            population = sum(perwt, na.rm = TRUE),
+            .groups = "drop")
+
+print(acs_vets, n = Inf)
+
+# disabled vets by immig status
+acs_disabled_vets_pop = disab_all %>%
+  filter(vetstat == 2) %>%
+  filter(diffany %in% c(1, 2)) %>%
+  mutate(disabled = diffany == 2) %>%
+  group_by(year, immig_status) %>%
+  summarise(
+    disabled = sum(perwt[disabled], na.rm = TRUE),
+    population = sum(perwt, na.rm = TRUE),
+    pct = disabled / population * 100,
+    .groups = "drop")
+
+print(acs_disabled_vets_pop, n = Inf)
+
+# disabled vets age distribution
+disabled_vets_age_dist_2024 = disab_all_2024 %>%
+  filter(vetstat == 2) %>%
+  mutate(disabled = diffany == 2) %>%
+  filter(disabled) %>%
+  filter(immig_status %in% c("Native-born citizens", "Legal immigrants")) %>%
+  mutate(immig_status = droplevels(factor(immig_status, levels = c("Native-born citizens", "Legal immigrants"))))
+
+ggplot(disabled_vets_age_dist_2024, aes(x = age, weight = perwt, fill = immig_status, color = immig_status)) +
+  geom_density(alpha = 0.4, linewidth = 1.2) +
+  scale_fill_manual(values = colors[c("Native-born citizens", "Legal immigrants")]) +
+  scale_color_manual(values = colors[c("Native-born citizens", "Legal immigrants")]) +
+  scale_x_continuous(breaks = seq(15, 100, by = 10), expand = c(0.02, 0)) +
+  labs(
+    title = "Age Distribution of Disabled Veterans by Immigration Status (2024)",
+    subtitle = "ACS; excludes illegal immigrants — veteran status is a legal-status proxy in the residual method",
+    x = NULL,
+    y = "Density",
+    fill = NULL,
+    color = NULL,
+    caption = "Source: ACS via IPUMS") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 30, face = "bold", hjust = 0, color = "black"),
+    plot.subtitle = element_text(size = 18, color = "gray40", hjust = 0, margin = margin(b = 12)),
+    legend.position = "top",
+    legend.justification = "left",
+    legend.text = element_text(size = 20),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray90", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = 25, color = "gray40"),
+    axis.text.y = element_text(size = 25, color = "gray40"),
+    plot.caption = element_text(size = 12, color = "gray40", hjust = 0),
+    plot.caption.position = "plot",
+    plot.title.position = "plot",
+    plot.background = element_rect(fill = "white", color = NA),
+    panel.background = element_rect(fill = "white", color = NA))
+
+ggsave("results/acs_disabled_vets_age_dist_2024.png", width = 15, height = 10)
